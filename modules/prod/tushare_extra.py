@@ -31,7 +31,9 @@ class TushareExtraModule(VibeModule):
 
     def fetch_all(self):
         self.context.logger.info("Starting Tushare Extra Data Fetch...")
-        self.fetch_concepts()
+        self.fetch_ths_concepts()
+        self.fetch_standard_concepts()
+        self.fetch_sw_industries()
         self.fetch_latest_financial()
 
     def _get_adapter(self):
@@ -44,16 +46,44 @@ class TushareExtraModule(VibeModule):
         token = self.context.config.get("data", {}).get("tushare_token", "")
         return TushareAdapter(token=token)
 
-    def fetch_concepts(self):
+    def fetch_ths_concepts(self):
         adapter = self._get_adapter()
         self.context.logger.info("Fetching THS Concepts...")
         df = adapter.get_ths_index()
         if not df.empty:
             path = os.path.join("data", "concepts", "ths_index.csv")
+            # Ensure dir exists
+            os.makedirs(os.path.dirname(path), exist_ok=True)
             df.to_csv(path, index=False)
-            self.context.logger.info(f"Saved {len(df)} concepts to {path}")
+            self.context.logger.info(f"Saved {len(df)} THS concepts to {path}")
         else:
-            self.context.logger.warning("No concept data returned.")
+            self.context.logger.warning("No THS concept data returned.")
+
+    def fetch_standard_concepts(self):
+        adapter = self._get_adapter()
+        self.context.logger.info("Fetching Standard Concepts...")
+        df = adapter.get_concept()
+        if not df.empty:
+            path = os.path.join("data", "concepts", "concept_list.csv")
+            os.makedirs(os.path.dirname(path), exist_ok=True)
+            df.to_csv(path, index=False)
+            self.context.logger.info(f"Saved {len(df)} standard concepts to {path}")
+        else:
+            self.context.logger.warning("No standard concept data returned.")
+
+    def fetch_sw_industries(self):
+        adapter = self._get_adapter()
+        self.context.logger.info("Fetching Shenwan Industries (L1, L2, L3)...")
+        
+        for level in ['L1', 'L2', 'L3']:
+            df = adapter.get_index_classify(level=level, src='SW2021')
+            if not df.empty:
+                path = os.path.join("data", "concepts", f"sw_industry_{level}.csv")
+                os.makedirs(os.path.dirname(path), exist_ok=True)
+                df.to_csv(path, index=False)
+                self.context.logger.info(f"Saved {len(df)} SW {level} industries to {path}")
+            else:
+                self.context.logger.warning(f"No SW industry data returned for {level}.")
 
     def fetch_latest_financial(self):
         adapter = self._get_adapter()

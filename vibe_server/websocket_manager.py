@@ -7,10 +7,13 @@ class WebSocketManager:
     def __init__(self):
         self.active_connections: List[WebSocket] = []
         self.last_updates: Dict[str, str] = {} # Track last update time for widgets
+        self.loop = None
 
     async def connect(self, websocket: WebSocket):
         await websocket.accept()
         self.active_connections.append(websocket)
+        if self.loop is None:
+            self.loop = asyncio.get_running_loop()
         print(f"Client connected. Total: {len(self.active_connections)}")
 
     def disconnect(self, websocket: WebSocket):
@@ -41,11 +44,22 @@ class WebSocketManager:
         This schedules the async broadcast task on the running event loop.
         """
         try:
+            # 1. Try to use the captured loop (thread-safe way)
+            if self.loop and self.loop.is_running():
+                asyncio.run_coroutine_threadsafe(self.broadcast(message), self.loop)
+                return
+
+            # 2. Try current loop (if we are in async context)
             loop = asyncio.get_running_loop()
             loop.create_task(self.broadcast(message))
+            
         except RuntimeError:
-            # If no loop is running (e.g. testing), just print
-            print(f"Mock Broadcast: {message}")
+            # If no loop is running (e.g. testing or startup), just print
+            # Only print if we actually have connections, otherwise it's just noise during startup
+            if self.active_connections:
+                print(f"Mock Broadcast (Connections active but no loop found?): {message}")
+            else:
+                pass # Silent drop if no one listening
 
 # Singleton instance
 manager = WebSocketManager()

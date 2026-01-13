@@ -12,5 +12,9 @@ class Event:
     payload: Dict[str, Any] = field(default_factory=dict)
     timestamp: float = field(default_factory=time.time)
     
+    @property
+    def type(self):
+        return self.event_type
+
     def __str__(self):
         return f"<Event type={self.event_type} topic={self.topic} ts={self.timestamp}>"

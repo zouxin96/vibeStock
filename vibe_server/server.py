@@ -54,20 +54,39 @@ async def save_layout(layout: List[Dict] = Body(...)):
 
 @app.get("/api/data/files")
 async def list_data_files():
-    """List available data files."""
-    data_dir = os.path.join(os.getcwd(), "data", "daily")
-    if not os.path.exists(data_dir):
+    """List available data files from storage."""
+    base_dir = os.path.join(os.getcwd(), "data", "storage")
+    results = []
+    
+    if not os.path.exists(base_dir):
         return []
-    files = [f for f in os.listdir(data_dir) if f.endswith(".csv")]
-    files.sort(reverse=True) # Newest first
-    return files
+        
+    for root, dirs, files in os.walk(base_dir):
+        for file in files:
+            if file.endswith(".csv"):
+                # Create relative path from data/storage
+                rel_path = os.path.relpath(os.path.join(root, file), base_dir)
+                results.append(rel_path.replace("\\", "/"))
+                
+    results.sort(reverse=True) # Newest first (roughly)
+    return results
 
 @app.get("/api/data/content")
 async def get_data_content(file: str):
     """Get content of a CSV file (top 100 lines)."""
-    file_path = os.path.join(os.getcwd(), "data", "daily", file)
+    # Prevent directory traversal
+    if ".." in file:
+         raise HTTPException(status_code=400, detail="Invalid path")
+
+    file_path = os.path.join(os.getcwd(), "data", "storage", file)
+    
+    # Fallback to old data/daily for backward compatibility if not found in storage
     if not os.path.exists(file_path):
-        raise HTTPException(status_code=404, detail="File not found")
+         old_path = os.path.join(os.getcwd(), "data", "daily", file)
+         if os.path.exists(old_path):
+             file_path = old_path
+         else:
+            raise HTTPException(status_code=404, detail="File not found")
     
     content = []
     try:
@@ -87,100 +106,132 @@ async def get_data_content(file: str):
 async def list_data_sources():
     """Return status of data sources."""
     sources = []
-    data_dir = os.path.join(os.getcwd(), "data", "daily")
+    storage_dir = os.path.join(os.getcwd(), "data", "storage")
     
-    # 1. Tushare Stats
-    ts_files = []
-    if os.path.exists(data_dir):
-        ts_files = [f for f in os.listdir(data_dir) if f.startswith("daily_") and f.endswith(".csv")]
-    
-    # Estimate count from latest file if exists
-    ts_count = 0
-    ts_last_sync = "Never"
-    if ts_files:
-        ts_files.sort(reverse=True)
-        latest = ts_files[0]
-        ts_last_sync = latest.replace("daily_", "").replace(".csv", "") # YYYYMMDD
-        # Formatting to YYYY-MM-DD
-        if len(ts_last_sync) == 8:
-            ts_last_sync = f"{ts_last_sync[:4]}-{ts_last_sync[4:6]}-{ts_last_sync[6:]}"
-        
-        # Read line count of latest file
-        try:
-            with open(os.path.join(data_dir, latest), 'r', encoding='utf-8') as f:
-                ts_count = sum(1 for _ in f) - 1 # Exclude header
-        except:
-            ts_count = -1
+    # Helper to get stats
+    def get_source_stats(subdir_path, prefix=""):
+        full_path = os.path.join(storage_dir, subdir_path)
+        if not os.path.exists(full_path):
+            return 0, "Never", 0
             
+        files = [f for f in os.listdir(full_path) if f.endswith(".csv") and (not prefix or f.startswith(prefix))]
+        if not files:
+            return 0, "Never", 0
+            
+        files.sort(reverse=True)
+        latest = files[0]
+        
+        # Extract date from filename if possible (daily_20240101.csv or concepts_ths_2024-01-01.csv)
+        import re
+        date_match = re.search(r'(\d{8})|(\d{4}-\d{2}-\d{2})', latest)
+        last_sync = date_match.group(0) if date_match else "Unknown"
+        
+        # Count lines
+        try:
+            with open(os.path.join(full_path, latest), 'r', encoding='utf-8') as f:
+                count = sum(1 for _ in f) - 1
+        except:
+            count = -1
+            
+        return max(0, count), last_sync, len(files)
+
+    # 1. Tushare Market (Stock/PostMarket)
+    # Check old data/daily for backward compat or new structure
+    # For now we assume new structure primarily
+    count, last, num_files = get_source_stats(os.path.join("stock", "post_market"), "daily_")
+    
+    # Fallback check for old structure if new is empty
+    if num_files == 0:
+         old_dir = os.path.join(os.getcwd(), "data", "daily")
+         if os.path.exists(old_dir):
+             files = [f for f in os.listdir(old_dir) if f.startswith("daily_")]
+             if files:
+                 files.sort(reverse=True)
+                 count = 0 # Lazy
+                 last = files[0].replace("daily_", "").replace(".csv", "")
+                 num_files = len(files)
+
     sources.append({
         "id": "tushare",
-        "name": "Tushare Pro",
-        "count": max(0, ts_count),
-        "last_sync": ts_last_sync,
-        "files_count": len(ts_files)
+        "name": "Tushare Market",
+        "count": count,
+        "last_sync": last,
+        "files_count": num_files
     })
 
-    # 2. AKShare Stats
-    ak_files = []
-    if os.path.exists(data_dir):
-        ak_files = [f for f in os.listdir(data_dir) if f.startswith("akshare_") and f.endswith(".csv")]
-        
-    ak_count = 0
-    ak_last_sync = "Never"
-    if ak_files:
-        ak_files.sort(reverse=True)
-        latest = ak_files[0]
-        ak_last_sync = latest.replace("akshare_", "").replace(".csv", "")
-        if len(ak_last_sync) == 8:
-            ak_last_sync = f"{ak_last_sync[:4]}-{ak_last_sync[4:6]}-{ak_last_sync[6:]}"
-            
-        try:
-            with open(os.path.join(data_dir, latest), 'r', encoding='utf-8') as f:
-                ak_count = sum(1 for _ in f) - 1
-        except:
-            ak_count = -1
-
+    # 2. AKShare (Stock/PostMarket) - AKShareAdapter writes to stock/post_market now too with akshare_ prefix
+    count, last, num_files = get_source_stats(os.path.join("stock", "post_market"), "akshare_")
     sources.append({
         "id": "akshare",
-        "name": "AKShare (Open Source)",
-        "count": max(0, ak_count),
-        "last_sync": ak_last_sync,
-        "files_count": len(ak_files)
+        "name": "AKShare",
+        "count": count,
+        "last_sync": last,
+        "files_count": num_files
+    })
+    
+    # 3. Tushare Info (Info/PostMarket)
+    count, last, num_files = get_source_stats(os.path.join("info", "post_market"), "")
+    sources.append({
+        "id": "tushare_info",
+        "name": "Tushare Info (Concepts)",
+        "count": count,
+        "last_sync": last,
+        "files_count": num_files
     })
 
     return sources
 
-def _run_manual_sync(source: str):
+def _run_manual_sync(source: str, start_date: str = None, end_date: str = None):
     """Run sync in background."""
-    print(f"Starting sync for {source}...")
+    print(f"Starting sync for {source} (Range: {start_date} to {end_date})...")
     try:
-        if source == "tushare":
-            # Load config to get token
-            config_path = os.path.join("config", "config.yaml")
-            import yaml
+        # Load config to get token
+        config_path = os.path.join("config", "config.yaml")
+        import yaml
+        token = ""
+        if os.path.exists(config_path):
             with open(config_path, 'r', encoding='utf-8') as f:
                 config = yaml.safe_load(f)
-                
             token = config.get("data", {}).get("tushare_token", "")
             
+        if source == "tushare":
             from vibe_data.adapter.tushare_adapter import TushareAdapter
             adapter = TushareAdapter(token=token)
-            adapter.sync_daily_data()
+            adapter.sync_daily_data(start_date=start_date, end_date=end_date)
             
         elif source == "akshare":
             from vibe_data.adapter.akshare_adapter import AKShareAdapter
             adapter = AKShareAdapter()
+            # AKShare adapter currently doesn't support range sync for market snapshot
             adapter.sync_daily_data()
             
+        elif source == "tushare_info":
+            from vibe_data.adapter.tushare_info_adapter import TushareInfoAdapter
+            from vibe_data.provider import DataCategory
+            import datetime
+            
+            adapter = TushareInfoAdapter(token=token)
+            # Sync Concepts
+            adapter.sync_all_concepts(src="ths")
+            # Sync Industries
+            df = adapter.get_industry_list(src="SW2021", level="L1")
+            if not df.empty:
+                path = adapter.get_save_path(DataCategory.INFO, f"industry_sw2021_{datetime.date.today()}.csv")
+                df.to_csv(path, index=False)
+                print(f"Saved SW2021 industries to {path}")
+
         print(f"Manual sync for {source} completed.")
     except Exception as e:
         print(f"Manual sync for {source} failed: {e}")
+        import traceback
+        traceback.print_exc()
 
 @app.post("/api/data/sync")
-async def trigger_sync(background_tasks: BackgroundTasks, source: str = "tushare"):
+async def trigger_sync(background_tasks: BackgroundTasks, source: str = "tushare", start_date: str = None, end_date: str = None):
     """Trigger a manual data sync."""
-    background_tasks.add_task(_run_manual_sync, source)
+    background_tasks.add_task(_run_manual_sync, source, start_date, end_date)
     return {"status": "started", "message": f"Sync for {source} started in background"}
+
 
 
 @app.websocket("/ws")

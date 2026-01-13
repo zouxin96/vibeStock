@@ -44,6 +44,6 @@ class RealtimeMarketWatch(VibeModule):
             # 2. 推送到前端 "watchlist_main" 组件
             if data:
                 self.context.output.dashboard("watchlist_main", data)
-                self.context.logger.info(f"Pushed {len(data)} realtime quotes.")
+                #self.context.logger.info(f"Pushed {len(data)} realtime quotes.")
         else:
             self.context.logger.warning("Current data provider does not support 'get_snapshot'")

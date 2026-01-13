@@ -2175,3 +2175,639 @@
 2026-01-13 16:48:18,657 - vibe - INFO - Pushed 10 realtime quotes.
 2026-01-13 16:48:21,972 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
 2026-01-13 16:48:21,973 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:48:25,385 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:48:25,390 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:48:28,806 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:48:28,808 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:48:32,132 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:48:32,133 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:48:35,400 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:48:35,402 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:48:38,683 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:48:38,685 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:48:41,955 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:48:41,956 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:48:45,243 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:48:45,244 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:48:48,545 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:48:48,547 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:48:51,827 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:48:51,828 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:48:55,077 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:48:55,078 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:48:58,432 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:48:58,434 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:49:01,717 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:49:01,719 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:49:04,972 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:49:04,974 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:49:08,293 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:49:08,295 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:49:11,589 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:49:11,590 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:49:14,883 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:49:14,885 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:49:18,329 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:49:18,330 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:49:21,653 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:49:21,654 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:49:25,006 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:49:25,007 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:49:29,306 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:49:29,308 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:49:32,574 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:49:32,576 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:49:35,972 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:49:35,974 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:49:39,294 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:49:39,295 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:49:42,584 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:49:42,585 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:49:45,877 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:49:45,878 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:49:49,185 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:49:49,186 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:49:52,460 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:49:52,462 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:49:55,746 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:49:55,748 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:49:59,047 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:49:59,049 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:50:01,455 - vibe - INFO - Registered interval job 60s for MarketDataRecorder
+2026-01-13 16:50:01,456 - vibe - INFO - Registered interval job 3s for RealtimeMarketWatch
+2026-01-13 16:50:01,457 - vibe - INFO - Subscribed TushareExtraModule to 'CMD_FETCH_EXTRA'
+2026-01-13 16:50:01,460 - vibe - INFO - Registered interval job 60s for TushareSyncModule
+2026-01-13 16:50:01,865 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:50:01,867 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:50:05,152 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:50:05,154 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:50:08,562 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:50:08,563 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:50:10,937 - vibe - INFO - Registered interval job 60s for MarketDataRecorder
+2026-01-13 16:50:10,939 - vibe - INFO - Registered interval job 3s for RealtimeMarketWatch
+2026-01-13 16:50:10,940 - vibe - INFO - Subscribed TushareExtraModule to 'CMD_FETCH_EXTRA'
+2026-01-13 16:50:10,943 - vibe - INFO - Registered interval job 60s for TushareSyncModule
+2026-01-13 16:50:11,214 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:50:11,215 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:50:14,653 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:50:14,654 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:50:15,174 - vibe.data.akshare - ERROR - AKShare is not installed. Please run `pip install akshare`.
+2026-01-13 16:50:17,946 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:50:17,947 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:50:21,269 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:50:21,270 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:50:24,563 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:50:24,565 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:50:27,942 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:50:27,944 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:50:31,250 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:50:31,251 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:50:34,562 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:50:34,564 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:50:37,845 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:50:37,846 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:50:41,151 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:50:41,153 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:50:44,466 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:50:44,468 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:50:47,753 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:50:47,754 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:50:51,118 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:50:51,120 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:50:54,545 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:50:54,547 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:50:58,168 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:50:58,169 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:51:01,433 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:51:01,435 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:51:05,202 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:51:05,204 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:51:08,585 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:51:08,586 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:51:12,161 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:51:12,163 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:51:15,473 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:51:15,474 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:51:18,808 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:51:18,809 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:51:22,082 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:51:22,083 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:51:25,362 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:51:25,364 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:51:28,665 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:51:28,667 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:51:31,990 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:51:31,991 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:51:35,344 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:51:35,346 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:51:38,744 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:51:38,746 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:51:42,040 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:51:42,041 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:51:45,352 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:51:45,353 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:51:48,626 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:51:48,628 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:51:51,945 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:51:51,947 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:51:55,669 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:51:55,670 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:51:59,144 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:51:59,145 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:52:02,428 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:52:02,429 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:52:05,700 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:52:05,701 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:52:08,971 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:52:08,972 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:52:12,262 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:52:12,264 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:52:15,570 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:52:15,571 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:52:18,866 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:52:18,868 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:52:22,180 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:52:22,181 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:52:25,533 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:52:25,535 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:52:28,894 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:52:28,895 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:52:32,191 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:52:32,193 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:52:35,469 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:52:35,470 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:52:38,762 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:52:38,764 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:52:42,095 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:52:42,096 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:52:45,408 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:52:45,410 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:52:48,747 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:52:48,749 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:52:52,031 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:52:52,032 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:52:55,741 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:52:55,742 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:52:59,052 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:52:59,053 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:53:02,390 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:53:02,393 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:53:05,671 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:53:05,673 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:53:08,953 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:53:08,955 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:53:12,316 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:53:12,318 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:53:15,595 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:53:15,597 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:53:18,900 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:53:18,902 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:53:22,276 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:53:22,278 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:53:25,564 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:53:25,565 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:53:28,911 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:53:28,913 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:53:32,277 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:53:32,278 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:53:35,627 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:53:35,629 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:53:38,918 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:53:38,919 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:53:42,451 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:53:42,453 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:53:45,726 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:53:45,728 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:53:48,979 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:53:48,980 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:53:52,251 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:53:52,253 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:53:55,532 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:53:55,533 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:53:58,837 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:53:58,839 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:54:02,161 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:54:02,162 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:54:05,450 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:54:05,451 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:54:08,742 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:54:08,743 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:54:12,039 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:54:12,041 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:54:15,292 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:54:15,294 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:54:18,570 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:54:18,571 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:54:21,857 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:54:21,859 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:54:25,217 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:54:25,218 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:54:28,494 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:54:28,496 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:54:31,749 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:54:31,751 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:54:35,035 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:54:35,036 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:54:38,338 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:54:38,340 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:54:41,640 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:54:41,643 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:54:44,916 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:54:44,918 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:54:48,188 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:54:48,189 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:54:51,591 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:54:51,592 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:54:54,999 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:54:55,000 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:54:58,271 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:54:58,273 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:55:01,562 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:55:01,563 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:55:04,851 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:55:04,852 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:55:08,119 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:55:08,121 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:55:11,405 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:55:11,407 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:55:14,703 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:55:14,705 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:55:18,000 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:55:18,002 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:55:21,272 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:55:21,274 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:55:24,541 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:55:24,543 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:55:27,795 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:55:27,796 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:55:31,072 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:55:31,074 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:55:34,426 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:55:34,427 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:55:37,716 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:55:37,717 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:55:41,039 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:55:41,041 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:55:44,328 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:55:44,329 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:55:47,618 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:55:47,620 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:55:50,911 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:55:50,913 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:55:54,173 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:55:54,175 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:55:57,444 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:55:57,445 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:56:00,714 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:56:00,715 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:56:04,002 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:56:04,004 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:56:07,317 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:56:07,318 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:56:10,614 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:56:10,616 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:56:13,922 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:56:13,923 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:56:17,196 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:56:17,197 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:56:20,708 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:56:20,709 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:56:23,990 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:56:23,991 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:56:27,371 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:56:27,372 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:56:30,652 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:56:30,654 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:56:31,012 - vibe - INFO - Deregistering module resources for: TushareExtraModule
+2026-01-13 16:56:31,015 - vibe - INFO - Subscribed TushareExtraModule to 'CMD_FETCH_EXTRA'
+2026-01-13 16:56:33,936 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:56:33,937 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:56:37,223 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:56:37,224 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:56:40,509 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:56:40,511 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:56:43,776 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:56:43,777 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:59:22,557 - vibe - INFO - Registered interval job 60s for MarketDataRecorder
+2026-01-13 16:59:22,559 - vibe - INFO - Registered interval job 3s for RealtimeMarketWatch
+2026-01-13 16:59:22,562 - vibe - INFO - Subscribed TushareExtraModule to 'CMD_FETCH_EXTRA'
+2026-01-13 16:59:22,562 - vibe - INFO - Registered interval job 60s for TushareSyncModule
+2026-01-13 16:59:23,151 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:59:23,152 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:59:26,460 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:59:26,461 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:59:28,409 - vibe.data.tushare - INFO - Tushare Pro API initialized.
+2026-01-13 16:59:28,409 - vibe.data.tushare - INFO - Starting Tushare sync for 20260113...
+2026-01-13 16:59:29,455 - vibe.data.tushare - INFO - Successfully synced 5452 records to data\daily\daily_20260113.csv
+2026-01-13 16:59:29,756 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:59:29,758 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:59:32,312 - vibe.data.akshare - INFO - Starting AKShare sync for 20260113...
+2026-01-13 16:59:33,048 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:59:33,049 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:59:36,311 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:59:36,313 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:59:39,615 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:59:39,618 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:59:42,909 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:59:42,910 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:59:46,228 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:59:46,229 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:59:49,511 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:59:49,512 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:59:52,834 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:59:52,835 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:59:56,123 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:59:56,125 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 16:59:59,415 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 16:59:59,416 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:00:02,666 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:00:02,667 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:00:05,951 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:00:05,952 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:00:09,339 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:00:09,340 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:00:12,621 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:00:12,622 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:00:15,921 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:00:15,923 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:00:19,232 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:00:19,233 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:00:22,528 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:00:22,530 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:00:25,824 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:00:25,825 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:00:29,110 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:00:29,111 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:00:32,359 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:00:32,361 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:00:35,670 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:00:35,672 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:00:39,244 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:00:39,245 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:00:42,531 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:00:42,533 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:00:45,818 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:00:45,820 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:00:49,088 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:00:49,089 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:00:52,384 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:00:52,386 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:00:55,656 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:00:57,164 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:01:00,439 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:01:00,440 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:01:03,741 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:01:03,742 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:01:07,070 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:01:07,071 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:01:10,362 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:01:10,363 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:01:13,673 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:01:13,674 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:01:16,956 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:01:16,957 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:01:20,231 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:01:20,233 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:01:23,513 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:01:23,514 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:01:26,790 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:01:26,792 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:01:30,064 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:01:30,066 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:01:33,347 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:01:33,349 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:01:36,641 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:01:36,642 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:01:39,919 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:01:39,921 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:01:43,813 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:01:43,814 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:01:47,113 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:01:47,114 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:01:50,426 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:01:50,428 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:01:53,847 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:01:53,849 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:01:57,595 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:01:57,597 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:02:00,876 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:02:00,877 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:02:04,157 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:02:04,159 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:02:04,580 - vibe.data.akshare - ERROR - Error during AKShare sync: name 'os' is not defined
+2026-01-13 17:02:07,454 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:02:07,458 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:02:10,738 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:02:10,739 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:02:13,993 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:02:13,995 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:02:17,259 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:02:17,260 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:02:18,619 - vibe.data.akshare - INFO - Starting AKShare sync for 20260113...
+2026-01-13 17:02:20,548 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:02:20,550 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:02:23,839 - vibe.data.sina - INFO - Successfully fetched 10 stocks from Sina.
+2026-01-13 17:02:23,841 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:10:02,955 - vibe - INFO - Registered interval job 60s for MarketDataRecorder
+2026-01-13 17:10:02,957 - vibe - INFO - Registered interval job 3s for RealtimeMarketWatch
+2026-01-13 17:10:02,959 - vibe - INFO - Subscribed TushareExtraModule to 'CMD_FETCH_EXTRA'
+2026-01-13 17:10:02,960 - vibe - INFO - Registered interval job 60s for TushareSyncModule
+2026-01-13 17:10:03,738 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:10:07,152 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:10:10,635 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:10:12,086 - vibe.data.akshare - INFO - Starting AKShare sync for 20260113...
+2026-01-13 17:10:13,913 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:10:17,237 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:10:20,512 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:10:23,780 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:10:27,172 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:10:30,435 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:10:33,738 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:10:37,040 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:10:40,299 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:10:43,595 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:10:46,870 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:10:50,135 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:10:53,429 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:10:56,796 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:11:00,097 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:11:03,401 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:11:06,717 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:11:09,963 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:11:13,236 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:11:16,523 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:11:19,815 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:11:23,094 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:11:26,379 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:11:29,676 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:11:32,961 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:11:36,225 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:11:39,486 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:11:42,775 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:11:46,075 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:11:49,506 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:11:52,771 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:11:56,380 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:11:59,671 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:12:02,931 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:12:06,228 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:12:09,534 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:12:12,829 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:12:16,246 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:12:19,528 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:12:22,801 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:12:26,055 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:12:29,366 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:12:32,785 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:12:35,598 - vibe.data.akshare - ERROR - Error during AKShare sync: name 'os' is not defined
+2026-01-13 17:12:36,237 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:12:39,538 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:12:42,800 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:12:46,103 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:12:49,505 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:12:52,784 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:12:56,069 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:15:25,368 - vibe - INFO - Registered interval job 60s for MarketDataRecorder
+2026-01-13 17:15:25,370 - vibe - INFO - Registered interval job 3s for RealtimeMarketWatch
+2026-01-13 17:15:25,372 - vibe - INFO - Subscribed TushareExtraModule to 'CMD_FETCH_EXTRA'
+2026-01-13 17:15:25,373 - vibe - INFO - Registered interval job 60s for TushareSyncModule
+2026-01-13 17:15:25,623 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:15:28,914 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:15:32,203 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:15:40,245 - vibe.data.sinaliveadapter - ERROR - Sina Batch error: HTTPConnectionPool(host='127.0.0.1', port=1082): Read timed out. (read timeout=5)
+2026-01-13 17:15:46,705 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:15:49,967 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:15:53,425 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:15:56,703 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:16:04,708 - vibe.data.sinaliveadapter - ERROR - Sina Batch error: HTTPConnectionPool(host='127.0.0.1', port=1082): Read timed out. (read timeout=5)
+2026-01-13 17:16:08,011 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:16:11,371 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:16:14,655 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:16:17,969 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:16:21,253 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:16:24,541 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:16:27,813 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:16:31,225 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:16:34,478 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:16:37,827 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:16:41,094 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:16:44,394 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:16:47,664 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:16:50,947 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:16:54,230 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:16:57,761 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:17:01,023 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:17:04,293 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:17:07,578 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:17:10,841 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:19:02,052 - vibe - INFO - Registered interval job 60s for MarketDataRecorder
+2026-01-13 17:19:02,054 - vibe - INFO - Registered interval job 3s for RealtimeMarketWatch
+2026-01-13 17:19:02,056 - vibe - INFO - Subscribed TushareExtraModule to 'CMD_FETCH_EXTRA'
+2026-01-13 17:19:02,058 - vibe - INFO - Registered interval job 60s for TushareSyncModule
+2026-01-13 17:19:02,353 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:19:05,627 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:19:09,020 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:19:12,301 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:19:15,630 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:19:18,943 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:19:22,244 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:19:25,545 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:20:41,870 - vibe - INFO - Registered interval job 60s for MarketDataRecorder
+2026-01-13 17:20:41,871 - vibe - INFO - Registered interval job 3s for RealtimeMarketWatch
+2026-01-13 17:20:41,874 - vibe - INFO - Subscribed TushareExtraModule to 'CMD_FETCH_EXTRA'
+2026-01-13 17:20:41,875 - vibe - INFO - Registered interval job 60s for TushareSyncModule
+2026-01-13 17:20:42,144 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:20:45,411 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:20:47,459 - vibe.data.akshare - INFO - Starting AKShare sync for 20260113...
+2026-01-13 17:20:48,688 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:20:51,993 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:20:55,269 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:20:58,534 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:21:01,810 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:21:05,252 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:21:08,538 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:21:11,853 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:21:15,122 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:21:18,406 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:21:21,812 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:21:25,100 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:21:28,400 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:21:31,693 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:21:35,054 - vibe - INFO - Pushed 10 realtime quotes.
+2026-01-13 17:21:36,886 - vibe - INFO - Deregistering module resources for: RealtimeMarketWatch
+2026-01-13 17:21:36,890 - vibe - INFO - Registered interval job 3s for RealtimeMarketWatch
+2026-01-13 17:23:40,875 - vibe.data.akshare - ERROR - Error during AKShare sync: name 'os' is not defined
+2026-01-13 17:28:59,169 - vibe - INFO - Registered interval job 60s for MarketDataRecorder
+2026-01-13 17:28:59,170 - vibe - INFO - Registered interval job 3s for RealtimeMarketWatch
+2026-01-13 17:28:59,173 - vibe - INFO - Subscribed TushareExtraModule to 'CMD_FETCH_EXTRA'
+2026-01-13 17:28:59,175 - vibe - INFO - Registered interval job 60s for TushareSyncModule
+2026-01-13 17:29:12,179 - vibe.data.akshareadapter - INFO - Starting AKShare sync for 20260113...
+2026-01-13 17:29:59,465 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-13 17:30:59,755 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-13 17:31:46,681 - vibe.data.akshareadapter - INFO - Successfully synced 5797 records from AKShare to data\storage\stock\post_market\akshare_20260113.csv
+2026-01-13 17:32:00,031 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-13 17:32:51,223 - vibe.data.tushareadapter - INFO - Tushare Pro API initialized.
+2026-01-13 17:32:51,224 - vibe.data.tushareadapter - INFO - Starting Tushare sync for 20260113...
+2026-01-13 17:33:00,327 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-13 17:33:22,935 - vibe.data.tushareadapter - ERROR - Error during Tushare sync: HTTPConnectionPool(host='127.0.0.1', port=1082): Read timed out. (read timeout=30)
+2026-01-13 17:37:52,133 - vibe - INFO - Registered interval job 3600s for InfoSyncModule
+2026-01-13 17:37:52,133 - vibe.data.tushareinfoadapter - INFO - Tushare Pro API (Info) initialized.
+2026-01-13 17:37:52,134 - vibe - INFO - InfoSyncModule initialized with TushareInfoAdapter.
+2026-01-13 17:37:52,134 - vibe - INFO - Registered interval job 60s for MarketDataRecorder
+2026-01-13 17:37:52,136 - vibe - INFO - Registered interval job 3s for RealtimeMarketWatch
+2026-01-13 17:37:52,139 - vibe - INFO - Subscribed TushareExtraModule to 'CMD_FETCH_EXTRA'
+2026-01-13 17:37:52,143 - vibe - INFO - Registered interval job 60s for TushareSyncModule
+2026-01-13 17:41:40,790 - vibe - INFO - Registered interval job 3600s for InfoSyncModule
+2026-01-13 17:41:40,790 - vibe.data.tushareinfoadapter - INFO - Tushare Pro API (Info) initialized.
+2026-01-13 17:41:40,790 - vibe - INFO - InfoSyncModule initialized with TushareInfoAdapter.
+2026-01-13 17:41:40,791 - vibe - INFO - Registered interval job 60s for MarketDataRecorder
+2026-01-13 17:41:40,792 - vibe - INFO - Registered interval job 3s for RealtimeMarketWatch
+2026-01-13 17:41:40,795 - vibe - INFO - Subscribed TushareExtraModule to 'CMD_FETCH_EXTRA'
+2026-01-13 17:41:40,796 - vibe - INFO - Registered interval job 60s for TushareSyncModule
+2026-01-13 17:41:56,441 - vibe.data.tushareinfoadapter - INFO - Tushare Pro API (Info) initialized.
+2026-01-13 17:41:56,441 - vibe.data.tushareinfoadapter - INFO - Syncing ths concepts...
+2026-01-13 17:41:57,433 - vibe.data.tushareinfoadapter - ERROR - Failed to fetch concept list (ths): 抱歉，您没有接口访问权限，权限的具体详情访问：https://tushare.pro/document/1?doc_id=108。
+2026-01-13 17:41:57,434 - vibe.data.tushareinfoadapter - WARNING - No concepts found for ths
+2026-01-13 17:41:58,117 - vibe.data.tushareinfoadapter - ERROR - Failed to fetch industry list: 抱歉，您没有接口访问权限，权限的具体详情访问：https://tushare.pro/document/1?doc_id=108。
+2026-01-13 17:42:41,057 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-13 17:43:28,327 - vibe.data.tushareadapter - INFO - Tushare Pro API initialized.
+2026-01-13 17:43:28,327 - vibe.data.tushareadapter - INFO - Starting Tushare sync for 20260113...
+2026-01-13 17:43:29,314 - vibe.data.tushareadapter - INFO - Successfully synced 5452 records to data\storage\stock\post_market\daily_20260113.csv
+2026-01-13 17:43:41,440 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-13 17:44:41,755 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-13 17:45:42,080 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-13 17:46:42,362 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-13 17:47:42,632 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-13 17:48:42,907 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-13 17:49:43,238 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-13 17:50:43,538 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-13 17:51:43,833 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-13 17:52:45,131 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-13 17:53:45,410 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-13 17:54:45,709 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-13 17:55:46,172 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-13 17:56:25,219 - vibe - INFO - Registered interval job 3600s for InfoSyncModule
+2026-01-13 17:56:25,219 - vibe.data.tushareinfoadapter - INFO - Tushare Pro API (Info) initialized.
+2026-01-13 17:56:25,219 - vibe - INFO - InfoSyncModule initialized with TushareInfoAdapter.
+2026-01-13 17:56:25,220 - vibe - INFO - Registered interval job 60s for MarketDataRecorder
+2026-01-13 17:56:25,221 - vibe - INFO - Registered interval job 3s for RealtimeMarketWatch
+2026-01-13 17:56:25,223 - vibe - INFO - Subscribed TushareExtraModule to 'CMD_FETCH_EXTRA'
+2026-01-13 17:56:25,225 - vibe - INFO - Registered interval job 60s for TushareSyncModule
+2026-01-13 17:57:11,964 - vibe.data.akshareadapter - INFO - Starting AKShare sync for 20260113...
+2026-01-13 17:57:21,378 - vibe.data.tushareadapter - INFO - Tushare Pro API initialized.
+2026-01-13 17:57:21,409 - vibe.data.tushareadapter - INFO - Starting Tushare sync for 2 days...
+2026-01-13 17:57:21,410 - vibe.data.tushareadapter - INFO - Fetching Tushare daily for 20260112...
+2026-01-13 17:57:22,866 - vibe.data.tushareadapter - INFO - Successfully synced 5459 records to data\storage\stock\post_market\daily_20260112.csv
+2026-01-13 17:57:22,867 - vibe.data.tushareadapter - INFO - Fetching Tushare daily for 20260113...
+2026-01-13 17:57:24,328 - vibe.data.tushareadapter - INFO - Successfully synced 5452 records to data\storage\stock\post_market\daily_20260113.csv
+2026-01-13 17:57:24,328 - vibe.data.tushareadapter - INFO - Tushare sync batch completed.
+2026-01-13 17:57:25,485 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-13 17:58:25,771 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-13 17:59:26,066 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-13 18:00:13,961 - vibe.data.akshareadapter - INFO - Successfully synced 5797 records from AKShare to data\storage\stock\post_market\akshare_20260113.csv
+2026-01-13 18:00:26,620 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-13 18:01:26,966 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-13 18:02:27,229 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-13 18:03:27,520 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-13 18:04:27,836 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-13 18:05:30,200 - vibe - INFO - Recorded 3 market data snapshots.

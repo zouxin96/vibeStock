@@ -38,8 +38,8 @@ class MarketDataRecorder(VibeModule):
                     # Enrich with timestamp
                     item['timestamp'] = timestamp
                     # Save using storage service
-                    # Category: market_snapshot
-                    self.context.storage.save_record("market_snapshot", item)
+                    # Category: stock/realtime
+                    self.context.storage.save_record("stock/realtime", item)
                     count += 1
                 
                 self.context.logger.info(f"Recorded {count} market data snapshots.")

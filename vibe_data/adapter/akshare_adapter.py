@@ -1,8 +1,9 @@
 import pandas as pd
 import logging
 import datetime
+import os
 from typing import Optional, List
-from ..provider import IDataProvider
+from ..provider import BaseFetcher, FetcherType, DataCategory, DataDimension
 
 # Try to import akshare, but don't crash if missing (allow safe failure)
 try:
@@ -10,21 +11,28 @@ try:
 except ImportError:
     ak = None
 
-logger = logging.getLogger("vibe.data.akshare")
-
-class AKShareAdapter(IDataProvider):
+class AKShareAdapter(BaseFetcher):
     """
     Data Provider using AKShare (Open Source Financial Data).
     https://github.com/akfamily/akshare
     """
     
     def __init__(self, **kwargs):
+        super().__init__(FetcherType.POST_MARKET)
         if ak is None:
-            logger.error("AKShare is not installed. Please run `pip install akshare`.")
+            self.log(logging.ERROR, "AKShare is not installed. Please run `pip install akshare`.")
     
     def _ensure_akshare(self):
         if ak is None:
             raise ImportError("AKShare module not found. Please install it via pip.")
+
+    @property
+    def data_dimension(self) -> DataDimension:
+        return DataDimension.DATE
+
+    @property
+    def archive_filename_template(self) -> str:
+        return "akshare_{date}.csv"
 
     def get_price(self, code: str, date: str = None) -> Optional[float]:
         """
@@ -48,7 +56,7 @@ class AKShareAdapter(IDataProvider):
             if snapshot:
                 return snapshot[0].get('price')
         except Exception as e:
-            logger.error(f"AKShare get_price error: {e}")
+            self.log(logging.ERROR, f"AKShare get_price error: {e}")
         return None
 
     def get_snapshot(self, codes: List[str]) -> List[dict]:
@@ -94,7 +102,7 @@ class AKShareAdapter(IDataProvider):
             return results
             
         except Exception as e:
-            logger.error(f"AKShare get_snapshot error: {e}")
+            self.log(logging.ERROR, f"AKShare get_snapshot error: {e}")
             return []
 
     def get_history(self, code: str, start_date: str, end_date: str) -> pd.DataFrame:
@@ -128,7 +136,7 @@ class AKShareAdapter(IDataProvider):
             return df[list(rename_map.values())]
             
         except Exception as e:
-            logger.error(f"AKShare get_history error: {e}")
+            self.log(logging.ERROR, f"AKShare get_history error: {e}")
             return pd.DataFrame()
 
     def sync_daily_data(self):
@@ -137,27 +145,25 @@ class AKShareAdapter(IDataProvider):
         """
         self._ensure_akshare()
         today = datetime.datetime.now().strftime("%Y%m%d")
-        logger.info(f"Starting AKShare sync for {today}...")
+        self.log(logging.INFO, f"Starting AKShare sync for {today}...")
         
         try:
             # Fetch spot data for all A-shares
             df = ak.stock_zh_a_spot_em()
             
             if df.empty:
-                logger.warning(f"No data found from AKShare for {today}.")
+                self.log(logging.WARNING, f"No data found from AKShare for {today}.")
                 return
 
-            # Ensure directory exists
-            save_dir = os.path.join("data", "daily")
-            if not os.path.exists(save_dir):
-                os.makedirs(save_dir)
-                
-            filename = os.path.join(save_dir, f"akshare_{today}.csv")
+            # Use new storage path logic with filename template
+            fname = self.get_archive_filename(date=today)
+            filename = self.get_save_path(DataCategory.STOCK, fname)
+            
             df.to_csv(filename, index=False)
-            logger.info(f"Successfully synced {len(df)} records from AKShare to {filename}")
+            self.log(logging.INFO, f"Successfully synced {len(df)} records from AKShare to {filename}")
             
         except Exception as e:
-            logger.error(f"Error during AKShare sync: {e}")
+            self.log(logging.ERROR, f"Error during AKShare sync: {e}")
 
     def get_table(self, table_name: str, date: str = None) -> pd.DataFrame:
         """
@@ -177,8 +183,8 @@ class AKShareAdapter(IDataProvider):
                 else:
                     return func()
             else:
-                logger.warning(f"AKShare does not have function '{table_name}'")
+                self.log(logging.WARNING, f"AKShare does not have function '{table_name}'")
         except Exception as e:
-            logger.error(f"AKShare get_table '{table_name}' error: {e}")
+            self.log(logging.ERROR, f"AKShare get_table '{table_name}' error: {e}")
         
         return pd.DataFrame()

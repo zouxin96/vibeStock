@@ -33,7 +33,7 @@ class DataFactory:
         # Here we do some basic parameter injection
         if provider_type == "local":
             return provider_cls(root_path="tushare")
-        elif provider_type == "tushare":
+        elif provider_type == "tushare" or provider_type == "tushare_info":
             token = config.get("data", {}).get("tushare_token", "")
             return provider_cls(token=token)
         elif provider_type == "akshare":
@@ -47,8 +47,10 @@ from .adapter.local_adapter import LocalFileAdapter
 from .adapter.tushare_adapter import TushareAdapter
 from .adapter.sina_adapter import SinaLiveAdapter
 from .adapter.akshare_adapter import AKShareAdapter
+from .adapter.tushare_info_adapter import TushareInfoAdapter
 
 DataFactory.register("local", LocalFileAdapter)
 DataFactory.register("tushare", TushareAdapter)
 DataFactory.register("sina", SinaLiveAdapter)
 DataFactory.register("akshare", AKShareAdapter)
+DataFactory.register("tushare_info", TushareInfoAdapter)

@@ -2,17 +2,16 @@ import requests
 import logging
 from typing import Optional
 import pandas as pd
-from ..provider import IDataProvider
+from ..provider import BaseFetcher, FetcherType
 
-logger = logging.getLogger("vibe.data.sina")
-
-class SinaLiveAdapter(IDataProvider):
+class SinaLiveAdapter(BaseFetcher):
     """
     Fetches realtime data from Sina Finance (Free, No Token).
     Ideal for testing during trading hours.
     """
     
     def __init__(self, **kwargs):
+        super().__init__(FetcherType.REALTIME)
         self.headers = {
             "Referer": "https://finance.sina.com.cn",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
@@ -32,18 +31,18 @@ class SinaLiveAdapter(IDataProvider):
         
         results = []
         try:
-            logger.debug(f"Fetching Sina data from: {url}")
+            # self.log(logging.DEBUG, f"Fetching Sina data from: {url}")
             resp = requests.get(url, headers=self.headers, timeout=5)
             
             if resp.status_code != 200:
-                logger.error(f"Sina API returned status code {resp.status_code}")
+                self.log(logging.ERROR, f"Sina API returned status code {resp.status_code}")
                 return []
 
             # Force GBK encoding for Sina
             resp.encoding = 'gbk'
             content = resp.text
             if not content or len(content) < 50:
-                logger.warning(f"Sina API returned empty or short response: {content}")
+                self.log(logging.WARNING, f"Sina API returned empty or short response: {content}")
                 return []
 
             lines = content.split('\n')
@@ -56,7 +55,7 @@ class SinaLiveAdapter(IDataProvider):
                     data_str = line.split('="')[1].strip('";')
                     
                     if not data_str:
-                        logger.debug(f"No data for code {raw_code}")
+                        self.log(logging.DEBUG, f"No data for code {raw_code}")
                         continue
 
                     parts = data_str.split(',')
@@ -77,11 +76,11 @@ class SinaLiveAdapter(IDataProvider):
                             "vol": float(parts[8])
                         })
                 except Exception as line_err:
-                    logger.error(f"Error parsing line: {line[:50]}... Error: {line_err}")
+                    self.log(logging.ERROR, f"Error parsing line: {line[:50]}... Error: {line_err}")
             
-            logger.info(f"Successfully fetched {len(results)} stocks from Sina.")
+            # self.log(logging.INFO, f"Successfully fetched {len(results)} stocks from Sina.")
         except Exception as e:
-            logger.error(f"Sina Batch error: {str(e)}")
+            self.log(logging.ERROR, f"Sina Batch error: {str(e)}")
             
         return results
 

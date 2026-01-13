@@ -136,7 +136,13 @@
             <div class="bg-slate-800 p-6 rounded-lg w-3/4 h-3/4 flex flex-col shadow-xl border border-slate-600">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-xl font-bold">📂 Data Manager</h2>
-                    <div class="flex gap-2">
+                    <div class="flex gap-2 items-center">
+                         <div class="flex items-center gap-1 bg-slate-700/50 p-1 rounded">
+                            <span class="text-xs text-slate-400 pl-1">Range:</span>
+                            <input type="date" v-model="startDate" class="bg-slate-900 border border-slate-600 rounded px-2 py-1 text-xs text-white">
+                            <span class="text-slate-500">-</span>
+                            <input type="date" v-model="endDate" class="bg-slate-900 border border-slate-600 rounded px-2 py-1 text-xs text-white">
+                         </div>
                          <button @click="showDataModal=false" class="px-4 py-2 bg-slate-600 rounded hover:bg-slate-500 text-sm">Close</button>
                     </div>
                 </div>
@@ -150,7 +156,7 @@
                                 <div class="flex justify-between items-start mb-3">
                                     <div>
                                         <div class="font-bold text-lg text-white">{{ source.name }}</div>
-                                        <div class="text-xs text-slate-500 uppercase font-semibold mt-1">Daily Data</div>
+                                        <div class="text-xs text-slate-500 uppercase font-semibold mt-1">Data Status</div>
                                     </div>
                                     <button @click="triggerSync(source.id)" :disabled="syncing[source.id]" 
                                         :class="['px-3 py-1 rounded text-xs font-bold flex items-center gap-1', syncing[source.id] ? 'bg-slate-600 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-500']">
@@ -181,7 +187,7 @@
                              <button v-for="file in dataFiles" :key="file" 
                                 @click="loadFileContent(file)"
                                 :class="['px-3 py-1 rounded text-xs border transition-colors', currentFileName === file ? 'bg-emerald-900 border-emerald-500 text-emerald-100' : 'bg-slate-800 border-slate-700 text-slate-400 hover:bg-slate-700']">
-                                {{ file }}
+                                {{ file.split('/').pop() }}
                             </button>
                         </div>
                         
@@ -240,6 +246,8 @@
                 
                 const dataSources = ref([]);
                 const syncing = ref({}); // Track sync status per source
+                const startDate = ref('');
+                const endDate = ref('');
                 
                 const dataFiles = ref([]);
                 const currentFileName = ref('');
@@ -254,6 +262,8 @@
                 const toggleDataModal = async () => {
                     showDataModal.value = !showDataModal.value;
                     if (showDataModal.value) {
+                        // Default to today if empty? Or leave empty for single day default.
+                        // Let's leave empty to imply "Auto/Today".
                         await loadDataSources();
                         await loadDataFiles();
                     }
@@ -296,7 +306,11 @@
                     addLog(`Starting sync for ${sourceId}...`);
                     
                     try {
-                        await fetch(`/api/data/sync?source=${sourceId}`, { method: 'POST' });
+                        let url = `/api/data/sync?source=${sourceId}`;
+                        if(startDate.value) url += `&start_date=${startDate.value.replace(/-/g, '')}`;
+                        if(endDate.value) url += `&end_date=${endDate.value.replace(/-/g, '')}`;
+                        
+                        await fetch(url, { method: 'POST' });
                         addLog(`Sync command for ${sourceId} sent.`);
                         
                         // Poll for update or just wait a bit then refresh
@@ -499,7 +513,7 @@
                     // Data Modal
                     showDataModal, toggleDataModal, dataFiles, 
                     currentFileName, currentFileContent, loadFileContent, triggerSync,
-                    dataSources, syncing
+                    dataSources, syncing, startDate, endDate
                 };
             }
         }).mount('#app');
