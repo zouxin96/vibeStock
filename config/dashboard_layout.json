@@ -1,0 +1,20 @@
+[
+  {
+    "id": "watchlist",
+    "title": "\ud83d\udc40 Watchlist Monitor",
+    "type": "watchlist",
+    "colSpan": "col-span-1 md:col-span-2 lg:col-span-1"
+  },
+  {
+    "id": "chart",
+    "title": "\ud83d\udcc8 Market Index (SH000001)",
+    "type": "chart",
+    "colSpan": "col-span-1 md:col-span-2"
+  },
+  {
+    "id": "logs",
+    "title": "System Logs",
+    "type": "logs",
+    "colSpan": "col-span-3"
+  }
+]
