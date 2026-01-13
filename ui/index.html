@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vibeStock Dashboard</title>
+    <!-- Vue 3 -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- ECharts -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- SortableJS -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <style>
+        body { background-color: #0f172a; color: #e2e8f0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .widget-card { background-color: #1e293b; border-radius: 0.5rem; padding: 1rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); height: 100%; }
+        .top-bar { transition: transform 0.3s ease; }
+        .top-bar.hidden-bar { transform: translateY(-100%); }
+        .sortable-ghost { opacity: 0.5; background: #334155; }
+        .drag-handle { cursor: grab; }
+        .drag-handle:active { cursor: grabbing; }
+    </style>
+</head>
+<body>
+    <div id="app" class="min-h-screen flex flex-col">
+        
+        <!-- Top Toolbar -->
+        <header :class="['top-bar fixed w-full top-0 left-0 z-50 bg-slate-800 border-b border-slate-700 px-4 py-2 flex justify-between items-center', {'hidden-bar': !showToolbar && !isEditMode}]" @mouseenter="showToolbar=true">
+            <div class="flex items-center gap-4">
+                <span class="font-bold text-xl text-emerald-400">vibeStock</span>
+                
+                <!-- System Status Indicators -->
+                <div class="flex items-center gap-2 text-xs text-slate-400 bg-slate-900 px-3 py-1 rounded">
+                    <span :class="['w-2 h-2 rounded-full', dataStatus.watchlist ? 'bg-green-500' : 'bg-red-500']"></span>
+                    <span>Data: {{ dataStatus.lastUpdate || 'Waiting...' }}</span>
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <button @click="toggleEditMode" :class="['p-2 rounded text-slate-300 text-sm font-bold', isEditMode ? 'bg-indigo-600 hover:bg-indigo-500' : 'hover:bg-slate-700']">
+                    {{ isEditMode ? '💾 Save Layout' : '✏️ Edit Layout' }}
+                </button>
+                <button @click="toggleSettings" class="p-2 hover:bg-slate-700 rounded text-slate-300">
+                    ⚙️ Settings
+                </button>
+            </div>
+        </header>
+
+        <!-- Toggle Button (Visible when toolbar hidden) -->
+        <div v-if="!showToolbar && !isEditMode" class="fixed top-0 left-1/2 transform -translate-x-1/2 z-40">
+             <button @click="showToolbar=true" class="bg-slate-800 text-xs px-4 py-1 rounded-b-lg opacity-50 hover:opacity-100">▼</button>
+        </div>
+
+        <!-- Main Content -->
+        <main class="flex-grow pt-16 p-6">
+            <!-- Dynamic Grid -->
+            <div ref="gridContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <div v-for="widget in widgets" :key="widget.id" :class="['widget-wrapper', widget.colSpan]" :data-id="widget.id">
+                    <div class="widget-card relative group">
+                        <!-- Drag Handle -->
+                        <div v-if="isEditMode" class="drag-handle absolute top-2 right-2 p-1 bg-slate-700 rounded text-slate-300 z-10 hover:bg-slate-600">
+                            ✋ Drag
+                        </div>
+
+                        <!-- Widget Content -->
+                        
+                        <!-- Watchlist Type -->
+                        <div v-if="widget.type === 'watchlist'">
+                            <h3 class="text-lg font-semibold mb-4 text-emerald-300">{{ widget.title }}</h3>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-left">
+                                    <thead class="text-xs text-slate-400 uppercase bg-slate-700">
+                                        <tr>
+                                            <th class="px-4 py-2">Code</th>
+                                            <th class="px-4 py-2">Name</th>
+                                            <th class="px-4 py-2">Price</th>
+                                            <th class="px-4 py-2">Change</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="stock in watchlist" :key="stock.code" class="border-b border-slate-700 hover:bg-slate-700/50">
+                                            <td class="px-4 py-2 font-medium">{{ stock.code }}</td>
+                                            <td class="px-4 py-2">{{ stock.name }}</td>
+                                            <td class="px-4 py-2 text-right">{{ stock.price.toFixed(2) }}</td>
+                                            <td :class="['px-4 py-2 text-right', getChangeColor(stock.change)]">{{ stock.change }}%</td>
+                                        </tr>
+                                        <tr v-if="watchlist.length === 0">
+                                            <td colspan="4" class="text-center py-4 text-slate-500">Waiting for data...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Chart Type -->
+                        <div v-else-if="widget.type === 'chart'">
+                            <h3 class="text-lg font-semibold mb-4 text-blue-300">{{ widget.title }}</h3>
+                            <div :id="'chart-' + widget.id" style="width: 100%; height: 300px;"></div>
+                        </div>
+
+                        <!-- Logs Type -->
+                        <div v-else-if="widget.type === 'logs'">
+                            <h3 class="text-lg font-semibold mb-2 text-gray-300">{{ widget.title }}</h3>
+                            <div class="bg-black text-green-500 font-mono text-xs p-2 h-32 overflow-y-auto rounded">
+                                <div v-for="(log, i) in logs" :key="i">[{{ log.time }}] {{ log.msg }}</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- Settings Modal -->
+        <div v-if="showSettings" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div class="bg-slate-800 p-6 rounded-lg w-96 shadow-xl border border-slate-600">
+                <h2 class="text-xl font-bold mb-4">Settings</h2>
+                <div class="mb-4">
+                    <label class="block text-sm mb-1">Refresh Rate (ms)</label>
+                    <input type="number" class="w-full bg-slate-900 border border-slate-600 rounded p-2" value="3000">
+                </div>
+                <div class="flex justify-end gap-2">
+                    <button @click="showSettings=false" class="px-4 py-2 bg-slate-600 rounded hover:bg-slate-500">Close</button>
+                    <button class="px-4 py-2 bg-emerald-600 rounded hover:bg-emerald-500">Save</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const { createApp, ref, onMounted, nextTick } = Vue;
+
+        const DEFAULT_WIDGETS = [
+            { id: 'watchlist', title: '👀 Watchlist Monitor', type: 'watchlist', colSpan: 'col-span-1 md:col-span-2 lg:col-span-1' },
+            { id: 'chart', title: '📈 Market Index (SH000001)', type: 'chart', colSpan: 'col-span-1 md:col-span-2' },
+            { id: 'logs', title: 'System Logs', type: 'logs', colSpan: 'col-span-3' }
+        ];
+
+        createApp({
+            setup() {
+                const showToolbar = ref(true);
+                const showSettings = ref(false);
+                const isEditMode = ref(false);
+                const widgets = ref([...DEFAULT_WIDGETS]);
+                
+                const watchlist = ref([]);
+                const logs = ref([]);
+                const dataStatus = ref({ watchlist: false, lastUpdate: '' });
+                
+                let chartInstance = null;
+                let sortableInstance = null;
+                const gridContainer = ref(null);
+
+                const toggleSettings = () => showSettings.value = !showSettings.value;
+                
+                const toggleEditMode = async () => {
+                    if (isEditMode.value) {
+                        // Save Mode
+                        await saveLayout();
+                        if (sortableInstance) {
+                            sortableInstance.option("disabled", true);
+                        }
+                    } else {
+                        // Enter Edit Mode
+                        if (sortableInstance) {
+                            sortableInstance.option("disabled", false);
+                        }
+                    }
+                    isEditMode.value = !isEditMode.value;
+                };
+
+                const getChangeColor = (val) => {
+                    const num = parseFloat(val);
+                    if (num > 0) return 'text-red-400';
+                    if (num < 0) return 'text-green-400';
+                    return 'text-gray-400';
+                };
+
+                const addLog = (msg) => {
+                    const time = new Date().toLocaleTimeString();
+                    logs.value.unshift({ time, msg });
+                    if (logs.value.length > 50) logs.value.pop();
+                };
+
+                const initChart = () => {
+                    // Need to wait for DOM update because v-for might move things
+                    nextTick(() => {
+                        const chartWidget = widgets.value.find(w => w.type === 'chart');
+                        if (!chartWidget) return;
+                        
+                        const chartDom = document.getElementById('chart-' + chartWidget.id);
+                        if (chartDom) {
+                            if (chartInstance) chartInstance.dispose();
+                            chartInstance = echarts.init(chartDom, 'dark');
+                            const option = {
+                                backgroundColor: 'transparent',
+                                tooltip: { trigger: 'axis' },
+                                xAxis: { type: 'category', data: [] },
+                                yAxis: { scale: true },
+                                series: [{ type: 'candlestick', data: [] }]
+                            };
+                            chartInstance.setOption(option);
+                        }
+                    });
+                };
+
+                const updateChart = (data) => {
+                    if (!chartInstance) initChart();
+                    if (chartInstance) {
+                        chartInstance.setOption({
+                            xAxis: { data: data.dates },
+                            series: [{ data: data.values }]
+                        });
+                    }
+                };
+
+                // --- API & WS ---
+
+                const connectWS = () => {
+                    const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+                    const wsUrl = `${protocol}://${window.location.host}/ws`;
+                    const ws = new WebSocket(wsUrl);
+
+                    ws.onopen = () => addLog("Connected to Server");
+
+                    ws.onmessage = (event) => {
+                        try {
+                            const msg = JSON.parse(event.data);
+                            if (msg.type === 'update') {
+                                if (msg.widget_id === 'watchlist_main') {
+                                    watchlist.value = msg.data;
+                                    dataStatus.value.watchlist = true;
+                                    dataStatus.value.lastUpdate = new Date().toLocaleTimeString();
+                                } else if (msg.widget_id === 'chart_sh000001') {
+                                    updateChart(msg.data);
+                                }
+                            }
+                        } catch (e) {
+                            console.error(e);
+                        }
+                    };
+
+                    ws.onclose = () => {
+                        addLog("Disconnected. Retrying...");
+                        dataStatus.value.watchlist = false;
+                        setTimeout(connectWS, 5000);
+                    };
+                };
+
+                const checkStatus = async () => {
+                    try {
+                        const res = await fetch('/api/status');
+                        const data = await res.json();
+                        // Update status logic
+                        if (data['watchlist_main']) {
+                            // Calculate diff?
+                        }
+                    } catch (e) {
+                        console.error("Status check failed", e);
+                    }
+                };
+
+                const loadLayout = async () => {
+                    try {
+                        const res = await fetch('/api/layout');
+                        const data = await res.json();
+                        if (data && data.length > 0) {
+                            widgets.value = data;
+                        }
+                    } catch (e) {
+                        addLog("Failed to load layout, using default.");
+                    }
+                };
+
+                const saveLayout = async () => {
+                    try {
+                        // Get current order from DOM via Sortable or just map the array if we bound it correctly
+                        // Sortable changes the DOM, so we need to sync widgets array? 
+                        // Actually, SortableJS manual mode modifies DOM. 
+                        // The 'widgets' array needs to be reordered to match DOM order.
+                        
+                        const newOrderIds = sortableInstance.toArray();
+                        const newWidgets = [];
+                        newOrderIds.forEach(id => {
+                            const w = widgets.value.find(x => x.id === id);
+                            if (w) newWidgets.push(w);
+                        });
+                        widgets.value = newWidgets;
+
+                        await fetch('/api/layout', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(widgets.value)
+                        });
+                        addLog("Layout saved!");
+                    } catch (e) {
+                        addLog("Error saving layout: " + e);
+                    }
+                };
+
+                const initSortable = () => {
+                    if (gridContainer.value) {
+                        sortableInstance = new Sortable(gridContainer.value, {
+                            animation: 150,
+                            handle: '.drag-handle',
+                            disabled: true, // Start disabled
+                            dataIdAttr: 'data-id',
+                            onEnd: function (evt) {
+                                // console.log('Dropped');
+                            }
+                        });
+                    }
+                };
+
+                onMounted(async () => {
+                    await loadLayout();
+                    initSortable();
+                    initChart();
+                    connectWS();
+                    
+                    // Poll status every 5s
+                    setInterval(checkStatus, 5000);
+
+                    setTimeout(() => { 
+                        if(!isEditMode.value) showToolbar.value = false; 
+                    }, 2000);
+                    
+                    // Re-init chart on resize
+                    window.addEventListener('resize', () => {
+                         if(chartInstance) chartInstance.resize();
+                    });
+                });
+
+                return {
+                    showToolbar, showSettings, toggleSettings, 
+                    watchlist, logs, dataStatus, 
+                    widgets, isEditMode, toggleEditMode,
+                    gridContainer, getChangeColor
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
