@@ -8,9 +8,13 @@ class RealtimeMarketWatch(VibeModule):
     从新浪财经获取实时数据，并推送到 Web 面板。
     """
     
+    def __init__(self):
+        super().__init__()
+        self.description = "真实行情监控模块 - 从新浪财经获取实时数据，并推送到 Web 面板。"
+
     def configure(self):
         # 你的自选股列表
-        self.watchlist = [
+        default_watchlist = [
             "sh000001", # 上证指数
             "sz399006", # 创业板指
             "sh600519", # 贵州茅台
@@ -21,6 +25,8 @@ class RealtimeMarketWatch(VibeModule):
             "sh600036", # 招商银行
             "sz002594", # 比亚迪
         ]
+        
+        self.watchlist = self.config.get("watchlist", default_watchlist)
         
         # 确保我们使用 Sina 源 (即使 config 没改，这里强行获取也可以，但最好走 ctx)
         # 这里演示如何每 3 秒刷新一次

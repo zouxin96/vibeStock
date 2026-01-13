@@ -39,6 +39,8 @@ class SinaLiveAdapter(IDataProvider):
                 logger.error(f"Sina API returned status code {resp.status_code}")
                 return []
 
+            # Force GBK encoding for Sina
+            resp.encoding = 'gbk'
             content = resp.text
             if not content or len(content) < 50:
                 logger.warning(f"Sina API returned empty or short response: {content}")

@@ -17,6 +17,7 @@ class VibeModule(ABC):
         self.context: Optional['Context'] = None
         self.config: Dict[str, Any] = {}
         self.name: str = self.__class__.__name__
+        self.description: str = self.__class__.__doc__.strip() if self.__class__.__doc__ else ""
 
     def initialize(self, context: 'Context'):
         """

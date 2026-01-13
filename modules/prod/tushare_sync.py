@@ -10,6 +10,10 @@ class TushareSyncModule(VibeModule):
     Checks existence of data file; if missing, fetches immediately.
     """
     
+    def __init__(self):
+        super().__init__()
+        self.description = "Tushare Data Synchronization Module. Ensures daily market data is synced after 16:00."
+
     def configure(self):
         # Check every minute
         self.trigger_on_cron("interval:60")

@@ -135,46 +135,80 @@
         <div v-if="showDataModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
             <div class="bg-slate-800 p-6 rounded-lg w-3/4 h-3/4 flex flex-col shadow-xl border border-slate-600">
                 <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-bold">📂 Data Viewer</h2>
+                    <h2 class="text-xl font-bold">📂 Data Manager</h2>
                     <div class="flex gap-2">
-                         <button @click="triggerSync" class="px-4 py-2 bg-indigo-600 rounded hover:bg-indigo-500 text-sm">🔄 Sync Now</button>
                          <button @click="showDataModal=false" class="px-4 py-2 bg-slate-600 rounded hover:bg-slate-500 text-sm">Close</button>
                     </div>
                 </div>
                 
                 <div class="flex flex-grow overflow-hidden gap-4">
-                    <!-- File List -->
-                    <div class="w-1/4 bg-slate-900 rounded p-2 overflow-y-auto">
-                        <h3 class="font-bold mb-2 text-slate-400">Daily Files</h3>
+                    <!-- Data Sources (Left) -->
+                    <div class="w-1/3 bg-slate-900 rounded p-4 overflow-y-auto">
+                        <h3 class="font-bold mb-4 text-emerald-400">Data Sources</h3>
                         <ul>
-                            <li v-for="file in dataFiles" :key="file" 
-                                @click="loadFileContent(file)"
-                                :class="['cursor-pointer p-2 rounded text-sm', currentFileName === file ? 'bg-slate-700 text-white' : 'text-slate-400 hover:bg-slate-800']">
-                                📄 {{ file }}
+                            <li v-for="source in dataSources" :key="source.id" class="mb-4 p-4 bg-slate-800 rounded border border-slate-700 shadow hover:border-slate-500 transition-colors">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div>
+                                        <div class="font-bold text-lg text-white">{{ source.name }}</div>
+                                        <div class="text-xs text-slate-500 uppercase font-semibold mt-1">Daily Data</div>
+                                    </div>
+                                    <button @click="triggerSync(source.id)" :disabled="syncing[source.id]" 
+                                        :class="['px-3 py-1 rounded text-xs font-bold flex items-center gap-1', syncing[source.id] ? 'bg-slate-600 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-500']">
+                                        <span v-if="syncing[source.id]">⏳</span>
+                                        <span v-else>🔄</span>
+                                        {{ syncing[source.id] ? 'Syncing...' : 'Sync' }}
+                                    </button>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2 text-sm">
+                                    <div class="bg-slate-900 p-2 rounded">
+                                        <div class="text-slate-500 text-xs">Records</div>
+                                        <div class="text-emerald-400 font-mono">{{ source.count.toLocaleString() }}</div>
+                                    </div>
+                                    <div class="bg-slate-900 p-2 rounded">
+                                        <div class="text-slate-500 text-xs">Last Sync</div>
+                                        <div class="text-blue-400 font-mono">{{ source.last_sync }}</div>
+                                    </div>
+                                </div>
                             </li>
-                            <li v-if="dataFiles.length === 0" class="text-slate-600 italic text-sm p-2">No files found.</li>
                         </ul>
                     </div>
 
-                    <!-- Content Viewer -->
-                    <div class="w-3/4 bg-slate-900 rounded p-2 overflow-auto">
-                        <div v-if="currentFileContent">
-                            <h3 class="font-bold mb-2 text-emerald-400">{{ currentFileName }} (Top 100 rows)</h3>
-                            <table class="w-full text-xs text-left">
-                                <thead class="bg-slate-800 text-slate-400 sticky top-0">
-                                    <tr>
-                                        <th v-for="(header, i) in currentFileContent[0]" :key="i" class="px-2 py-1 border-b border-slate-700">{{ header }}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="(row, i) in currentFileContent.slice(1)" :key="i" class="hover:bg-slate-800">
-                                        <td v-for="(cell, j) in row" :key="j" class="px-2 py-1 border-b border-slate-800">{{ cell }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    <!-- File/Content Viewer (Right) -->
+                    <div class="w-2/3 flex flex-col gap-2">
+                        <!-- File List Bar -->
+                        <div class="bg-slate-900 rounded p-2 overflow-x-auto whitespace-nowrap flex gap-2 h-16 items-center">
+                             <span class="text-slate-500 text-sm px-2">Files:</span>
+                             <button v-for="file in dataFiles" :key="file" 
+                                @click="loadFileContent(file)"
+                                :class="['px-3 py-1 rounded text-xs border transition-colors', currentFileName === file ? 'bg-emerald-900 border-emerald-500 text-emerald-100' : 'bg-slate-800 border-slate-700 text-slate-400 hover:bg-slate-700']">
+                                {{ file }}
+                            </button>
                         </div>
-                        <div v-else class="flex items-center justify-center h-full text-slate-600">
-                            Select a file to view content
+                        
+                        <!-- Content Table -->
+                        <div class="bg-slate-900 rounded p-2 flex-grow overflow-auto relative">
+                            <div v-if="currentFileContent">
+                                <div class="sticky top-0 bg-slate-900 pb-2 border-b border-slate-700 mb-2 flex justify-between items-center">
+                                     <h3 class="font-bold text-emerald-400">{{ currentFileName }}</h3>
+                                     <span class="text-xs text-slate-500">Showing top 100 rows</span>
+                                </div>
+                                <table class="w-full text-xs text-left border-collapse">
+                                    <thead class="bg-slate-800 text-slate-400 sticky top-8 z-10">
+                                        <tr>
+                                            <th v-for="(header, i) in currentFileContent[0]" :key="i" class="px-2 py-1 border-b border-slate-700">{{ header }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(row, i) in currentFileContent.slice(1)" :key="i" class="hover:bg-slate-800 border-b border-slate-800/50">
+                                            <td v-for="(cell, j) in row" :key="j" class="px-2 py-1">{{ cell }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div v-else class="flex flex-col items-center justify-center h-full text-slate-600">
+                                <span class="text-4xl mb-4">📄</span>
+                                <span>Select a file above to inspect raw data</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -204,6 +238,9 @@
                 const logs = ref([]);
                 const dataStatus = ref({ watchlist: false, lastUpdate: '' });
                 
+                const dataSources = ref([]);
+                const syncing = ref({}); // Track sync status per source
+                
                 const dataFiles = ref([]);
                 const currentFileName = ref('');
                 const currentFileContent = ref(null);
@@ -217,7 +254,17 @@
                 const toggleDataModal = async () => {
                     showDataModal.value = !showDataModal.value;
                     if (showDataModal.value) {
+                        await loadDataSources();
                         await loadDataFiles();
+                    }
+                };
+                
+                const loadDataSources = async () => {
+                    try {
+                        const res = await fetch('/api/data/sources');
+                        dataSources.value = await res.json();
+                    } catch (e) {
+                        addLog("Error loading sources: " + e);
                     }
                 };
 
@@ -242,15 +289,27 @@
                     }
                 };
                 
-                const triggerSync = async () => {
-                    addLog("Starting manual sync...");
+                const triggerSync = async (sourceId) => {
+                    if (syncing.value[sourceId]) return;
+                    
+                    syncing.value[sourceId] = true;
+                    addLog(`Starting sync for ${sourceId}...`);
+                    
                     try {
-                        await fetch('/api/data/sync', { method: 'POST' });
-                        addLog("Sync command sent. Check logs.");
-                        // Refresh file list after a delay
-                        setTimeout(loadDataFiles, 3000);
+                        await fetch(`/api/data/sync?source=${sourceId}`, { method: 'POST' });
+                        addLog(`Sync command for ${sourceId} sent.`);
+                        
+                        // Poll for update or just wait a bit then refresh
+                        setTimeout(async () => {
+                            await loadDataSources();
+                            await loadDataFiles();
+                            syncing.value[sourceId] = false;
+                            addLog(`${sourceId} sync check complete.`);
+                        }, 5000); // 5s wait for demo, ideally ws push
+                        
                     } catch (e) {
                         addLog("Sync trigger failed: " + e);
+                        syncing.value[sourceId] = false;
                     }
                 };
 
@@ -439,7 +498,8 @@
                     gridContainer, getChangeColor,
                     // Data Modal
                     showDataModal, toggleDataModal, dataFiles, 
-                    currentFileName, currentFileContent, loadFileContent, triggerSync
+                    currentFileName, currentFileContent, loadFileContent, triggerSync,
+                    dataSources, syncing
                 };
             }
         }).mount('#app');

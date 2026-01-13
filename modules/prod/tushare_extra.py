@@ -14,6 +14,10 @@ class TushareExtraModule(VibeModule):
     Scheduled to run weekly or manually.
     """
 
+    def __init__(self):
+        super().__init__()
+        self.description = "Fetches low-frequency data: Concepts, Financial Reports. Scheduled to run weekly or manually."
+
     def configure(self):
         # Run weekly, e.g., Monday at 02:00
         # self.trigger_on_cron("0 2 * * 1") 

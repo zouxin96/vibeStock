@@ -131,6 +131,34 @@ class AKShareAdapter(IDataProvider):
             logger.error(f"AKShare get_history error: {e}")
             return pd.DataFrame()
 
+    def sync_daily_data(self):
+        """
+        Synchronize daily snapshot from AKShare.
+        """
+        self._ensure_akshare()
+        today = datetime.datetime.now().strftime("%Y%m%d")
+        logger.info(f"Starting AKShare sync for {today}...")
+        
+        try:
+            # Fetch spot data for all A-shares
+            df = ak.stock_zh_a_spot_em()
+            
+            if df.empty:
+                logger.warning(f"No data found from AKShare for {today}.")
+                return
+
+            # Ensure directory exists
+            save_dir = os.path.join("data", "daily")
+            if not os.path.exists(save_dir):
+                os.makedirs(save_dir)
+                
+            filename = os.path.join(save_dir, f"akshare_{today}.csv")
+            df.to_csv(filename, index=False)
+            logger.info(f"Successfully synced {len(df)} records from AKShare to {filename}")
+            
+        except Exception as e:
+            logger.error(f"Error during AKShare sync: {e}")
+
     def get_table(self, table_name: str, date: str = None) -> pd.DataFrame:
         """
         Generic wrapper for other AKShare functions.

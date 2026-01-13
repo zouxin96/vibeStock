@@ -7,6 +7,8 @@ import threading
 import importlib.util
 import sys
 
+import yaml
+
 class ModuleLoaderService(IService):
     """
     Watches directories (core, prod, beta) and automatically loads/reloads modules.
@@ -100,6 +102,18 @@ class ModuleLoaderService(IService):
         print(f"[{self.name}] Detected new module: {path}")
         mod_instance = self._import_module(path)
         if mod_instance:
+            # Load Config if exists
+            config_path = os.path.join("config", "modules", f"{mod_instance.name}.yaml")
+            if os.path.exists(config_path):
+                try:
+                    with open(config_path, 'r', encoding='utf-8') as f:
+                        mod_config = yaml.safe_load(f)
+                        if mod_config:
+                            mod_instance.config.update(mod_config)
+                            print(f"[{self.name}] Loaded config for {mod_instance.name}")
+                except Exception as e:
+                     print(f"[{self.name}] Failed to load config for {mod_instance.name}: {e}")
+
             mod_instance.initialize(self.context)
             self.loaded_modules[path] = mod_instance.name
             print(f"[{self.name}] Successfully loaded {mod_instance.name}")

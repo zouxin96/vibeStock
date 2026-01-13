@@ -7,6 +7,10 @@ class {{ModuleName}}(VibeModule):
     {{Description}}
     """
     
+    def __init__(self):
+        super().__init__()
+        self.description = "{{Description}}"
+
     def configure(self):
         # Configure triggers here
         # Example: self.trigger_on_cron("0 9 * * 1-5")

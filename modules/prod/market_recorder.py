@@ -8,6 +8,10 @@ class MarketDataRecorder(VibeModule):
     Fetches snapshot data periodically and saves it to CSV storage.
     """
     
+    def __init__(self):
+        super().__init__()
+        self.description = "Market Data Recorder Module. Fetches snapshot data periodically and saves it to CSV storage."
+
     def configure(self):
         # Default recording interval: 1 minute
         self.trigger_on_cron("interval:60")
