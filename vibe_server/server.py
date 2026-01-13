@@ -1,8 +1,9 @@
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Body, HTTPException
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Body, HTTPException, BackgroundTasks
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, JSONResponse
 import os
 import json
+import csv
 from typing import List, Dict
 
 from .websocket_manager import manager
@@ -48,6 +49,66 @@ async def save_layout(layout: List[Dict] = Body(...)):
         return {"status": "success"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+# --- Data View APIs ---
+
+@app.get("/api/data/files")
+async def list_data_files():
+    """List available data files."""
+    data_dir = os.path.join(os.getcwd(), "data", "daily")
+    if not os.path.exists(data_dir):
+        return []
+    files = [f for f in os.listdir(data_dir) if f.endswith(".csv")]
+    files.sort(reverse=True) # Newest first
+    return files
+
+@app.get("/api/data/content")
+async def get_data_content(file: str):
+    """Get content of a CSV file (top 100 lines)."""
+    file_path = os.path.join(os.getcwd(), "data", "daily", file)
+    if not os.path.exists(file_path):
+        raise HTTPException(status_code=404, detail="File not found")
+    
+    content = []
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            reader = csv.reader(f)
+            headers = next(reader, None)
+            if headers:
+                content.append(headers)
+                for i, row in enumerate(reader):
+                    if i >= 100: break
+                    content.append(row)
+        return {"filename": file, "content": content}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+def _run_manual_sync():
+    """Run Tushare sync in background."""
+    try:
+        # Load config to get token
+        config_path = os.path.join("config", "config.yaml")
+        import yaml
+        with open(config_path, 'r', encoding='utf-8') as f:
+            config = yaml.safe_load(f)
+            
+        token = config.get("data", {}).get("tushare_token", "")
+        
+        # Instantiate Adapter
+        # Note: We import inside function to avoid circular deps if any
+        from vibe_data.adapter.tushare_adapter import TushareAdapter
+        adapter = TushareAdapter(token=token)
+        adapter.sync_daily_data()
+        print("Manual sync completed.")
+    except Exception as e:
+        print(f"Manual sync failed: {e}")
+
+@app.post("/api/data/sync")
+async def trigger_sync(background_tasks: BackgroundTasks):
+    """Trigger a manual data sync."""
+    background_tasks.add_task(_run_manual_sync)
+    return {"status": "started", "message": "Sync started in background"}
+
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):

@@ -10,6 +10,6 @@ server:
 
 data:
   provider: "sina" 
-  tushare_token: "YOUR_TUSHARE_TOKEN"
+  tushare_token: "d468b49a4a60689c2267c78d6f7266576cb5a1f3809f10fe06fc36d3"
   cache:
     enabled: true

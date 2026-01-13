@@ -36,21 +36,19 @@ class DataFactory:
         elif provider_type == "tushare":
             token = config.get("data", {}).get("tushare_token", "")
             return provider_cls(token=token)
+        elif provider_type == "akshare":
+            return provider_cls()
         else:
             return provider_cls()
 
 # Register built-ins
 
 from .adapter.local_adapter import LocalFileAdapter
-
 from .adapter.tushare_adapter import TushareAdapter
-
 from .adapter.sina_adapter import SinaLiveAdapter
-
-
+from .adapter.akshare_adapter import AKShareAdapter
 
 DataFactory.register("local", LocalFileAdapter)
-
 DataFactory.register("tushare", TushareAdapter)
-
 DataFactory.register("sina", SinaLiveAdapter)
+DataFactory.register("akshare", AKShareAdapter)

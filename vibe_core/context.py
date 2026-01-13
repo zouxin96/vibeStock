@@ -1,6 +1,7 @@
 from typing import Any, Callable, Dict, List
 import logging
 from .module import VibeModule
+from .storage import CSVStorageService
 
 # Import singleton manager. Note: This creates a dependency on vibe_server.
 # In a strictly decoupled architecture we might use dependency injection,
@@ -60,6 +61,7 @@ class Context:
         self.data: Any = None  # Placeholder for DataProvider
         self.output = OutputManager() 
         self.logger: logging.Logger = logging.getLogger("vibe")
+        self.storage = CSVStorageService() # Initialize Storage Service
         self.state: Dict[str, Any] = {} # Persistent state storage
         self._scheduler: Any = None
         self._event_bus: Any = None

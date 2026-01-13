@@ -15,6 +15,7 @@ from vibe_core.service import ServiceManager
 from vibe_services.scheduler_service import SchedulerService
 from vibe_services.web_service import WebServerService
 from vibe_services.module_loader import ModuleLoaderService
+from vibe_data.factory import DataFactory
 import time
 import threading
 import uvicorn
@@ -172,6 +173,13 @@ def cmd_run(args):
     # 1. Initialize Context
     ctx = Context()
     ctx.config = config # Inject config into context
+
+    # 1.1 Initialize Data Provider
+    try:
+        ctx.data = DataFactory.create_provider(config)
+        print(f"Data Provider initialized: {type(ctx.data).__name__}")
+    except Exception as e:
+        print(f"Failed to initialize data provider: {e}")
     
     # 2. Create Services
     sched_service = SchedulerService()

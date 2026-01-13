@@ -40,6 +40,9 @@
                 <button @click="toggleEditMode" :class="['p-2 rounded text-slate-300 text-sm font-bold', isEditMode ? 'bg-indigo-600 hover:bg-indigo-500' : 'hover:bg-slate-700']">
                     {{ isEditMode ? '💾 Save Layout' : '✏️ Edit Layout' }}
                 </button>
+                <button @click="toggleDataModal" class="p-2 hover:bg-slate-700 rounded text-slate-300">
+                    📂 Data
+                </button>
                 <button @click="toggleSettings" class="p-2 hover:bg-slate-700 rounded text-slate-300">
                     ⚙️ Settings
                 </button>
@@ -128,6 +131,56 @@
             </div>
         </div>
 
+        <!-- Data Modal -->
+        <div v-if="showDataModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div class="bg-slate-800 p-6 rounded-lg w-3/4 h-3/4 flex flex-col shadow-xl border border-slate-600">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold">📂 Data Viewer</h2>
+                    <div class="flex gap-2">
+                         <button @click="triggerSync" class="px-4 py-2 bg-indigo-600 rounded hover:bg-indigo-500 text-sm">🔄 Sync Now</button>
+                         <button @click="showDataModal=false" class="px-4 py-2 bg-slate-600 rounded hover:bg-slate-500 text-sm">Close</button>
+                    </div>
+                </div>
+                
+                <div class="flex flex-grow overflow-hidden gap-4">
+                    <!-- File List -->
+                    <div class="w-1/4 bg-slate-900 rounded p-2 overflow-y-auto">
+                        <h3 class="font-bold mb-2 text-slate-400">Daily Files</h3>
+                        <ul>
+                            <li v-for="file in dataFiles" :key="file" 
+                                @click="loadFileContent(file)"
+                                :class="['cursor-pointer p-2 rounded text-sm', currentFileName === file ? 'bg-slate-700 text-white' : 'text-slate-400 hover:bg-slate-800']">
+                                📄 {{ file }}
+                            </li>
+                            <li v-if="dataFiles.length === 0" class="text-slate-600 italic text-sm p-2">No files found.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Content Viewer -->
+                    <div class="w-3/4 bg-slate-900 rounded p-2 overflow-auto">
+                        <div v-if="currentFileContent">
+                            <h3 class="font-bold mb-2 text-emerald-400">{{ currentFileName }} (Top 100 rows)</h3>
+                            <table class="w-full text-xs text-left">
+                                <thead class="bg-slate-800 text-slate-400 sticky top-0">
+                                    <tr>
+                                        <th v-for="(header, i) in currentFileContent[0]" :key="i" class="px-2 py-1 border-b border-slate-700">{{ header }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(row, i) in currentFileContent.slice(1)" :key="i" class="hover:bg-slate-800">
+                                        <td v-for="(cell, j) in row" :key="j" class="px-2 py-1 border-b border-slate-800">{{ cell }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div v-else class="flex items-center justify-center h-full text-slate-600">
+                            Select a file to view content
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script>
@@ -143,6 +196,7 @@
             setup() {
                 const showToolbar = ref(true);
                 const showSettings = ref(false);
+                const showDataModal = ref(false);
                 const isEditMode = ref(false);
                 const widgets = ref([...DEFAULT_WIDGETS]);
                 
@@ -150,12 +204,56 @@
                 const logs = ref([]);
                 const dataStatus = ref({ watchlist: false, lastUpdate: '' });
                 
+                const dataFiles = ref([]);
+                const currentFileName = ref('');
+                const currentFileContent = ref(null);
+
                 let chartInstance = null;
                 let sortableInstance = null;
                 const gridContainer = ref(null);
 
                 const toggleSettings = () => showSettings.value = !showSettings.value;
                 
+                const toggleDataModal = async () => {
+                    showDataModal.value = !showDataModal.value;
+                    if (showDataModal.value) {
+                        await loadDataFiles();
+                    }
+                };
+
+                const loadDataFiles = async () => {
+                    try {
+                        const res = await fetch('/api/data/files');
+                        dataFiles.value = await res.json();
+                    } catch (e) {
+                        addLog("Error loading data files: " + e);
+                    }
+                };
+
+                const loadFileContent = async (filename) => {
+                    currentFileName.value = filename;
+                    currentFileContent.value = null;
+                    try {
+                        const res = await fetch(`/api/data/content?file=${filename}`);
+                        const data = await res.json();
+                        currentFileContent.value = data.content;
+                    } catch (e) {
+                        addLog("Error loading file content: " + e);
+                    }
+                };
+                
+                const triggerSync = async () => {
+                    addLog("Starting manual sync...");
+                    try {
+                        await fetch('/api/data/sync', { method: 'POST' });
+                        addLog("Sync command sent. Check logs.");
+                        // Refresh file list after a delay
+                        setTimeout(loadDataFiles, 3000);
+                    } catch (e) {
+                        addLog("Sync trigger failed: " + e);
+                    }
+                };
+
                 const toggleEditMode = async () => {
                     if (isEditMode.value) {
                         // Save Mode
@@ -338,7 +436,10 @@
                     showToolbar, showSettings, toggleSettings, 
                     watchlist, logs, dataStatus, 
                     widgets, isEditMode, toggleEditMode,
-                    gridContainer, getChangeColor
+                    gridContainer, getChangeColor,
+                    // Data Modal
+                    showDataModal, toggleDataModal, dataFiles, 
+                    currentFileName, currentFileContent, loadFileContent, triggerSync
                 };
             }
         }).mount('#app');
