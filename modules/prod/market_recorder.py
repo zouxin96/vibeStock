@@ -1,6 +1,7 @@
 from vibe_core.module import VibeModule
 from vibe_core.event import Event
 import datetime
+import time
 
 class MarketDataRecorder(VibeModule):
     """
@@ -11,6 +12,7 @@ class MarketDataRecorder(VibeModule):
     def __init__(self):
         super().__init__()
         self.description = "Market Data Recorder Module. Fetches snapshot data periodically and saves it to CSV storage."
+        self.interval = 60 # Default loop interval (fallback)
 
     def configure(self):
         # Default recording interval: 1 minute
@@ -42,6 +44,7 @@ class MarketDataRecorder(VibeModule):
                     self.context.storage.save_record("stock/realtime", item)
                     count += 1
                 
-                self.context.logger.info(f"Recorded {count} market data snapshots.")
+                # Log commented out to reduce noise
+                # self.context.logger.info(f"Recorded {count} market data snapshots.")
         else:
             self.context.logger.warning("Data provider does not support snapshots, cannot record.")

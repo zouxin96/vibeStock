@@ -51,9 +51,6 @@ class WatchlistModule(VibeModule):
         
         if msg_type == "subscribe" and widget_id:
             config = message.get("config", {})
-            # Parse codes from config
-            # Config might be { "codes": ["600519.SH", "000001.SZ"] }
-            # Or comma separated string
             codes = config.get("codes", [])
             
             # Default if empty
@@ -64,9 +61,7 @@ class WatchlistModule(VibeModule):
                 
             with self.subscriptions_lock:
                 self.subscriptions[widget_id] = {"codes": codes}
-                print(f"[Watchlist] Subscribed instance {widget_id} with {len(codes)} stocks.")
-                
-            # Trigger immediate update for this instance if possible (optional)
+                print(f"[Watchlist] Subscribed instance {widget_id} with {len(codes)} stocks: {codes}")
 
     def _update_loop(self):
         while self.running:
@@ -75,9 +70,10 @@ class WatchlistModule(VibeModule):
                     # Snapshot of current subscriptions
                     subs = dict(self.subscriptions)
                 
-                # Batch all unique codes to optimize network? 
-                # Or just loop per instance for simplicity?
-                # Sina batch is efficient. Let's collect all unique codes first.
+                if not subs:
+                    time.sleep(1)
+                    continue
+
                 all_codes = set()
                 for sub in subs.values():
                     all_codes.update(sub["codes"])
@@ -86,24 +82,42 @@ class WatchlistModule(VibeModule):
                     try:
                         # Fetch all data once
                         data_list = self.adapter.get_snapshot(list(all_codes))
-                        # Convert to dict for fast lookup: { code: data_row }
+                        
+                        # Data Mapping: Sina adapter returns codes in lowercase/different format sometimes
+                        # We need to map back to the requested codes.
+                        # Strategy: Create a map of normalized_code -> data_row
+                        # And a map of requested_code -> normalized_code
+                        
+                        # 1. Normalize data keys
+                        # Sina adapter output 'code' is usually 'sh600519'
                         data_map = { row['code']: row for row in data_list }
                         
-                        # Distribute to instances
+                        # 2. Distribute to instances
                         for widget_id, sub in subs.items():
                             instance_data = []
-                            for code in sub["codes"]:
-                                # Sina adapter converts 600519.SH to sh600519
-                                # We need to match whatever the adapter returns.
-                                # The adapter returns 'code' as 'sh600519'.
-                                # Our input was '600519.SH'.
-                                # We need a helper to normalize keys or just search.
+                            for req_code in sub["codes"]:
+                                # Convert requested '600519.SH' to 'sh600519' using adapter's helper if available
+                                # Or manually matching logic. 
+                                # adapter._convert_code is what we want.
+                                if hasattr(self.adapter, '_convert_code'):
+                                    norm_code = self.adapter._convert_code(req_code)
+                                else:
+                                    # Fallback simple converter
+                                    if '.' in req_code:
+                                        num, suffix = req_code.split('.')
+                                        norm_code = f"{suffix.lower()}{num}"
+                                    else:
+                                        norm_code = req_code.lower()
                                 
-                                # Quick fix: check normalized keys in map
-                                # The adapter._convert_code logic is: 600519.SH -> sh600519
-                                normalized = self.adapter._convert_code(code)
-                                if normalized in data_map:
-                                    instance_data.append(data_map[normalized])
+                                if norm_code in data_map:
+                                    # Inject the original requested code for display consistency if needed
+                                    # But widget expects 'code', 'name', 'price', etc.
+                                    # Let's keep the row as is, or override 'code' to match display preference?
+                                    # The widget displays row.code. Sina returns 'sh600519'. User might prefer '600519.SH'.
+                                    # Let's override it back for display.
+                                    row = data_map[norm_code].copy()
+                                    row['code'] = req_code
+                                    instance_data.append(row)
                             
                             if instance_data:
                                 if hasattr(self.context, 'broadcast_ui'):

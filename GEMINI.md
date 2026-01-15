@@ -10,7 +10,8 @@ vibeStock/
 ├── data/                   # 本地数据存储
 │   ├── daily/              # 日线行情数据 (CSV)
 │   ├── financial/          # 财务报表数据
-│   └── concepts/           # 概念/行业板块数据
+│   ├── concepts/           # 概念/行业板块数据
+│   └── storage/            # 通用持久化存储 (JSON/SQLite)
 ├── modules/                # 策略与监控模块目录 (热加载)
 │   ├── core/               # 系统核心模块 (建议保留)
 │   ├── prod/               # 生产环境策略 (稳定)
@@ -19,7 +20,9 @@ vibeStock/
 │   ├── context.py          # Context 上下文对象 (API, Logger, EventBus)
 │   ├── event.py            # 事件定义 (Event-Driven 核心)
 │   ├── module.py           # VibeModule 基类 (所有策略需继承此通过)
-│   └── service.py          # 系统服务接口 (IService)
+│   ├── service.py          # 系统服务接口 (IService)
+│   ├── storage.py          # 存储接口定义
+│   └── trigger.py          # 触发器定义
 ├── vibe_data/              # 数据适配层
 │   ├── factory.py          # 数据源工厂模式实现
 │   ├── provider.py         # 数据源基类接口
@@ -36,8 +39,13 @@ vibeStock/
 ├── vibe_backtest/          # 回测引擎 
 │   └── engine.py           # 基于事件驱动的简易回测引擎
 ├── vibe_crawler/           # 爬虫框架
-│   └── crawler.py          # 爬虫基类 (BaseCrawler)
+│   ├── crawler.py          # 爬虫基类 (BaseCrawler)
+│   ├── analyzer.py         # 数据分析器
+│   └── pipeline.py         # 数据管道
 ├── ui/                     # 前端资源
-│   └── index.html          # 单页应用入口 (Vue3 + ECharts + SortableJS)
+│   ├── index.html          # 单页应用入口 (Vue3 + ECharts + SortableJS)
+│   └── widgets.js          # 前端组件库
 ├── templates/              # 代码生成模板
-└── 数据接口参考文档/                #  数据接口参考文档
+├── docs/                   # 项目文档
+├── tests/                  # 测试用例
+└── 数据接口参考文档/        # 数据接口参考文档

@@ -163,7 +163,13 @@ class ModuleLoaderService(IService):
         try:
             # We use a unique name for the spec to avoid sys.modules collision if needed,
             # but usually just file path base is fine.
-            module_name = os.path.splitext(os.path.basename(path))[0]
+            # Handle package paths (ending in __init__.py)
+            if path.endswith("__init__.py"):
+                # Parent directory name is the module name
+                module_name = os.path.basename(os.path.dirname(path))
+            else:
+                module_name = os.path.splitext(os.path.basename(path))[0]
+                
             spec = importlib.util.spec_from_file_location(module_name, path)
             if spec and spec.loader:
                 mod = importlib.util.module_from_spec(spec)

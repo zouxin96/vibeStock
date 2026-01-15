@@ -14,6 +14,29 @@
     }
   },
   {
+    "id": "watchlist_main",
+    "component": "watchlist-widget",
+    "title": "Market Watchlist (Sina)",
+    "default_col_span": "col-span-1 md:col-span-2 lg:col-span-1",
+    "script_path": "/modules/core/watchlist/widget.js",
+    "config_default": {
+      "codes": [
+        "600519.SH",
+        "000001.SZ",
+        "600036.SH"
+      ]
+    },
+    "config_description": "Specify a list of stock codes to monitor. \nFormat: { \"codes\": [\"600519.SH\", \"000001.SZ\"] }",
+    "instanceId": "watchlist_main_jnnnb1cdq",
+    "instanceConfig": {
+      "codes": [
+        "600519.SH",
+        "000001.SZ",
+        "600036.SH"
+      ]
+    }
+  },
+  {
     "id": "system_logs",
     "title": "System Logs",
     "component": "logs-widget",
