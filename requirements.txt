@@ -1,0 +1,10 @@
+requests
+beautifulsoup4
+html2text
+uvicorn
+fastapi
+pandas
+tushare
+PyYAML
+akshare
+lxml

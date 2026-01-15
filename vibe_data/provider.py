@@ -19,6 +19,12 @@ class DataDimension(Enum):
     INFO = "info"
     OTHER = "other"
 
+class SyncPolicy(Enum):
+    MANUAL = "manual"                  # 不自动同步
+    ON_MISSING_DATA = "on_missing"     # 无数据同步
+    DAILY_OR_STARTUP = "daily_startup" # 程序启动或者每日同步
+    REALTIME_INTERVAL = "interval"     # 实时接口 定时同步
+
 class IDataProvider(ABC):
     """
     Abstract interface for data providers.
@@ -28,6 +34,12 @@ class IDataProvider(ABC):
     @abstractmethod
     def data_dimension(self) -> DataDimension:
         """Dimension of data organization (e.g., by DATE, by STOCK)"""
+        pass
+
+    @property
+    @abstractmethod
+    def sync_policy(self) -> SyncPolicy:
+        """Policy for automatic data synchronization"""
         pass
 
     @property
@@ -59,14 +71,19 @@ class BaseFetcher(IDataProvider):
     """
     Base class for fetchers with logging and type handling.
     """
-    def __init__(self, fetcher_type: FetcherType):
+    def __init__(self, fetcher_type: FetcherType, sync_policy: SyncPolicy = SyncPolicy.MANUAL):
         self.fetcher_type = fetcher_type
         self.logger = logging.getLogger(f"vibe.data.{self.__class__.__name__.lower()}")
+        self._sync_policy = sync_policy
 
     @property
     def data_dimension(self) -> DataDimension:
         # Default to OTHER, override in subclasses
         return DataDimension.OTHER
+
+    @property
+    def sync_policy(self) -> SyncPolicy:
+        return self._sync_policy
 
     @property
     def archive_filename_template(self) -> str:

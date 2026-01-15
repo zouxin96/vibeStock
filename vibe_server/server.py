@@ -7,6 +7,7 @@ import csv
 from typing import List, Dict
 
 from .websocket_manager import manager
+from vibe_data.factory import DataFactory
 
 app = FastAPI()
 
@@ -135,49 +136,60 @@ async def list_data_sources():
             
         return max(0, count), last_sync, len(files)
 
-    # 1. Tushare Market (Stock/PostMarket)
-    # Check old data/daily for backward compat or new structure
-    # For now we assume new structure primarily
-    count, last, num_files = get_source_stats(os.path.join("stock", "post_market"), "daily_")
-    
-    # Fallback check for old structure if new is empty
-    if num_files == 0:
-         old_dir = os.path.join(os.getcwd(), "data", "daily")
-         if os.path.exists(old_dir):
-             files = [f for f in os.listdir(old_dir) if f.startswith("daily_")]
-             if files:
-                 files.sort(reverse=True)
-                 count = 0 # Lazy
-                 last = files[0].replace("daily_", "").replace(".csv", "")
-                 num_files = len(files)
+    # Load config for instantiation
+    import yaml
+    config = {}
+    config_path = os.path.join("config", "config.yaml")
+    if os.path.exists(config_path):
+        with open(config_path, 'r', encoding='utf-8') as f:
+             config = yaml.safe_load(f)
 
-    sources.append({
-        "id": "tushare",
-        "name": "Tushare Market",
-        "count": count,
-        "last_sync": last,
-        "files_count": num_files
-    })
+    for name in DataFactory.get_registered_providers():
+        if name in ["local", "sina"]: continue # Skip local/realtime
 
-    # 2. AKShare (Stock/PostMarket) - AKShareAdapter writes to stock/post_market now too with akshare_ prefix
-    count, last, num_files = get_source_stats(os.path.join("stock", "post_market"), "akshare_")
-    sources.append({
-        "id": "akshare",
-        "name": "AKShare",
-        "count": count,
-        "last_sync": last,
-        "files_count": num_files
-    })
-    
-    # 3. Tushare Info (Info/PostMarket)
-    count, last, num_files = get_source_stats(os.path.join("info", "post_market"), "")
-    sources.append({
-        "id": "tushare_info",
-        "name": "Tushare Info (Concepts)",
-        "count": count,
-        "last_sync": last,
-        "files_count": num_files
-    })
+        try:
+            # Create a temporary config for this specific provider
+            provider_config = config.copy()
+            if "data" not in provider_config: provider_config["data"] = {}
+            provider_config["data"]["provider"] = name
+            
+            provider = DataFactory.create_provider(provider_config)
+            
+            prefix = ""
+            subdir = os.path.join("stock", "post_market") # Default
+            
+            if hasattr(provider, "archive_filename_template"):
+                tmpl = provider.archive_filename_template
+                if "{" in tmpl:
+                    prefix = tmpl.split("{")[0]
+            
+            # Simple heuristic for category
+            if "Info" in provider.__class__.__name__ or name == "tushare_info":
+                subdir = os.path.join("info", "post_market")
+            
+            count, last, num_files = get_source_stats(subdir, prefix)
+            
+            # Fallback for old tushare structure
+            if name == "tushare" and num_files == 0:
+                 old_dir = os.path.join(os.getcwd(), "data", "daily")
+                 if os.path.exists(old_dir):
+                     files = [f for f in os.listdir(old_dir) if f.startswith("daily_")]
+                     if files:
+                         files.sort(reverse=True)
+                         count = 0 
+                         last = files[0].replace("daily_", "").replace(".csv", "")
+                         num_files = len(files)
+
+            sources.append({
+                "id": name,
+                "name": name.replace("_", " ").title(),
+                "count": count,
+                "last_sync": last,
+                "files_count": num_files
+            })
+            
+        except Exception as e:
+            print(f"Skipping source {name}: {e}")
 
     return sources
 
@@ -188,37 +200,49 @@ def _run_manual_sync(source: str, start_date: str = None, end_date: str = None):
         # Load config to get token
         config_path = os.path.join("config", "config.yaml")
         import yaml
-        token = ""
+        app_config = {}
         if os.path.exists(config_path):
             with open(config_path, 'r', encoding='utf-8') as f:
-                config = yaml.safe_load(f)
-            token = config.get("data", {}).get("tushare_token", "")
-            
-        if source == "tushare":
-            from vibe_data.adapter.tushare_adapter import TushareAdapter
-            adapter = TushareAdapter(token=token)
-            adapter.sync_daily_data(start_date=start_date, end_date=end_date)
-            
-        elif source == "akshare":
-            from vibe_data.adapter.akshare_adapter import AKShareAdapter
-            adapter = AKShareAdapter()
-            # AKShare adapter currently doesn't support range sync for market snapshot
-            adapter.sync_daily_data()
-            
-        elif source == "tushare_info":
-            from vibe_data.adapter.tushare_info_adapter import TushareInfoAdapter
-            from vibe_data.provider import DataCategory
-            import datetime
-            
-            adapter = TushareInfoAdapter(token=token)
-            # Sync Concepts
-            adapter.sync_all_concepts(src="ths")
-            # Sync Industries
-            df = adapter.get_industry_list(src="SW2021", level="L1")
-            if not df.empty:
-                path = adapter.get_save_path(DataCategory.INFO, f"industry_sw2021_{datetime.date.today()}.csv")
-                df.to_csv(path, index=False)
-                print(f"Saved SW2021 industries to {path}")
+                app_config = yaml.safe_load(f)
+        
+        # Prepare provider config
+        provider_config = app_config.copy()
+        if "data" not in provider_config: provider_config["data"] = {}
+        provider_config["data"]["provider"] = source
+        
+        # Use factory to create provider
+        provider = DataFactory.create_provider(provider_config)
+        
+        # Dispatch sync
+        if hasattr(provider, "sync_daily_data"):
+            # Check signature to see if it accepts date range
+            import inspect
+            sig = inspect.signature(provider.sync_daily_data)
+            if "start_date" in sig.parameters:
+                provider.sync_daily_data(start_date=start_date, end_date=end_date)
+            else:
+                provider.sync_daily_data()
+
+        # Specific handling for special adapters
+        if hasattr(provider, "sync_all_concepts"):
+             provider.sync_all_concepts(src="ths")
+             
+        if hasattr(provider, "sync_concepts_and_sectors"):
+             provider.sync_concepts_and_sectors()
+             
+        if hasattr(provider, "sync_ths_concept_histories"):
+             provider.sync_ths_concept_histories()
+
+        # Legacy support for TushareInfo industries
+        if source == "tushare_info":
+             from vibe_data.provider import DataCategory
+             import datetime
+             if hasattr(provider, "get_industry_list"):
+                df = provider.get_industry_list(src="SW2021", level="L1")
+                if not df.empty:
+                    path = provider.get_save_path(DataCategory.INFO, f"industry_sw2021_{datetime.date.today()}.csv")
+                    df.to_csv(path, index=False)
+                    print(f"Saved SW2021 industries to {path}")
 
         print(f"Manual sync for {source} completed.")
     except Exception as e:

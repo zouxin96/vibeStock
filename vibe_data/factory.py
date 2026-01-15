@@ -9,6 +9,10 @@ class DataFactory:
         cls._registry[name] = provider_cls
 
     @classmethod
+    def get_registered_providers(cls) -> list[str]:
+        return list(cls._registry.keys())
+
+    @classmethod
     def create_provider(cls, config: Dict[str, Any]) -> IDataProvider:
         # 1. Check if specific provider type is requested in config
         provider_type = config.get("data", {}).get("provider")
