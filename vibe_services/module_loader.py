@@ -70,23 +70,33 @@ class ModuleLoaderService(IService):
                 continue
                 
             for filename in os.listdir(directory):
-                if not filename.endswith(".py") or filename == "__init__.py":
+                full_path = os.path.join(directory, filename)
+                
+                is_package = os.path.isdir(full_path) and os.path.exists(os.path.join(full_path, "__init__.py"))
+                is_module_file = filename.endswith(".py") and filename != "__init__.py"
+                
+                if not (is_package or is_module_file):
                     continue
                 
-                full_path = os.path.join(directory, filename)
-                current_files.add(full_path)
+                # For packages, we track the timestamp of __init__.py or the dir itself?
+                # Changing files inside package should trigger reload.
+                # Simplest: Track __init__.py for packages.
+                
+                track_path = os.path.join(full_path, "__init__.py") if is_package else full_path
+                
+                current_files.add(track_path)
                 
                 try:
-                    mtime = os.path.getmtime(full_path)
+                    mtime = os.path.getmtime(track_path)
                     
-                    if full_path not in self.file_timestamps:
+                    if track_path not in self.file_timestamps:
                         # NEW FILE
-                        self._load_module(full_path)
-                    elif mtime > self.file_timestamps[full_path]:
+                        self._load_module(track_path)
+                    elif mtime > self.file_timestamps[track_path]:
                         # MODIFIED FILE
-                        self._reload_module(full_path)
+                        self._reload_module(track_path)
                     
-                    self.file_timestamps[full_path] = mtime
+                    self.file_timestamps[track_path] = mtime
                     
                 except Exception as e:
                     print(f"[{self.name}] Error scanning {full_path}: {e}")
@@ -113,6 +123,19 @@ class ModuleLoaderService(IService):
                             print(f"[{self.name}] Loaded config for {mod_instance.name}")
                 except Exception as e:
                      print(f"[{self.name}] Failed to load config for {mod_instance.name}: {e}")
+
+            # Register with Context for Message Routing (New)
+            if hasattr(self.context, 'register_module_instance'):
+                 # Use module.get_ui_config() to find the ID(s) it handles?
+                 # Or just use module class name?
+                 # The UI sends "moduleId" which corresponds to the "id" in get_ui_config().
+                 # A module might return a LIST of configs with different IDs.
+                 ui_configs = mod_instance.get_ui_config()
+                 if ui_configs:
+                     if not isinstance(ui_configs, list): ui_configs = [ui_configs]
+                     for cfg in ui_configs:
+                         if "id" in cfg:
+                             self.context.register_module_instance(cfg["id"], mod_instance)
 
             mod_instance.initialize(self.context)
             self.loaded_modules[path] = mod_instance.name

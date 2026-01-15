@@ -65,6 +65,39 @@ class Context:
         self.state: Dict[str, Any] = {} # Persistent state storage
         self._scheduler: Any = None
         self._event_bus: Any = None
+        self._module_registry: Dict[str, VibeModule] = {}
+
+    def register_module_instance(self, module_id: str, instance: VibeModule):
+        """Register a module instance to handle messages for a specific ID."""
+        self._module_registry[module_id] = instance
+        self.logger.info(f"Registered module route: {module_id} -> {instance.name}")
+
+    def broadcast_ui(self, widget_id: str, data: Any):
+        """
+        Broadcast data to a specific UI widget.
+        """
+        self.output.dashboard(widget_id, data)
+        
+    async def handle_client_message(self, message: Dict):
+        """
+        Route message from WebSocket to appropriate module.
+        Expected msg: { "moduleId": "...", ... }
+        """
+        module_id = message.get("moduleId")
+        if not module_id: return
+
+        if module_id in self._module_registry:
+            module = self._module_registry[module_id]
+            if hasattr(module, 'on_client_message'):
+                # Run in thread pool to avoid blocking async loop?
+                # on_client_message is likely synchronous.
+                # Use simple call for now, but ideally offload.
+                try:
+                    module.on_client_message(message)
+                except Exception as e:
+                    self.logger.error(f"Error handling client message in {module.name}: {e}")
+        else:
+            self.logger.warning(f"No module registered for ID: {module_id}")
 
     def register_cron(self, module: VibeModule, cron_expr: str):
         """Register a cron job for the module"""

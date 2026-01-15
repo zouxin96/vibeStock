@@ -34,6 +34,24 @@ class VibeModule(ABC):
         """
         pass
 
+    def get_ui_config(self) -> Optional[Any]:
+        """
+        Returns UI configuration for this module.
+        Can return a single Dict or a List[Dict] if the module provides multiple widgets.
+        
+        Return format example:
+        {
+            "id": "watchlist",           # Unique ID
+            "component": "watchlist-widget", # Vue component name
+            "title": "Market Watchlist", # Default title
+            "default_col_span": "col-span-1",
+            "script_path": "widget.js",   # Relative to module dir
+            "config_default": {"codes": ["600519.SH"]}, # Default instance config
+            "config_description": "JSON object with 'codes': list of stock codes." # Helper text
+        }
+        """
+        return None
+
     @abstractmethod
     def on_event(self, event: 'Event'):
         """

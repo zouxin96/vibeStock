@@ -3569,3 +3569,238 @@
 2026-01-14 18:53:06,853 - vibe - INFO - Recorded 3 market data snapshots.
 2026-01-14 18:54:06,889 - vibe - INFO - Recorded 3 market data snapshots.
 2026-01-14 18:55:06,927 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:10:39,275 - vibe - INFO - Registered interval job 3600s for InfoSyncModule
+2026-01-15 11:10:39,275 - vibe.data.tushareinfoadapter - INFO - Tushare Pro API (Info) initialized.
+2026-01-15 11:10:39,275 - vibe - INFO - InfoSyncModule initialized with TushareInfoAdapter.
+2026-01-15 11:10:39,276 - vibe - INFO - Registered interval job 60s for MarketDataRecorder
+2026-01-15 11:10:39,279 - vibe - INFO - Registered interval job 3s for RealtimeMarketWatch
+2026-01-15 11:10:39,281 - vibe - INFO - Subscribed TushareExtraModule to 'CMD_FETCH_EXTRA'
+2026-01-15 11:10:39,282 - vibe - INFO - Registered interval job 60s for TushareSyncModule
+2026-01-15 11:11:39,340 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:12:39,376 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:13:39,424 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:14:39,462 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:15:39,517 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:16:39,557 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:17:39,594 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:18:39,649 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:19:39,698 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:20:39,737 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:21:39,815 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:22:39,936 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:23:39,976 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:24:40,018 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:26:19,508 - vibe - INFO - Registered interval job 3600s for InfoSyncModule
+2026-01-15 11:26:19,508 - vibe.data.tushareinfoadapter - INFO - Tushare Pro API (Info) initialized.
+2026-01-15 11:26:19,508 - vibe - INFO - InfoSyncModule initialized with TushareInfoAdapter.
+2026-01-15 11:26:19,509 - vibe - INFO - Registered interval job 60s for MarketDataRecorder
+2026-01-15 11:26:19,510 - vibe - INFO - Registered interval job 3s for RealtimeMarketWatch
+2026-01-15 11:26:19,512 - vibe - INFO - Subscribed TushareExtraModule to 'CMD_FETCH_EXTRA'
+2026-01-15 11:26:19,513 - vibe - INFO - Registered interval job 60s for TushareSyncModule
+2026-01-15 11:27:19,559 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:28:19,618 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:29:19,655 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:30:19,697 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:31:19,736 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:32:19,791 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:33:19,827 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:34:19,865 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:35:10,434 - vibe - INFO - Registered interval job 3600s for InfoSyncModule
+2026-01-15 11:35:10,435 - vibe.data.tushareinfoadapter - INFO - Tushare Pro API (Info) initialized.
+2026-01-15 11:35:10,435 - vibe - INFO - InfoSyncModule initialized with TushareInfoAdapter.
+2026-01-15 11:35:10,436 - vibe - INFO - Registered interval job 60s for MarketDataRecorder
+2026-01-15 11:35:10,438 - vibe - INFO - Registered interval job 3s for RealtimeMarketWatch
+2026-01-15 11:35:10,440 - vibe - INFO - Subscribed TushareExtraModule to 'CMD_FETCH_EXTRA'
+2026-01-15 11:35:10,441 - vibe - INFO - Registered interval job 60s for TushareSyncModule
+2026-01-15 11:36:10,471 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:37:10,510 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:38:10,548 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:39:10,604 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:40:10,645 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:41:10,685 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:42:10,791 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:43:10,856 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:44:10,897 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:45:10,979 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:46:11,015 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:47:11,056 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:48:11,094 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:49:11,132 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:50:11,174 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:51:11,215 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:52:11,253 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:53:11,318 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:54:11,361 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:55:11,435 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:56:11,474 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:57:11,511 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:58:11,551 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 11:59:11,592 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:00:11,632 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:01:11,670 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:02:11,708 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:03:11,751 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:04:11,792 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:05:11,830 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:06:11,867 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:07:11,906 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:08:11,947 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:09:11,985 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:10:12,027 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:11:12,067 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:12:12,109 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:13:12,146 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:14:12,193 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:15:12,238 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:16:12,514 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:17:12,562 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:18:12,599 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:19:12,642 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:20:12,675 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:21:12,713 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:22:12,750 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:23:12,790 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:24:12,828 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:25:12,865 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:26:12,913 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:27:12,957 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:28:12,996 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:29:13,035 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:30:13,128 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:31:13,166 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:32:13,211 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:33:13,290 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:34:13,327 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:35:10,444 - vibe - INFO - Starting Info Data Sync...
+2026-01-15 12:35:10,457 - vibe.data.tushareinfoadapter - INFO - Syncing ths concepts...
+2026-01-15 12:35:10,590 - vibe.data.tushareinfoadapter - ERROR - Failed to fetch concept list (ths): 抱歉，您没有接口访问权限，权限的具体详情访问：https://tushare.pro/document/1?doc_id=108。
+2026-01-15 12:35:10,664 - vibe.data.tushareinfoadapter - WARNING - No concepts found for ths
+2026-01-15 12:35:10,749 - vibe.data.tushareinfoadapter - ERROR - Failed to fetch industry list: 抱歉，您没有接口访问权限，权限的具体详情访问：https://tushare.pro/document/1?doc_id=108。
+2026-01-15 12:35:13,370 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:36:13,449 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:37:13,488 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:38:13,525 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:39:13,607 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:40:13,642 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:41:13,686 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:42:13,777 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:43:13,824 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:44:13,862 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:45:13,942 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:46:13,978 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:47:14,015 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:48:14,085 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:49:14,125 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:50:14,161 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:51:14,199 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:52:14,238 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:53:14,279 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:54:14,321 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:55:14,364 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:56:14,438 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:57:14,475 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:58:14,515 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 12:59:14,554 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:00:14,602 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:01:14,639 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:02:14,677 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:03:14,739 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:04:14,800 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:05:14,836 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:06:14,876 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:07:14,936 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:08:14,987 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:08:28,774 - vibe - INFO - Registered interval job 3600s for InfoSyncModule
+2026-01-15 13:08:28,775 - vibe.data.tushareinfoadapter - INFO - Tushare Pro API (Info) initialized.
+2026-01-15 13:08:28,775 - vibe - INFO - InfoSyncModule initialized with TushareInfoAdapter.
+2026-01-15 13:08:28,777 - vibe - INFO - Registered interval job 60s for MarketDataRecorder
+2026-01-15 13:08:28,780 - vibe - INFO - Registered interval job 3s for RealtimeMarketWatch
+2026-01-15 13:08:28,783 - vibe - INFO - Subscribed TushareExtraModule to 'CMD_FETCH_EXTRA'
+2026-01-15 13:08:28,787 - vibe - INFO - Registered interval job 60s for TushareSyncModule
+2026-01-15 13:08:46,005 - vibe - INFO - Registered interval job 3600s for InfoSyncModule
+2026-01-15 13:08:46,005 - vibe.data.tushareinfoadapter - INFO - Tushare Pro API (Info) initialized.
+2026-01-15 13:08:46,005 - vibe - INFO - InfoSyncModule initialized with TushareInfoAdapter.
+2026-01-15 13:08:46,006 - vibe - INFO - Registered interval job 60s for MarketDataRecorder
+2026-01-15 13:08:46,007 - vibe - INFO - Registered interval job 3s for RealtimeMarketWatch
+2026-01-15 13:08:46,009 - vibe - INFO - Subscribed TushareExtraModule to 'CMD_FETCH_EXTRA'
+2026-01-15 13:08:46,013 - vibe - INFO - Registered interval job 60s for TushareSyncModule
+2026-01-15 13:12:18,450 - vibe - INFO - Registered interval job 3600s for InfoSyncModule
+2026-01-15 13:12:18,450 - vibe.data.tushareinfoadapter - INFO - Tushare Pro API (Info) initialized.
+2026-01-15 13:12:18,450 - vibe - INFO - InfoSyncModule initialized with TushareInfoAdapter.
+2026-01-15 13:12:18,451 - vibe - INFO - Registered interval job 60s for MarketDataRecorder
+2026-01-15 13:12:18,452 - vibe - INFO - Registered interval job 3s for RealtimeMarketWatch
+2026-01-15 13:12:18,454 - vibe - INFO - Subscribed TushareExtraModule to 'CMD_FETCH_EXTRA'
+2026-01-15 13:12:18,456 - vibe - INFO - Registered interval job 60s for TushareSyncModule
+2026-01-15 13:13:18,487 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:14:18,524 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:15:18,566 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:16:18,603 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:17:18,656 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:18:18,698 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:19:18,738 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:20:18,779 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:21:18,817 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:22:18,862 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:23:18,904 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:24:18,973 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:25:19,027 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:26:19,065 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:30:17,518 - vibe - INFO - Registered interval job 3600s for InfoSyncModule
+2026-01-15 13:30:17,519 - vibe.data.tushareinfoadapter - INFO - Tushare Pro API (Info) initialized.
+2026-01-15 13:30:17,519 - vibe - INFO - InfoSyncModule initialized with TushareInfoAdapter.
+2026-01-15 13:30:17,519 - vibe - INFO - Registered interval job 60s for MarketDataRecorder
+2026-01-15 13:30:17,521 - vibe - INFO - Registered interval job 3s for RealtimeMarketWatch
+2026-01-15 13:30:17,523 - vibe - INFO - Subscribed TushareExtraModule to 'CMD_FETCH_EXTRA'
+2026-01-15 13:30:17,524 - vibe - INFO - Registered interval job 60s for TushareSyncModule
+2026-01-15 13:30:43,357 - vibe - INFO - Registered interval job 3600s for InfoSyncModule
+2026-01-15 13:30:43,357 - vibe.data.tushareinfoadapter - INFO - Tushare Pro API (Info) initialized.
+2026-01-15 13:30:43,357 - vibe - INFO - InfoSyncModule initialized with TushareInfoAdapter.
+2026-01-15 13:30:43,358 - vibe - INFO - Registered interval job 60s for MarketDataRecorder
+2026-01-15 13:30:43,359 - vibe - INFO - Registered interval job 3s for RealtimeMarketWatch
+2026-01-15 13:30:43,361 - vibe - INFO - Subscribed TushareExtraModule to 'CMD_FETCH_EXTRA'
+2026-01-15 13:30:43,362 - vibe - INFO - Registered interval job 60s for TushareSyncModule
+2026-01-15 13:31:43,423 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:32:43,462 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:33:43,521 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:34:43,566 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:35:43,600 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:36:43,650 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:37:43,689 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:38:43,730 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:39:43,767 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:40:43,821 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:41:36,685 - vibe - INFO - Registered interval job 3600s for InfoSyncModule
+2026-01-15 13:41:36,685 - vibe.data.tushareinfoadapter - INFO - Tushare Pro API (Info) initialized.
+2026-01-15 13:41:36,685 - vibe - INFO - InfoSyncModule initialized with TushareInfoAdapter.
+2026-01-15 13:41:36,686 - vibe - INFO - Registered interval job 60s for MarketDataRecorder
+2026-01-15 13:41:36,687 - vibe - INFO - Registered interval job 3s for RealtimeMarketWatch
+2026-01-15 13:41:36,689 - vibe - INFO - Subscribed TushareExtraModule to 'CMD_FETCH_EXTRA'
+2026-01-15 13:41:36,691 - vibe - INFO - Registered interval job 60s for TushareSyncModule
+2026-01-15 13:42:36,724 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:43:36,780 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:44:36,332 - vibe - INFO - Registered interval job 3600s for InfoSyncModule
+2026-01-15 13:44:36,332 - vibe.data.tushareinfoadapter - INFO - Tushare Pro API (Info) initialized.
+2026-01-15 13:44:36,333 - vibe - INFO - InfoSyncModule initialized with TushareInfoAdapter.
+2026-01-15 13:44:36,333 - vibe - INFO - Registered interval job 60s for MarketDataRecorder
+2026-01-15 13:44:36,335 - vibe - INFO - Registered interval job 3s for RealtimeMarketWatch
+2026-01-15 13:44:36,336 - vibe - INFO - Subscribed TushareExtraModule to 'CMD_FETCH_EXTRA'
+2026-01-15 13:44:36,338 - vibe - INFO - Registered interval job 60s for TushareSyncModule
+2026-01-15 13:44:36,814 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 13:44:41,757 - vibe - INFO - Registered interval job 3600s for InfoSyncModule
+2026-01-15 13:44:41,758 - vibe.data.tushareinfoadapter - INFO - Tushare Pro API (Info) initialized.
+2026-01-15 13:44:41,758 - vibe - INFO - InfoSyncModule initialized with TushareInfoAdapter.
+2026-01-15 13:44:41,759 - vibe - INFO - Registered interval job 60s for MarketDataRecorder
+2026-01-15 13:44:41,760 - vibe - INFO - Registered interval job 3s for RealtimeMarketWatch
+2026-01-15 13:44:41,762 - vibe - INFO - Subscribed TushareExtraModule to 'CMD_FETCH_EXTRA'
+2026-01-15 13:44:41,764 - vibe - INFO - Registered interval job 60s for TushareSyncModule
+2026-01-15 14:13:45,871 - vibe - INFO - Registered interval job 3600s for InfoSyncModule
+2026-01-15 14:13:45,872 - vibe.data.tushareinfoadapter - INFO - Tushare Pro API (Info) initialized.
+2026-01-15 14:13:45,872 - vibe - INFO - InfoSyncModule initialized with TushareInfoAdapter.
+2026-01-15 14:13:45,873 - vibe - INFO - Registered interval job 60s for MarketDataRecorder
+2026-01-15 14:13:45,874 - vibe - INFO - Registered interval job 3s for RealtimeMarketWatch
+2026-01-15 14:13:45,876 - vibe - INFO - Subscribed TushareExtraModule to 'CMD_FETCH_EXTRA'
+2026-01-15 14:13:45,877 - vibe - INFO - Registered interval job 60s for TushareSyncModule
+2026-01-15 14:14:10,446 - vibe - WARNING - No module registered for ID: watchlist_main
+2026-01-15 14:14:45,913 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 14:15:48,467 - vibe - INFO - Recorded 3 market data snapshots.
+2026-01-15 14:16:48,528 - vibe - INFO - Recorded 3 market data snapshots.

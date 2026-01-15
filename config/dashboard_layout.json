@@ -1,20 +1,54 @@
 [
   {
-    "id": "watchlist",
-    "title": "\ud83d\udc40 Watchlist Monitor",
-    "type": "watchlist",
-    "colSpan": "col-span-1 md:col-span-2 lg:col-span-1"
+    "id": "watchlist_main",
+    "component": "watchlist-widget",
+    "title": "Market Watchlist (Sina)",
+    "default_col_span": "col-span-1 md:col-span-2 lg:col-span-1",
+    "script_path": "/modules/core/watchlist/widget.js",
+    "instanceId": "watchlist_main_gk505qpy8",
+    "instanceConfig": {
+      "codes": [
+        "600519.SH",
+        "000001.SZ"
+      ]
+    }
   },
   {
-    "id": "chart",
-    "title": "\ud83d\udcc8 Market Index (SH000001)",
-    "type": "chart",
-    "colSpan": "col-span-1 md:col-span-2"
-  },
-  {
-    "id": "logs",
+    "id": "system_logs",
     "title": "System Logs",
-    "type": "logs",
-    "colSpan": "col-span-3"
+    "component": "logs-widget",
+    "default_col_span": "col-span-3",
+    "instanceId": "system_logs_6ua4et4mr"
+  },
+  {
+    "id": "stock_kline",
+    "component": "stock-kline-widget",
+    "title": "Moutai (600519) Day K",
+    "default_col_span": "col-span-1 md:col-span-2",
+    "script_path": "/modules/beta/market_charts/widget.js",
+    "instanceId": "stock_kline_nrj9gmmft"
+  },
+  {
+    "id": "index_line",
+    "component": "index-line-widget",
+    "title": "Index Trend (Live)",
+    "default_col_span": "col-span-1 md:col-span-2",
+    "script_path": "/modules/beta/market_charts/widget.js",
+    "instanceId": "index_line_fus22n1yr"
+  },
+  {
+    "id": "sector_pie",
+    "component": "sector-pie-widget",
+    "title": "Sector Distribution",
+    "default_col_span": "col-span-1",
+    "script_path": "/modules/beta/market_charts/widget.js",
+    "instanceId": "sector_pie_dc77ha7n0"
+  },
+  {
+    "id": "system_logs",
+    "title": "System Logs",
+    "component": "logs-widget",
+    "default_col_span": "col-span-3",
+    "instanceId": "system_logs_0mmfjzuxb"
   }
 ]

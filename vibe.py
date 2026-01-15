@@ -194,6 +194,10 @@ def cmd_run(args):
     ServiceManager.register(web_service)
     ServiceManager.register(loader_service)
     
+    # Wire up WebSocket handler to Context routing
+    from vibe_server.websocket_manager import manager
+    manager.set_handler(ctx.handle_client_message)
+
     # 5. Start All Services
     # The loader_service will immediately scan modules/core, prod, beta and load found modules
     ServiceManager.start_all()

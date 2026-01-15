@@ -5,16 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>vibeStock Dashboard</title>
     <!-- Vue 3 -->
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.prod.js"></script>
     <!-- ECharts -->
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- SortableJS -->
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <!-- Base Widgets Library -->
+    <script src="/static/widgets.js"></script>
     <style>
         body { background-color: #0f172a; color: #e2e8f0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .widget-card { background-color: #1e293b; border-radius: 0.5rem; padding: 1rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); height: 100%; }
+        .widget-card { background-color: #1e293b; border-radius: 0.5rem; padding: 1rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); height: 100%; display: flex; flex-direction: column; }
         .top-bar { transition: transform 0.3s ease; }
         .top-bar.hidden-bar { transform: translateY(-100%); }
         .sortable-ghost { opacity: 0.5; background: #334155; }
@@ -32,8 +34,8 @@
                 
                 <!-- System Status Indicators -->
                 <div class="flex items-center gap-2 text-xs text-slate-400 bg-slate-900 px-3 py-1 rounded">
-                    <span :class="['w-2 h-2 rounded-full', dataStatus.watchlist ? 'bg-green-500' : 'bg-red-500']"></span>
-                    <span>Data: {{ dataStatus.lastUpdate || 'Waiting...' }}</span>
+                    <span :class="['w-2 h-2 rounded-full', isConnected ? 'bg-green-500' : 'bg-red-500']"></span>
+                    <span>Server: {{ isConnected ? 'Online' : 'Offline' }}</span>
                 </div>
             </div>
             <div class="flex gap-2">
@@ -43,9 +45,16 @@
                 <button @click="toggleDataModal" class="p-2 hover:bg-slate-700 rounded text-slate-300">
                     📂 Data
                 </button>
-                <button @click="toggleSettings" class="p-2 hover:bg-slate-700 rounded text-slate-300">
-                    ⚙️ Settings
-                </button>
+                <div class="relative group">
+                     <button class="p-2 hover:bg-slate-700 rounded text-slate-300">➕ Add Widget</button>
+                     <div class="absolute right-0 top-full mt-1 bg-slate-800 border border-slate-700 rounded shadow-xl hidden group-hover:block w-48 z-50">
+                        <div v-for="mod in availableModules" :key="mod.id" 
+                             @click="addWidget(mod)"
+                             class="px-4 py-2 hover:bg-slate-700 cursor-pointer text-sm">
+                            {{ mod.title }}
+                        </div>
+                     </div>
+                </div>
             </div>
         </header>
 
@@ -59,74 +68,48 @@
             <!-- Dynamic Grid -->
             <div ref="gridContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 
-                <div v-for="widget in widgets" :key="widget.id" :class="['widget-wrapper', widget.colSpan]" :data-id="widget.id">
+                <div v-for="widget in activeWidgets" :key="widget.instanceId" :class="['widget-wrapper', widget.default_col_span]" :data-id="widget.instanceId">
                     <div class="widget-card relative group">
-                        <!-- Drag Handle -->
-                        <div v-if="isEditMode" class="drag-handle absolute top-2 right-2 p-1 bg-slate-700 rounded text-slate-300 z-10 hover:bg-slate-600">
-                            ✋ Drag
-                        </div>
-
-                        <!-- Widget Content -->
-                        
-                        <!-- Watchlist Type -->
-                        <div v-if="widget.type === 'watchlist'">
-                            <h3 class="text-lg font-semibold mb-4 text-emerald-300">{{ widget.title }}</h3>
-                            <div class="overflow-x-auto">
-                                <table class="w-full text-sm text-left">
-                                    <thead class="text-xs text-slate-400 uppercase bg-slate-700">
-                                        <tr>
-                                            <th class="px-4 py-2">Code</th>
-                                            <th class="px-4 py-2">Name</th>
-                                            <th class="px-4 py-2">Price</th>
-                                            <th class="px-4 py-2">Change</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-for="stock in watchlist" :key="stock.code" class="border-b border-slate-700 hover:bg-slate-700/50">
-                                            <td class="px-4 py-2 font-medium">{{ stock.code }}</td>
-                                            <td class="px-4 py-2">{{ stock.name }}</td>
-                                            <td class="px-4 py-2 text-right">{{ stock.price.toFixed(2) }}</td>
-                                            <td :class="['px-4 py-2 text-right', getChangeColor(stock.change)]">{{ stock.change }}%</td>
-                                        </tr>
-                                        <tr v-if="watchlist.length === 0">
-                                            <td colspan="4" class="text-center py-4 text-slate-500">Waiting for data...</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                        <!-- Header / Drag Handle -->
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="text-lg font-semibold text-slate-200">{{ widget.title }}</h3>
+                            <div v-if="isEditMode" class="flex gap-2">
+                                <button @click="configureWidget(widget)" class="text-blue-400 hover:text-blue-300 px-2" title="Configure">⚙️</button>
+                                <button @click="removeWidget(widget.instanceId)" class="text-red-400 hover:text-red-300 px-2" title="Remove">✕</button>
+                                <div class="drag-handle px-2 bg-slate-700 rounded text-slate-300 hover:bg-slate-600 cursor-grab">
+                                    ✋
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Chart Type -->
-                        <div v-else-if="widget.type === 'chart'">
-                            <h3 class="text-lg font-semibold mb-4 text-blue-300">{{ widget.title }}</h3>
-                            <div :id="'chart-' + widget.id" style="width: 100%; height: 300px;"></div>
+                        <!-- Dynamic Widget Component -->
+                        <div class="flex-grow relative overflow-hidden">
+                            <widget-wrapper :config="widget" :key="JSON.stringify(widget.instanceConfig)"></widget-wrapper>
                         </div>
-
-                        <!-- Logs Type -->
-                        <div v-else-if="widget.type === 'logs'">
-                            <h3 class="text-lg font-semibold mb-2 text-gray-300">{{ widget.title }}</h3>
-                            <div class="bg-black text-green-500 font-mono text-xs p-2 h-32 overflow-y-auto rounded">
-                                <div v-for="(log, i) in logs" :key="i">[{{ log.time }}] {{ log.msg }}</div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
 
             </div>
         </main>
 
-        <!-- Settings Modal -->
-        <div v-if="showSettings" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-            <div class="bg-slate-800 p-6 rounded-lg w-96 shadow-xl border border-slate-600">
-                <h2 class="text-xl font-bold mb-4">Settings</h2>
-                <div class="mb-4">
-                    <label class="block text-sm mb-1">Refresh Rate (ms)</label>
-                    <input type="number" class="w-full bg-slate-900 border border-slate-600 rounded p-2" value="3000">
+        <!-- Config Modal -->
+        <div v-if="showConfigModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div class="bg-slate-800 p-6 rounded-lg w-1/2 h-1/2 flex flex-col shadow-xl border border-slate-600">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold">⚙️ Configure Widget</h2>
+                    <button @click="showConfigModal=false" class="text-slate-400 hover:text-white">✕</button>
                 </div>
-                <div class="flex justify-end gap-2">
-                    <button @click="showSettings=false" class="px-4 py-2 bg-slate-600 rounded hover:bg-slate-500">Close</button>
-                    <button class="px-4 py-2 bg-emerald-600 rounded hover:bg-emerald-500">Save</button>
+                <div class="flex-grow flex flex-col gap-2">
+                    <div class="bg-slate-700/50 p-2 rounded text-xs text-slate-300 whitespace-pre-wrap font-mono border border-slate-600">
+                        {{ configDescription || 'No configuration description available.' }}
+                    </div>
+                    <label class="text-xs text-slate-500 mt-2">Instance Configuration (JSON)</label>
+                    <textarea v-model="currentConfigJson" class="flex-grow bg-slate-900 border border-slate-700 rounded p-2 font-mono text-sm text-green-400 focus:outline-none focus:border-blue-500"></textarea>
+                    <div v-if="configError" class="text-red-400 text-xs font-bold">{{ configError }}</div>
+                </div>
+                <div class="flex justify-end gap-2 mt-4">
+                    <button @click="showConfigModal=false" class="px-4 py-2 bg-slate-600 rounded hover:bg-slate-500 text-sm">Cancel</button>
+                    <button @click="saveWidgetConfig" class="px-4 py-2 bg-blue-600 rounded hover:bg-blue-500 text-sm font-bold">Save Configuration</button>
                 </div>
             </div>
         </div>
@@ -136,87 +119,10 @@
             <div class="bg-slate-800 p-6 rounded-lg w-3/4 h-3/4 flex flex-col shadow-xl border border-slate-600">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-xl font-bold">📂 Data Manager</h2>
-                    <div class="flex gap-2 items-center">
-                         <div class="flex items-center gap-1 bg-slate-700/50 p-1 rounded">
-                            <span class="text-xs text-slate-400 pl-1">Range:</span>
-                            <input type="date" v-model="startDate" class="bg-slate-900 border border-slate-600 rounded px-2 py-1 text-xs text-white">
-                            <span class="text-slate-500">-</span>
-                            <input type="date" v-model="endDate" class="bg-slate-900 border border-slate-600 rounded px-2 py-1 text-xs text-white">
-                         </div>
-                         <button @click="showDataModal=false" class="px-4 py-2 bg-slate-600 rounded hover:bg-slate-500 text-sm">Close</button>
-                    </div>
+                    <button @click="showDataModal=false" class="px-4 py-2 bg-slate-600 rounded hover:bg-slate-500 text-sm">Close</button>
                 </div>
-                
-                <div class="flex flex-grow overflow-hidden gap-4">
-                    <!-- Data Sources (Left) -->
-                    <div class="w-1/3 bg-slate-900 rounded p-4 overflow-y-auto">
-                        <h3 class="font-bold mb-4 text-emerald-400">Data Sources</h3>
-                        <ul>
-                            <li v-for="source in dataSources" :key="source.id" class="mb-4 p-4 bg-slate-800 rounded border border-slate-700 shadow hover:border-slate-500 transition-colors">
-                                <div class="flex justify-between items-start mb-3">
-                                    <div>
-                                        <div class="font-bold text-lg text-white">{{ source.name }}</div>
-                                        <div class="text-xs text-slate-500 uppercase font-semibold mt-1">Data Status</div>
-                                    </div>
-                                    <button @click="triggerSync(source.id)" :disabled="syncing[source.id]" 
-                                        :class="['px-3 py-1 rounded text-xs font-bold flex items-center gap-1', syncing[source.id] ? 'bg-slate-600 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-500']">
-                                        <span v-if="syncing[source.id]">⏳</span>
-                                        <span v-else>🔄</span>
-                                        {{ syncing[source.id] ? 'Syncing...' : 'Sync' }}
-                                    </button>
-                                </div>
-                                <div class="grid grid-cols-2 gap-2 text-sm">
-                                    <div class="bg-slate-900 p-2 rounded">
-                                        <div class="text-slate-500 text-xs">Records</div>
-                                        <div class="text-emerald-400 font-mono">{{ source.count.toLocaleString() }}</div>
-                                    </div>
-                                    <div class="bg-slate-900 p-2 rounded">
-                                        <div class="text-slate-500 text-xs">Last Sync</div>
-                                        <div class="text-blue-400 font-mono">{{ source.last_sync }}</div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- File/Content Viewer (Right) -->
-                    <div class="w-2/3 flex flex-col gap-2">
-                        <!-- File List Bar -->
-                        <div class="bg-slate-900 rounded p-2 overflow-x-auto whitespace-nowrap flex gap-2 h-16 items-center">
-                             <span class="text-slate-500 text-sm px-2">Files:</span>
-                             <button v-for="file in dataFiles" :key="file" 
-                                @click="loadFileContent(file)"
-                                :class="['px-3 py-1 rounded text-xs border transition-colors', currentFileName === file ? 'bg-emerald-900 border-emerald-500 text-emerald-100' : 'bg-slate-800 border-slate-700 text-slate-400 hover:bg-slate-700']">
-                                {{ file.split('/').pop() }}
-                            </button>
-                        </div>
-                        
-                        <!-- Content Table -->
-                        <div class="bg-slate-900 rounded p-2 flex-grow overflow-auto relative">
-                            <div v-if="currentFileContent">
-                                <div class="sticky top-0 bg-slate-900 pb-2 border-b border-slate-700 mb-2 flex justify-between items-center">
-                                     <h3 class="font-bold text-emerald-400">{{ currentFileName }}</h3>
-                                     <span class="text-xs text-slate-500">Showing top 100 rows</span>
-                                </div>
-                                <table class="w-full text-xs text-left border-collapse">
-                                    <thead class="bg-slate-800 text-slate-400 sticky top-8 z-10">
-                                        <tr>
-                                            <th v-for="(header, i) in currentFileContent[0]" :key="i" class="px-2 py-1 border-b border-slate-700">{{ header }}</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-for="(row, i) in currentFileContent.slice(1)" :key="i" class="hover:bg-slate-800 border-b border-slate-800/50">
-                                            <td v-for="(cell, j) in row" :key="j" class="px-2 py-1">{{ cell }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div v-else class="flex flex-col items-center justify-center h-full text-slate-600">
-                                <span class="text-4xl mb-4">📄</span>
-                                <span>Select a file above to inspect raw data</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="flex-grow flex items-center justify-center text-slate-500">
+                    <p>Data Manager functionality is currently simplified in this view.</p>
                 </div>
             </div>
         </div>
@@ -224,299 +130,246 @@
     </div>
 
     <script>
-        const { createApp, ref, onMounted, nextTick } = Vue;
+        const { createApp, ref, onMounted, defineComponent, h } = Vue;
 
-        const DEFAULT_WIDGETS = [
-            { id: 'watchlist', title: '👀 Watchlist Monitor', type: 'watchlist', colSpan: 'col-span-1 md:col-span-2 lg:col-span-1' },
-            { id: 'chart', title: '📈 Market Index (SH000001)', type: 'chart', colSpan: 'col-span-1 md:col-span-2' },
-            { id: 'logs', title: 'System Logs', type: 'logs', colSpan: 'col-span-3' }
-        ];
-
-        createApp({
+        // --- Built-in Widgets ---
+        const LogsWidget = {
+            template: `
+                <div class="bg-black text-green-500 font-mono text-xs p-2 h-full overflow-y-auto rounded">
+                    <div v-for="(log, i) in logs" :key="i">[{{ log.time }}] {{ log.msg }}</div>
+                </div>
+            `,
             setup() {
-                const showToolbar = ref(true);
-                const showSettings = ref(false);
-                const showDataModal = ref(false);
-                const isEditMode = ref(false);
-                const widgets = ref([...DEFAULT_WIDGETS]);
-                
-                const watchlist = ref([]);
                 const logs = ref([]);
-                const dataStatus = ref({ watchlist: false, lastUpdate: '' });
-                
-                const dataSources = ref([]);
-                const syncing = ref({}); // Track sync status per source
-                const startDate = ref('');
-                const endDate = ref('');
-                
-                const dataFiles = ref([]);
-                const currentFileName = ref('');
-                const currentFileContent = ref(null);
-
-                let chartInstance = null;
-                let sortableInstance = null;
-                const gridContainer = ref(null);
-
-                const toggleSettings = () => showSettings.value = !showSettings.value;
-                
-                const toggleDataModal = async () => {
-                    showDataModal.value = !showDataModal.value;
-                    if (showDataModal.value) {
-                        // Default to today if empty? Or leave empty for single day default.
-                        // Let's leave empty to imply "Auto/Today".
-                        await loadDataSources();
-                        await loadDataFiles();
-                    }
-                };
-                
-                const loadDataSources = async () => {
-                    try {
-                        const res = await fetch('/api/data/sources');
-                        dataSources.value = await res.json();
-                    } catch (e) {
-                        addLog("Error loading sources: " + e);
-                    }
-                };
-
-                const loadDataFiles = async () => {
-                    try {
-                        const res = await fetch('/api/data/files');
-                        dataFiles.value = await res.json();
-                    } catch (e) {
-                        addLog("Error loading data files: " + e);
-                    }
-                };
-
-                const loadFileContent = async (filename) => {
-                    currentFileName.value = filename;
-                    currentFileContent.value = null;
-                    try {
-                        const res = await fetch(`/api/data/content?file=${filename}`);
-                        const data = await res.json();
-                        currentFileContent.value = data.content;
-                    } catch (e) {
-                        addLog("Error loading file content: " + e);
-                    }
-                };
-                
-                const triggerSync = async (sourceId) => {
-                    if (syncing.value[sourceId]) return;
-                    
-                    syncing.value[sourceId] = true;
-                    addLog(`Starting sync for ${sourceId}...`);
-                    
-                    try {
-                        let url = `/api/data/sync?source=${sourceId}`;
-                        if(startDate.value) url += `&start_date=${startDate.value.replace(/-/g, '')}`;
-                        if(endDate.value) url += `&end_date=${endDate.value.replace(/-/g, '')}`;
-                        
-                        await fetch(url, { method: 'POST' });
-                        addLog(`Sync command for ${sourceId} sent.`);
-                        
-                        // Poll for update or just wait a bit then refresh
-                        setTimeout(async () => {
-                            await loadDataSources();
-                            await loadDataFiles();
-                            syncing.value[sourceId] = false;
-                            addLog(`${sourceId} sync check complete.`);
-                        }, 5000); // 5s wait for demo, ideally ws push
-                        
-                    } catch (e) {
-                        addLog("Sync trigger failed: " + e);
-                        syncing.value[sourceId] = false;
-                    }
-                };
-
-                const toggleEditMode = async () => {
-                    if (isEditMode.value) {
-                        // Save Mode
-                        await saveLayout();
-                        if (sortableInstance) {
-                            sortableInstance.option("disabled", true);
-                        }
-                    } else {
-                        // Enter Edit Mode
-                        if (sortableInstance) {
-                            sortableInstance.option("disabled", false);
-                        }
-                    }
-                    isEditMode.value = !isEditMode.value;
-                };
-
-                const getChangeColor = (val) => {
-                    const num = parseFloat(val);
-                    if (num > 0) return 'text-red-400';
-                    if (num < 0) return 'text-green-400';
-                    return 'text-gray-400';
-                };
-
                 const addLog = (msg) => {
-                    const time = new Date().toLocaleTimeString();
-                    logs.value.unshift({ time, msg });
+                    logs.value.unshift({ time: new Date().toLocaleTimeString(), msg });
                     if (logs.value.length > 50) logs.value.pop();
                 };
+                onMounted(() => { window.addSystemLog = addLog; });
+                return { logs };
+            }
+        };
 
-                const initChart = () => {
-                    // Need to wait for DOM update because v-for might move things
-                    nextTick(() => {
-                        const chartWidget = widgets.value.find(w => w.type === 'chart');
-                        if (!chartWidget) return;
-                        
-                        const chartDom = document.getElementById('chart-' + chartWidget.id);
-                        if (chartDom) {
-                            if (chartInstance) chartInstance.dispose();
-                            chartInstance = echarts.init(chartDom, 'dark');
-                            const option = {
-                                backgroundColor: 'transparent',
-                                tooltip: { trigger: 'axis' },
-                                xAxis: { type: 'category', data: [] },
-                                yAxis: { scale: true },
-                                series: [{ type: 'candlestick', data: [] }]
-                            };
-                            chartInstance.setOption(option);
+        // Initialize Registry
+        window.VibeComponentRegistry = {
+            'logs-widget': LogsWidget
+        };
+
+        // 1. Define the Dynamic Loader Component
+        const WidgetWrapper = defineComponent({
+            props: ['config'],
+            setup(props) {
+                const comp = ref(null);
+                const name = props.config.component;
+                
+                if (window.VibeComponentRegistry && window.VibeComponentRegistry[name]) {
+                    comp.value = window.VibeComponentRegistry[name];
+                } else {
+                    setTimeout(() => {
+                        if (window.VibeComponentRegistry && window.VibeComponentRegistry[name]) {
+                            comp.value = window.VibeComponentRegistry[name];
                         }
-                    });
-                };
+                    }, 500);
+                }
+                
+                return () => comp.value ? h(comp.value, { 
+                    widgetId: props.config.instanceId, 
+                    moduleId: props.config.id, 
+                    config: props.config.instanceConfig || {} 
+                }) : h('div', { class: 'text-slate-500 p-4' }, 'Loading ' + name + '...');
+            }
+        });
 
-                const updateChart = (data) => {
-                    if (!chartInstance) initChart();
-                    if (chartInstance) {
-                        chartInstance.setOption({
-                            xAxis: { data: data.dates },
-                            series: [{ data: data.values }]
+        // 2. Main App
+        const app = createApp({
+            setup() {
+                // All state and methods go here.
+                const showToolbar = ref(true);
+                const isEditMode = ref(false);
+                const showDataModal = ref(false);
+                const showConfigModal = ref(false);
+                const isConnected = ref(false);
+                const availableModules = ref([]); 
+                const activeWidgets = ref([]);
+                const gridContainer = ref(null);
+                let sortableInstance = null;
+                let ws = null;
+                const subscribers = {};
+
+                const currentConfigJson = ref("{}");
+                const configDescription = ref("");
+                const configError = ref("");
+                const editingWidgetId = ref(null);
+
+                const toggleDataModal = () => showDataModal.value = !showDataModal.value;
+
+                const loadModuleRegistry = async () => {
+                    try {
+                        const res = await fetch('/api/modules/ui_registry');
+                        const registry = await res.json();
+                        
+                        for (const mod of registry) {
+                            if (mod.script_path) {
+                                await new Promise((resolve, reject) => {
+                                    const s = document.createElement('script');
+                                    s.src = mod.script_path;
+                                    s.onload = resolve;
+                                    s.onerror = reject;
+                                    document.head.appendChild(s);
+                                }).catch(e => console.error("Script load error", e));
+                            }
+                        }
+                        
+                        availableModules.value = registry;
+
+                        availableModules.value.push({
+                            id: 'system_logs',
+                            title: 'System Logs',
+                            component: 'logs-widget',
+                            default_col_span: 'col-span-3'
                         });
+
+                    } catch (e) {
+                        console.error("Registry load failed", e);
                     }
                 };
 
-                // --- API & WS ---
+                const addWidget = (mod, edit=true) => {
+                    activeWidgets.value.push({
+                        ...mod,
+                        instanceId: mod.id + '_' + Math.random().toString(36).substr(2, 9),
+                        instanceConfig: mod.config_default ? JSON.parse(JSON.stringify(mod.config_default)) : {}
+                    });
+                    if(edit) {
+                        isEditMode.value = true;
+                        if(sortableInstance) sortableInstance.option("disabled", false);
+                    }
+                };
+                
+                const loadLayout = async () => {
+                    try {
+                        const res = await fetch('/api/layout');
+                        const layout = await res.json();
+                        
+                        if (!layout || layout.length === 0) {
+                             const wl = availableModules.value.find(m => m.id === 'watchlist_main');
+                             if(wl) addWidget(wl, false);
+                             const logs = availableModules.value.find(m => m.id === 'system_logs');
+                             if(logs) addWidget(logs, false);
+                        } else {
+                            layout.forEach(saved => {
+                                activeWidgets.value.push(saved);
+                            });
+                        }
+                    } catch (e) { console.error(e); }
+                };
+
+                const removeWidget = (uid) => {
+                    activeWidgets.value = activeWidgets.value.filter(w => w.instanceId !== uid);
+                };
+
+                const configureWidget = (widget) => {
+                    editingWidgetId.value = widget.instanceId;
+                    currentConfigJson.value = JSON.stringify(widget.instanceConfig || {}, null, 2);
+                    
+                    const modDef = availableModules.value.find(m => m.id === widget.id);
+                    configDescription.value = modDef ? modDef.config_description : "";
+                    configError.value = "";
+                    
+                    showConfigModal.value = true;
+                };
+
+                const saveLayout = async () => {
+                     if (sortableInstance) {
+                        const newOrder = sortableInstance.toArray();
+                        const newWidgets = [];
+                        newOrder.forEach(id => {
+                            const w = activeWidgets.value.find(x => x.instanceId === id);
+                            if (w) newWidgets.push(w);
+                        });
+                        activeWidgets.value = newWidgets;
+                     }
+                     
+                     await fetch('/api/layout', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(activeWidgets.value)
+                     });
+                };
+                
+                const saveWidgetConfig = async () => {
+                    try {
+                        const parsed = JSON.parse(currentConfigJson.value);
+                        const idx = activeWidgets.value.findIndex(w => w.instanceId === editingWidgetId.value);
+                        if (idx !== -1) {
+                            activeWidgets.value[idx].instanceConfig = parsed;
+                            await saveLayout();
+                        }
+                        showConfigModal.value = false;
+                    } catch (e) {
+                        configError.value = "Invalid JSON: " + e.message;
+                    }
+                };
+                
+                const toggleEditMode = async () => {
+                    isEditMode.value = !isEditMode.value;
+                    if(sortableInstance) sortableInstance.option("disabled", !isEditMode.value);
+                    if(!isEditMode.value) {
+                        await saveLayout();
+                    }
+                };
 
                 const connectWS = () => {
                     const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
                     const wsUrl = `${protocol}://${window.location.host}/ws`;
-                    const ws = new WebSocket(wsUrl);
-
-                    ws.onopen = () => addLog("Connected to Server");
-
-                    ws.onmessage = (event) => {
+                    ws = new WebSocket(wsUrl);
+                    ws.onopen = () => isConnected.value = true;
+                    ws.onclose = () => { isConnected.value = false; setTimeout(connectWS, 3000); };
+                    ws.onmessage = (e) => {
                         try {
-                            const msg = JSON.parse(event.data);
-                            if (msg.type === 'update') {
-                                if (msg.widget_id === 'watchlist_main') {
-                                    watchlist.value = msg.data;
-                                    dataStatus.value.watchlist = true;
-                                    dataStatus.value.lastUpdate = new Date().toLocaleTimeString();
-                                } else if (msg.widget_id === 'chart_sh000001') {
-                                    updateChart(msg.data);
-                                }
+                            const msg = JSON.parse(e.data);
+                            if(msg.type === 'update' && subscribers[msg.widget_id]) {
+                                subscribers[msg.widget_id](msg.data);
                             }
-                        } catch (e) {
-                            console.error(e);
-                        }
-                    };
-
-                    ws.onclose = () => {
-                        addLog("Disconnected. Retrying...");
-                        dataStatus.value.watchlist = false;
-                        setTimeout(connectWS, 5000);
+                        } catch(x){}
                     };
                 };
-
-                const checkStatus = async () => {
-                    try {
-                        const res = await fetch('/api/status');
-                        const data = await res.json();
-                        // Update status logic
-                        if (data['watchlist_main']) {
-                            // Calculate diff?
+                window.vibeSocket = {
+                    subscribe: (id, cb) => subscribers[id] = cb,
+                    unsubscribe: (id) => delete subscribers[id],
+                    send: (type, payload) => {
+                        if(ws && ws.readyState === 1) {
+                            ws.send(JSON.stringify({ type, ...payload }));
                         }
-                    } catch (e) {
-                        console.error("Status check failed", e);
-                    }
-                };
-
-                const loadLayout = async () => {
-                    try {
-                        const res = await fetch('/api/layout');
-                        const data = await res.json();
-                        if (data && data.length > 0) {
-                            widgets.value = data;
-                        }
-                    } catch (e) {
-                        addLog("Failed to load layout, using default.");
-                    }
-                };
-
-                const saveLayout = async () => {
-                    try {
-                        // Get current order from DOM via Sortable or just map the array if we bound it correctly
-                        // Sortable changes the DOM, so we need to sync widgets array? 
-                        // Actually, SortableJS manual mode modifies DOM. 
-                        // The 'widgets' array needs to be reordered to match DOM order.
-                        
-                        const newOrderIds = sortableInstance.toArray();
-                        const newWidgets = [];
-                        newOrderIds.forEach(id => {
-                            const w = widgets.value.find(x => x.id === id);
-                            if (w) newWidgets.push(w);
-                        });
-                        widgets.value = newWidgets;
-
-                        await fetch('/api/layout', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(widgets.value)
-                        });
-                        addLog("Layout saved!");
-                    } catch (e) {
-                        addLog("Error saving layout: " + e);
-                    }
-                };
-
-                const initSortable = () => {
-                    if (gridContainer.value) {
-                        sortableInstance = new Sortable(gridContainer.value, {
-                            animation: 150,
-                            handle: '.drag-handle',
-                            disabled: true, // Start disabled
-                            dataIdAttr: 'data-id',
-                            onEnd: function (evt) {
-                                // console.log('Dropped');
-                            }
-                        });
                     }
                 };
 
                 onMounted(async () => {
+                    await loadModuleRegistry();
                     await loadLayout();
-                    initSortable();
-                    initChart();
                     connectWS();
                     
-                    // Poll status every 5s
-                    setInterval(checkStatus, 5000);
-
-                    setTimeout(() => { 
-                        if(!isEditMode.value) showToolbar.value = false; 
-                    }, 2000);
-                    
-                    // Re-init chart on resize
-                    window.addEventListener('resize', () => {
-                         if(chartInstance) chartInstance.resize();
-                    });
+                    if(gridContainer.value) {
+                        sortableInstance = new Sortable(gridContainer.value, {
+                            animation: 150,
+                            handle: '.drag-handle',
+                            disabled: true,
+                            dataIdAttr: 'data-id'
+                        });
+                    }
                 });
 
-                return {
-                    showToolbar, showSettings, toggleSettings, 
-                    watchlist, logs, dataStatus, 
-                    widgets, isEditMode, toggleEditMode,
-                    gridContainer, getChangeColor,
-                    // Data Modal
-                    showDataModal, toggleDataModal, dataFiles, 
-                    currentFileName, currentFileContent, loadFileContent, triggerSync,
-                    dataSources, syncing, startDate, endDate
+                return { 
+                    showToolbar, isEditMode, toggleEditMode, showDataModal, toggleDataModal, 
+                    showConfigModal, currentConfigJson, configDescription, configError, configureWidget, saveWidgetConfig,
+                    isConnected, availableModules, activeWidgets, gridContainer,
+                    addWidget, removeWidget
                 };
             }
-        }).mount('#app');
+        });
+        
+        app.component('widget-wrapper', WidgetWrapper);
+        app.mount('#app');
     </script>
 </body>
 </html>

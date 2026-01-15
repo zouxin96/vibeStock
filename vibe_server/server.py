@@ -18,10 +18,90 @@ if not os.path.exists(static_dir):
 
 app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
+# Mount modules directory to serve widget scripts
+modules_dir = os.path.join(os.getcwd(), "modules")
+if not os.path.exists(modules_dir):
+    os.makedirs(modules_dir)
+app.mount("/modules", StaticFiles(directory=modules_dir), name="modules")
+
 @app.get("/")
 async def get():
     with open(os.path.join(static_dir, "index.html"), 'r', encoding='utf-8') as f:
         return HTMLResponse(content=f.read())
+
+@app.get("/api/modules/ui_registry")
+async def get_ui_registry():
+    """
+    Returns the UI configuration for all active modules.
+    Used by the frontend to dynamically load scripts and build the dashboard.
+    """
+    # This logic should ideally be in module_loader, but for now we'll access context via a hack or singleton if available.
+    # A better way is to have ModuleLoaderService inject this data into a shared state or the server holds a reference.
+    # For now, let's look at what modules are loaded by scanning the filesystem or importing the loader service instance.
+    # Since server.py is often separate, we'll implement a simple scan or rely on the running vibe.py process to update a shared registry.
+    
+    # SIMPLIFICATION: We will re-scan here or use a shared singleton registry if one existed.
+    # To avoid complexity, we will manually instantiate modules to check config (NOT IDEAL but works for this task)
+    # OR better: The ModuleLoader updates a JSON file or shared dict.
+    
+    # FAST PATH: We scan the directories for __init__.py and import them? No, that's heavy.
+    # We will assume a global registry exists. 
+    # Let's import the loader service instance from vibe.py? No, circular import.
+    
+    # PRACTICAL SOLUTION:
+    # We will walk the 'modules' directory. If we find a module with 'widget.js' and a python class, 
+    # we can try to extract config. 
+    # BUT easier: Just return the config for the known 'watchlist' module we created, 
+    # plus any others we find that follow the pattern.
+    
+    registry = []
+    
+    # 1. Scan for modules with widget.js
+    for category in ["core", "prod", "beta"]:
+        cat_path = os.path.join(modules_dir, category)
+        if not os.path.exists(cat_path): continue
+        
+        for mod_name in os.listdir(cat_path):
+            mod_path = os.path.join(cat_path, mod_name)
+            if os.path.isdir(mod_path):
+                # Check for widget.js
+                widget_js = os.path.join(mod_path, "widget.js")
+                if os.path.exists(widget_js):
+                    # It has a UI. Now we need the python config.
+                    # We can try to import it, or just make a best guess/convention.
+                    # Convention: It must be loaded by the main process.
+                    
+                    # For this task, we will try to instantiate it temporarily to get config
+                    # OR we just hardcode the path convention for the frontend to assume.
+                    
+                    # Let's do the "Import to get config" (Safe enough for trusted code)
+                    try:
+                        import importlib.util
+                        spec = importlib.util.spec_from_file_location(mod_name, os.path.join(mod_path, "__init__.py"))
+                        if spec and spec.loader:
+                            module = importlib.util.module_from_spec(spec)
+                            spec.loader.exec_module(module)
+                            # Find class
+                            from vibe_core.module import VibeModule
+                            for attr_name in dir(module):
+                                attr = getattr(module, attr_name)
+                                if isinstance(attr, type) and issubclass(attr, VibeModule) and attr is not VibeModule:
+                                    instance = attr()
+                                    ui_config = instance.get_ui_config()
+                                    if ui_config:
+                                        # Normalize to list
+                                        configs = ui_config if isinstance(ui_config, list) else [ui_config]
+                                        
+                                        for cfg in configs:
+                                            # Fix script path to be absolute URL
+                                            if "script_path" in cfg:
+                                                cfg["script_path"] = f"/modules/{category}/{mod_name}/{cfg['script_path']}"
+                                            registry.append(cfg)
+                                    break
+                    except Exception as e:
+                        print(f"Error loading UI config for {mod_name}: {e}")
+
+    return JSONResponse(registry)
 
 @app.get("/api/status")
 async def get_status():
@@ -263,10 +343,8 @@ async def websocket_endpoint(websocket: WebSocket):
     await manager.connect(websocket)
     try:
         while True:
-            # Keep connection open and listen for client messages (e.g. ping)
             data = await websocket.receive_text()
-            # We can handle client commands here if needed
-            if data == "ping":
-                await websocket.send_text("pong")
+            # Handle upstream messages
+            await manager.handle_message(websocket, data)
     except WebSocketDisconnect:
         manager.disconnect(websocket)
