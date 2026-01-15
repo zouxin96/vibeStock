@@ -3,17 +3,24 @@ from typing import Dict, Type
 
 class IService(ABC):
     """
+    后台服务接口 (例如：Web服务器, 调度器, 机器人)。
     Interface for background services (e.g., WebServer, Scheduler, TelegramBot).
     """
     
     @abstractmethod
     def start(self):
-        """Start the service (non-blocking preferred, or define threading strategy)"""
+        """
+        启动服务 (首选非阻塞方式，或者定义线程策略)。
+        Start the service (non-blocking preferred, or define threading strategy)
+        """
         pass
 
     @abstractmethod
     def stop(self):
-        """Stop the service and cleanup"""
+        """
+        停止服务并清理资源。
+        Stop the service and cleanup
+        """
         pass
     
     @property
