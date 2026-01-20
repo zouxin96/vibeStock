@@ -179,7 +179,28 @@ def cmd_run(args):
         ctx.data = DataFactory.create_provider(config)
         print(f"Data Provider initialized: {type(ctx.data).__name__}")
     except Exception as e:
-        print(f"Failed to initialize data provider: {e}")
+        print(f"CRITICAL ERROR: Failed to initialize data provider: {e}")
+        import traceback
+        traceback.print_exc()
+        # Fallback to a dummy provider to prevent NoneType crashes
+        class NullDataProvider:
+            def __getattr__(self, name):
+                def safe_return(*args, **kwargs):
+                    try:
+                        import pandas as pd
+                        return pd.DataFrame()
+                    except ImportError:
+                        return None
+                return safe_return
+            @property
+            def data_dimension(self): return None
+            @property
+            def sync_policy(self): return None
+        ctx.data = NullDataProvider()
+
+        print("WARNING: Using NullDataProvider. System functionality will be severely limited.")
+
+
     
     # 2. Create Services
     sched_service = SchedulerService()

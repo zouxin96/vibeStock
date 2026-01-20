@@ -86,8 +86,35 @@ async def get_ui_registry():
                             for attr_name in dir(module):
                                 attr = getattr(module, attr_name)
                                 if isinstance(attr, type) and issubclass(attr, VibeModule) and attr is not VibeModule:
-                                    instance = attr()
-                                    ui_config = instance.get_ui_config()
+                                    ui_config = None
+                                    
+                                    # 1. Try class method (preferred)
+                                    if hasattr(attr, 'get_ui_config') and callable(getattr(attr, 'get_ui_config')):
+                                        try:
+                                            # Check if it's bound (classmethod) or needs instance
+                                            # Inspecting is tricky, just try calling it as class method first
+                                            ui_config = attr.get_ui_config()
+                                        except TypeError:
+                                            # Likely an instance method requiring 'self'
+                                            pass
+                                        except Exception as e:
+                                            print(f"Error calling static get_ui_config for {mod_name}: {e}")
+
+                                    # 2. Fallback to instantiation
+                                    if ui_config is None:
+                                        try:
+                                            # Try passing None as context (for modules expecting context)
+                                            try:
+                                                instance = attr(None)
+                                            except TypeError:
+                                                # Fallback: Try no arguments (for modules without context in __init__)
+                                                instance = attr()
+                                                
+                                            if hasattr(instance, 'get_ui_config'):
+                                                ui_config = instance.get_ui_config()
+                                        except Exception as e:
+                                            print(f"Error instantiating {mod_name} for config: {e}")
+
                                     if ui_config:
                                         # Normalize to list
                                         configs = ui_config if isinstance(ui_config, list) else [ui_config]

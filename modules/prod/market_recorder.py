@@ -27,6 +27,9 @@ class MarketDataRecorder(VibeModule):
         # Only run on timer
         if event.type != "TIMER":
             return
+            
+        if self.context.data is None:
+            return
 
         # Check if we can fetch data
         if hasattr(self.context.data, "get_snapshot"):

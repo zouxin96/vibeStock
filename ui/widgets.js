@@ -242,12 +242,40 @@
         }
     };
 
+    // --- 6. Base Data Monitor Widget ---
+    const BaseDataWidget = {
+        props: ['status', 'title'],
+        template: `
+            <div class="h-full flex flex-col justify-center items-center p-4">
+                <div class="text-xl font-bold mb-4">{{ title || 'Data Provider' }}</div>
+                
+                <div class="flex items-center space-x-2 mb-4">
+                    <div :class="['w-4 h-4 rounded-full', status.is_connected ? 'bg-green-500 shadow-green-500/50 shadow-lg' : 'bg-red-500']"></div>
+                    <span class="text-lg">{{ status.is_connected ? 'Online' : 'Offline' }}</span>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4 w-full text-center">
+                    <div class="bg-slate-700/50 p-3 rounded">
+                        <div class="text-xs text-slate-400">Last Update</div>
+                        <div class="font-mono">{{ status.last_updated || 'Never' }}</div>
+                    </div>
+                    <div class="bg-slate-700/50 p-3 rounded">
+                        <div class="text-xs text-slate-400">Errors</div>
+                        <div class="font-mono text-red-400">{{ status.error_count || 0 }}</div>
+                    </div>
+                </div>
+            </div>
+        `
+    };
+
     // Register globally
     window.VibeBaseWidgets = {
         BaseListWidget,
         BasePieWidget,
         BaseBarWidget,
         BaseLineWidget,
-        BaseCandleWidget
+        BaseCandleWidget,
+        BaseDataWidget
     };
+
 })();

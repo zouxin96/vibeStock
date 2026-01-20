@@ -1,24 +1,39 @@
 from vibe_core.module import VibeModule
 from vibe_core.event import Event
-from vibe_core.context import Context
 
 class {{ModuleName}}(VibeModule):
     """
     {{Description}}
     """
     
-    def __init__(self):
-        super().__init__()
-        self.description = "{{Description}}"
+    def __init__(self, context=None):
+        super().__init__(context)
+        self.id = "{{MODULE_ID}}"
+        self.name = "{{MODULE_NAME}}"
 
-    def configure(self):
-        # Configure triggers here
-        # Example: self.trigger_on_cron("0 9 * * 1-5")
-        # Example: self.subscribe_topic("quote.000001.SH")
-        pass
+    def on_start(self):
+        if not self.context: return
+        self.logger.info(f"{self.name} started.")
+        # self.context.register_cron(self, "interval:60")
+
+    def on_stop(self):
+        self.logger.info(f"{self.name} stopped.")
 
     def on_event(self, event: Event):
-        self.context.logger.info(f"{{ModuleName}} received event: {event}")
-        
-        # Your logic here
-        # data = self.context.data.get_price(...)
+        pass
+
+    @classmethod
+    def get_ui_config(cls):
+        """
+        Return UI configuration for the dashboard.
+        Should match the structure expected by ui/widgets.js or define a new component.
+        """
+        return None
+        # Example:
+        # return {
+        #     "id": "{{MODULE_ID}}",
+        #     "title": "{{MODULE_NAME}}",
+        #     "component": "base-list-widget", # or custom
+        #     "config_default": {},
+        #     "script_path": "widget.js" # if custom component
+        # }

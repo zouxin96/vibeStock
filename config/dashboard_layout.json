@@ -8,70 +8,53 @@
     "instanceId": "watchlist_main_gk505qpy8",
     "instanceConfig": {
       "codes": [
-        "600519.SH",
-        "000001.SZ"
+        "300184.SZ",
+        "000001"
       ]
     }
   },
   {
-    "id": "watchlist_main",
-    "component": "watchlist-widget",
-    "title": "Market Watchlist (Sina)",
-    "default_col_span": "col-span-1 md:col-span-2 lg:col-span-1",
-    "script_path": "/modules/core/watchlist/widget.js",
-    "config_default": {
-      "codes": [
-        "600519.SH",
-        "000001.SZ",
-        "600036.SH"
-      ]
-    },
-    "config_description": "Specify a list of stock codes to monitor. \nFormat: { \"codes\": [\"600519.SH\", \"000001.SZ\"] }",
-    "instanceId": "watchlist_main_jnnnb1cdq",
-    "instanceConfig": {
-      "codes": [
-        "600519.SH",
-        "000001.SZ",
-        "600036.SH"
-      ]
-    }
-  },
-  {
-    "id": "system_logs",
-    "title": "System Logs",
-    "component": "logs-widget",
-    "default_col_span": "col-span-3",
-    "instanceId": "system_logs_6ua4et4mr"
-  },
-  {
-    "id": "stock_kline",
-    "component": "stock-kline-widget",
-    "title": "Moutai (600519) Day K",
-    "default_col_span": "col-span-1 md:col-span-2",
-    "script_path": "/modules/beta/market_charts/widget.js",
-    "instanceId": "stock_kline_nrj9gmmft"
-  },
-  {
-    "id": "index_line",
-    "component": "index-line-widget",
-    "title": "Index Trend (Live)",
-    "default_col_span": "col-span-1 md:col-span-2",
-    "script_path": "/modules/beta/market_charts/widget.js",
-    "instanceId": "index_line_fus22n1yr"
-  },
-  {
-    "id": "sector_pie",
-    "component": "sector-pie-widget",
-    "title": "Sector Distribution",
+    "id": "limit_rank",
+    "title": "Limit Up Rank (Funds)",
+    "component": "limit-rank-widget",
     "default_col_span": "col-span-1",
-    "script_path": "/modules/beta/market_charts/widget.js",
-    "instanceId": "sector_pie_dc77ha7n0"
+    "config_default": {},
+    "config_description": "Displays the top limit-up stocks sorted by blocking funds.",
+    "script_path": "/modules/beta/limit_rank/widget.js",
+    "instanceId": "limit_rank_re5o0rqy1",
+    "instanceConfig": {}
   },
   {
-    "id": "system_logs",
-    "title": "System Logs",
-    "component": "logs-widget",
-    "default_col_span": "col-span-3",
-    "instanceId": "system_logs_0mmfjzuxb"
+    "id": "weighted_limit_up",
+    "title": "Weighted Limit Up Rank",
+    "component": "weighted-limit-up-widget",
+    "default_col_span": "col-span-1",
+    "config_default": {},
+    "config_description": "Displays limit-up stocks sorted by Weighted Days (Days * Increase%).",
+    "script_path": "/modules/beta/weighted_limit_up/widget.js",
+    "instanceId": "weighted_limit_up_auto_added",
+    "instanceConfig": {}
+  },
+  {
+    "id": "region_pie",
+    "title": "Limit-Up Distribution by Province",
+    "component": "region-pie-widget",
+    "default_col_span": "col-span-1",
+    "config_default": {},
+    "config_description": "Pie chart showing number of limit-up stocks per province.",
+    "script_path": "/modules/beta/region_pie/widget.js",
+    "instanceId": "region_pie_wzgkon8eg",
+    "instanceConfig": {}
+  },
+  {
+    "id": "market_heatmap",
+    "title": "Industry Heatmap (Top 30)",
+    "component": "market-heatmap-widget",
+    "default_col_span": "col-span-1 md:col-span-2",
+    "config_default": {},
+    "config_description": "Displays the top 30 industries sorted by price change.",
+    "script_path": "/modules/beta/market_heatmap/modules/beta/market_heatmap/widget.js",
+    "instanceId": "market_heatmap_mib9gbmyh",
+    "instanceConfig": {}
   }
 ]

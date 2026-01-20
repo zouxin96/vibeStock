@@ -1,11 +1,18 @@
 from abc import ABC, abstractmethod
 from typing import List, Dict, Any, Optional
+from enum import Enum
 
 # Avoid circular imports by using TYPE_CHECKING
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from .context import Context
     from .event import Event
+
+class ModuleCategory(Enum):
+    SYSTEM = "SYSTEM"
+    DATA = "DATA"
+    STRATEGY = "STRATEGY"
+    MONITOR = "MONITOR"
 
 class VibeModule(ABC):
     """
@@ -20,6 +27,11 @@ class VibeModule(ABC):
         self.config: Dict[str, Any] = {}
         self.name: str = self.__class__.__name__
         self.description: str = self.__class__.__doc__.strip() if self.__class__.__doc__ else ""
+        
+        # New attributes for module management
+        self.category: ModuleCategory = ModuleCategory.STRATEGY
+        self.dependencies: List[str] = []
+        self.is_singleton: bool = True
 
     def initialize(self, context: 'Context'):
         """
@@ -30,6 +42,21 @@ class VibeModule(ABC):
         """
         self.context = context
         self.configure()
+        self.on_start()
+
+    def on_start(self):
+        """
+        模块启动时调用 (在 configure 之后)。
+        Called when the module starts (after configure).
+        """
+        pass
+
+    def on_stop(self):
+        """
+        模块停止/卸载时调用。
+        Called when the module stops/unloads.
+        """
+        pass
 
     def configure(self):
         """

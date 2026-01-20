@@ -1,0 +1,10 @@
+2026/1/20 10:32:22 - Attempting to start VibeStock Monitor Service hidden...
+2026/1/20 10:32:22 - Executing: start_monitor_service.bat
+2026/1/20 10:32:22 - Run command issued successfully. Return code (immediate): 0
+2026/1/20 10:32:41 - Attempting to start VibeStock Monitor Service hidden...
+2026/1/20 10:32:41 - Executing: start_monitor_service.bat
+2026/1/20 10:32:41 - Run command issued successfully. Return code (immediate): 0
+2026/1/20 10:33:10 - Attempting to start VibeStock Monitor Service hidden...
+2026/1/20 10:33:10 - Script Dir: D:\vibeStock\vibeStock\vibeStock
+2026/1/20 10:33:10 - Executing: D:\vibeStock\vibeStock\vibeStock\start_monitor_service.bat
+2026/1/20 10:33:11 - Run command issued successfully. Return code (immediate): 0

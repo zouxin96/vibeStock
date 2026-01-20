@@ -37,13 +37,21 @@ class RealtimeMarketWatch(VibeModule):
         # 为了演示方便，我们假设 ctx.data 已经是 SinaAdapter 或者我们直接用 provider 接口的扩展方法
         # 但标准做法是 ctx.data.get_snapshot
         
+        if self.context.data is None:
+             # self.context.logger.error("Data provider is not initialized.")
+             return
+
         # 检查 adapter 是否支持 snapshot
         if hasattr(self.context.data, "get_snapshot"):
-            data = self.context.data.get_snapshot(self.watchlist)
-            
-            # 2. 推送到前端 "watchlist_main" 组件
-            if data:
-                self.context.output.dashboard("watchlist_main", data)
-                #self.context.logger.info(f"Pushed {len(data)} realtime quotes.")
+            try:
+                data = self.context.data.get_snapshot(self.watchlist)
+                
+                # 2. 推送到前端 "watchlist_main" 组件
+                if data:
+                    self.context.output.dashboard("watchlist_main", data)
+                    #self.context.logger.info(f"Pushed {len(data)} realtime quotes.")
+            except Exception as e:
+                import traceback
+                self.context.logger.error(f"Snapshot failed: {e}\n{traceback.format_exc()}")
         else:
             self.context.logger.warning("Current data provider does not support 'get_snapshot'")

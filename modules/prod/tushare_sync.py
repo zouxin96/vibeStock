@@ -59,7 +59,7 @@ class TushareSyncModule(VibeModule):
         else:
             # Fallback for when active provider isn't Tushare
             try:
-                from vibe_data.adapter.tushare_adapter import TushareAdapter
+                from vibe_data.adapter.stock_detail.tushare import TushareAdapter
                 token = self.context.config.get("data", {}).get("tushare_token", "")
                 adapter = TushareAdapter(token=token)
                 adapter.sync_daily_data()

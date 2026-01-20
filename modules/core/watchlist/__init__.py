@@ -41,6 +41,30 @@ class WatchlistModule(VibeModule):
     def on_event(self, event: Event):
         pass
         
+    def _normalize_code(self, code: str) -> str:
+        """
+        自动为股票代码添加 .SH, .SZ 或 .BJ 后缀（如果缺失）。
+        - 6, 900, 688, 689 开头 -> .SH (沪市)
+        - 0, 2, 3 开头 -> .SZ (深市)
+        - 4, 8, 920 开头 -> .BJ (北交所)
+        """
+        code = code.strip().upper()
+        if '.' in code:
+            return code
+        
+        if code.startswith(('6', '900', '688', '689')):
+            return f"{code}.SH"
+        if code.startswith(('0', '2', '3')):
+            return f"{code}.SZ"
+        if code.startswith(('4', '8', '920')):
+            return f"{code}.BJ"
+
+        # 尝试作为指数处理，上证指数 000001.SH 特殊处理
+        if code == '000001':
+            return '000001.SH'
+            
+        return code # 无法判断则返回原样
+
     def on_client_message(self, message: dict):
         """
         Handle messages from the frontend widget.
@@ -58,10 +82,13 @@ class WatchlistModule(VibeModule):
                 codes = ["600519.SH", "000001.SZ", "600036.SH"]
             elif isinstance(codes, str):
                 codes = [c.strip() for c in codes.split(',')]
+            
+            # 自动修正代码
+            normalized_codes = [self._normalize_code(c) for c in codes if c]
                 
             with self.subscriptions_lock:
-                self.subscriptions[widget_id] = {"codes": codes}
-                print(f"[Watchlist] Subscribed instance {widget_id} with {len(codes)} stocks: {codes}")
+                self.subscriptions[widget_id] = {"codes": normalized_codes}
+                print(f"[Watchlist] Subscribed instance {widget_id} with {len(normalized_codes)} stocks: {normalized_codes}")
 
     def _update_loop(self):
         while self.running:

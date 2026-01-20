@@ -161,22 +161,26 @@
             setup(props) {
                 const comp = ref(null);
                 const name = props.config.component;
+                let attempts = 0;
                 
-                if (window.VibeComponentRegistry && window.VibeComponentRegistry[name]) {
-                    comp.value = window.VibeComponentRegistry[name];
-                } else {
-                    setTimeout(() => {
-                        if (window.VibeComponentRegistry && window.VibeComponentRegistry[name]) {
-                            comp.value = window.VibeComponentRegistry[name];
-                        }
-                    }, 500);
-                }
+                const checkRegistry = () => {
+                    if (window.VibeComponentRegistry && window.VibeComponentRegistry[name]) {
+                        comp.value = window.VibeComponentRegistry[name];
+                    } else if (attempts < 20) { // Retry for 10 seconds
+                        attempts++;
+                        setTimeout(checkRegistry, 500);
+                    } else {
+                        console.error(`Widget component '${name}' not found in registry after timeout.`);
+                    }
+                };
+                
+                checkRegistry();
                 
                 return () => comp.value ? h(comp.value, { 
                     widgetId: props.config.instanceId, 
                     moduleId: props.config.id, 
                     config: props.config.instanceConfig || {} 
-                }) : h('div', { class: 'text-slate-500 p-4' }, 'Loading ' + name + '...');
+                }) : h('div', { class: 'text-slate-500 p-4' }, `Loading ${name}...`);
             }
         });
 
@@ -207,14 +211,22 @@
                     try {
                         const res = await fetch('/api/modules/ui_registry');
                         const registry = await res.json();
+                        console.log("UI Registry loaded:", registry);
                         
                         for (const mod of registry) {
                             if (mod.script_path) {
+                                console.log(`Loading external script for ${mod.id}: ${mod.script_path}`);
                                 await new Promise((resolve, reject) => {
                                     const s = document.createElement('script');
                                     s.src = mod.script_path;
-                                    s.onload = resolve;
-                                    s.onerror = reject;
+                                    s.onload = () => {
+                                        console.log(`Successfully loaded: ${mod.script_path}`);
+                                        resolve();
+                                    };
+                                    s.onerror = (err) => {
+                                        console.error(`Failed to load script: ${mod.script_path}`, err);
+                                        reject(err);
+                                    };
                                     document.head.appendChild(s);
                                 }).catch(e => console.error("Script load error", e));
                             }

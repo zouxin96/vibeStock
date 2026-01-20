@@ -42,7 +42,7 @@ class TushareExtraModule(VibeModule):
             return self.context.data
         
         # Fallback to creating a local adapter instance
-        from vibe_data.adapter.tushare_adapter import TushareAdapter
+        from vibe_data.adapter.stock_detail.tushare import TushareAdapter
         token = self.context.config.get("data", {}).get("tushare_token", "")
         return TushareAdapter(token=token)
 
