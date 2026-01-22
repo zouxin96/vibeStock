@@ -2,8 +2,9 @@ import pandas as pd
 import logging
 import datetime
 import os
-from ..base import AKShareBase
-from vibe_data.debug_logger import log_debug, log_error
+import time
+from base import AKShareBase
+from vibe_core.data.debug_logger import log_debug, log_error
 
 try:
     import akshare as ak
@@ -29,6 +30,20 @@ class AKShareLimitBoard(AKShareBase):
         is_today = (date is None) or (date == now.strftime("%Y%m%d"))
         date_str = date if date else now.strftime("%Y%m%d")
         
+        # --- Cache Logic (Only for today/realtime) ---
+        if is_today:
+            current_ts = time.time()
+            if not hasattr(self, '_limit_up_cache'):
+                self._limit_up_cache = None
+                self._limit_up_cache_time = 0
+                self._limit_up_last_backup_time = 0
+            
+            # Use cache if valid (TTL 5s)
+            if self._limit_up_cache is not None and (current_ts - self._limit_up_cache_time < 5):
+                # log_debug("Using cached limit up pool")
+                return self._limit_up_cache
+        # ---------------------------------------------
+
         try:
             df = ak.stock_zt_pool_em(date=date_str)
             if df is None:
@@ -37,20 +52,32 @@ class AKShareLimitBoard(AKShareBase):
             
             log_debug(f"ak.stock_zt_pool_em returned DF with shape {df.shape}")
             
-            # --- 自动备份逻辑 ---
-            # 只要数据不为空就备份
+            # --- Update Cache ---
+            if is_today and not df.empty:
+                self._limit_up_cache = df
+                self._limit_up_cache_time = time.time()
+            # --------------------
+
+            # --- 自动备份逻辑 (Throttled 60s) ---
+            # 只要数据不为空就备份，但控制频率
             if not df.empty:
                 try:
-                    # 路径: data/storage/limit_backup/{date_str}/limit_up_{date_str}_{HHMMSS}.csv
-                    save_dir = os.path.join("data", "storage", "limit_backup", date_str)
-                    if not os.path.exists(save_dir):
-                        os.makedirs(save_dir, exist_ok=True)
-                        
-                    timestamp_str = now.strftime("%H%M%S")
-                    filename = f"limit_up_{date_str}_{timestamp_str}.csv"
-                    filepath = os.path.join(save_dir, filename)
+                    current_ts = time.time()
+                    if not hasattr(self, '_limit_up_last_backup_time'):
+                         self._limit_up_last_backup_time = 0
                     
-                    df.to_csv(filepath, index=False, encoding='utf-8-sig')
+                    if (current_ts - self._limit_up_last_backup_time) > 60:
+                        # 路径: data/storage/limit_backup/{date_str}/limit_up_{date_str}_{HHMMSS}.csv
+                        save_dir = os.path.join("data", "storage", "limit_backup", date_str)
+                        if not os.path.exists(save_dir):
+                            os.makedirs(save_dir, exist_ok=True)
+                            
+                        timestamp_str = now.strftime("%H%M%S")
+                        filename = f"limit_up_{date_str}_{timestamp_str}.csv"
+                        filepath = os.path.join(save_dir, filename)
+                        
+                        df.to_csv(filepath, index=False, encoding='utf-8-sig')
+                        self._limit_up_last_backup_time = current_ts # Update backup time
                 except Exception as backup_e:
                     self.log(logging.ERROR, f"Failed to backup limit pool: {backup_e}")
             # --------------------

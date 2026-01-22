@@ -10,7 +10,7 @@ project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../..
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
-from vibe_data.adapter.akshare_adapter import AKShareAdapter
+from vibe_core.data.adapter.akshare_adapter import AKShareAdapter
 
 # 配置日志
 logging.basicConfig(

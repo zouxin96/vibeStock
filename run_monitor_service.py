@@ -15,8 +15,8 @@ sys.stdout = open(startup_log, 'a', encoding='utf-8', buffering=1)
 sys.stderr = sys.stdout
 
 from vibe_core.context import Context
-from vibe_data.factory import DataFactory
-from vibe_driver.scheduler import SimpleScheduler
+from vibe_core.data.factory import DataFactory
+from vibe_core.driver.scheduler import SimpleScheduler
 from modules.prod.limit_up_monitor import LimitUpMonitor
 
 def load_config():

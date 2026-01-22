@@ -9,6 +9,7 @@ class LimitOrderRankModule(VibeModule):
     涨停封单排序模块
     定期获取涨停股池，并按封板资金降序排列。
     """
+    dependencies = ['AkShareDataModule']
     
     def __init__(self, context=None):
         # 基类 VibeModule.__init__ 不接受参数
@@ -116,7 +117,7 @@ class LimitOrderRankModule(VibeModule):
 
             # 2. 推送到前端
             payload = result_df.to_dict(orient='records')
-            self.context.broadcast_ui("widget_limit_rank", payload)
+            self.context.broadcast_ui("limit_rank", payload)
             
         except AttributeError as e:
             self.context.logger.error(f"Current DataProvider does not support `get_limit_up_pool`: {e}")

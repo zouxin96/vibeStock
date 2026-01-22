@@ -2,7 +2,7 @@ import pandas as pd
 import logging
 import datetime
 import os
-from ..base import AKShareBase
+from base import AKShareBase
 
 try:
     import akshare as ak
@@ -47,12 +47,41 @@ class AKShareMeta(AKShareBase):
     def get_em_sectors(self) -> pd.DataFrame:
         self._ensure_akshare()
         if ak is None: return pd.DataFrame()
+        
+        # 1. Try EastMoney (Preferred)
         try:
             df = ak.stock_board_industry_name_em()
-            return df if df is not None else pd.DataFrame()
+            if df is not None and not df.empty:
+                return df
         except Exception as e:
-            self.log(logging.ERROR, f"AKShare get_em_sectors 错误: {e}")
-            return pd.DataFrame()
+            self.log(logging.WARNING, f"AKShare get_em_sectors (EM) failed: {e}. Trying Fallback (THS)...")
+
+        # 2. Fallback to Tonghuashun
+        try:
+            df_ths = ak.stock_board_industry_summary_ths()
+            if df_ths is not None and not df_ths.empty:
+                # Map columns to match EM format expected by consumers
+                # EM Cols: 排名, 板块名称, ... 最新价, 涨跌幅, 总市值, ...
+                # THS Cols: 序号, 板块, 涨跌幅, 总成交量, 总成交额, ... 均价
+                
+                rename_map = {
+                    "板块": "板块名称",
+                    "涨跌幅": "涨跌幅",
+                    "均价": "最新价",
+                    "总成交额": "总市值" # Proxy: use turnover instead of market cap if cap is missing
+                }
+                df_ths = df_ths.rename(columns=rename_map)
+                
+                # Ensure numeric
+                for col in ['最新价', '涨跌幅', '总市值']:
+                    if col in df_ths.columns:
+                        df_ths[col] = pd.to_numeric(df_ths[col], errors='coerce').fillna(0)
+                        
+                return df_ths
+        except Exception as e:
+            self.log(logging.ERROR, f"AKShare get_em_sectors (THS Fallback) failed: {e}")
+
+        return pd.DataFrame()
 
     def get_ths_concept_history(self, symbol: str, start_date: str, end_date: str) -> pd.DataFrame:
         self._ensure_akshare()

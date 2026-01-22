@@ -3,11 +3,11 @@ import logging
 from .module import VibeModule
 from .storage import CSVStorageService
 
-# Import singleton manager. Note: This creates a dependency on vibe_server.
+# Import singleton manager. Note: This creates a dependency on vibe_core.server.
 # In a strictly decoupled architecture we might use dependency injection,
 # but for this scale, direct import is fine.
 try:
-    from vibe_server.websocket_manager import manager as ws_manager
+    from vibe_core.server.websocket_manager import manager as ws_manager
 except ImportError:
     ws_manager = None
 

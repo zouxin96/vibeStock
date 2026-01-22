@@ -8,6 +8,7 @@ class MarketHeatmapModule(VibeModule):
     市场行业热力图模块
     展示各行业的实时涨跌分布。
     """
+    dependencies = ['AkShareDataModule']
     
     def __init__(self, context=None):
         super().__init__()
@@ -111,7 +112,7 @@ class MarketHeatmapModule(VibeModule):
                 self.last_log_time = now
                 
             # 推送 UI 数据
-            self.context.broadcast_ui("widget_market_heatmap", payload)
+            self.context.broadcast_ui("market_heatmap", payload)
             
         except Exception as e:
             self.context.logger.error(f"Heatmap process error: {e}")

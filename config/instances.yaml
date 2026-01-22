@@ -1,0 +1,19 @@
+instances:
+  # Core Data Modules (Explicitly Loaded)
+  - id: akshare_data
+    module: AkShareDataModule
+  
+  - id: sina_data
+    module: SinaDataModule
+
+  - id: stock_info
+    module: StockInfoModule
+
+  # Feature Modules
+  - id: WatchlistModule
+    module: WatchlistModule
+  
+  - id: main
+    module: WatchlistModule
+    config:
+      codes: ["300184.SZ", "000001"]

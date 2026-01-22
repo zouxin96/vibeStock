@@ -43,24 +43,25 @@
                         lastUpdate.value = new Date().toLocaleTimeString();
                     };
                     
-                                const subscribe = () => {
-                                    if (window.vibeSocket) {
-                                        window.vibeSocket.subscribe(props.widgetId, handleUpdate);
-                                        // Send Subscribe Command with Config
-                                        const sendSub = () => {
-                                            window.vibeSocket.send('subscribe', {
-                                                widgetId: props.widgetId,
-                                                moduleId: props.moduleId,
-                                                config: props.config || {}
-                                            });
-                                        };
-                                        
-                                        sendSub();
-                                        // Retry once after 2 seconds in case backend module wasn't ready
-                                        setTimeout(sendSub, 2000);
-                                    }
-                                };        
-                    onMounted(() => {
+                                            const subscribe = () => {
+                                                if (window.vibeSocket) {
+                                                    // Backend broadcasts to the Module ID (the channel), not the Widget Instance ID.
+                                                    window.vibeSocket.subscribe(props.moduleId, handleUpdate);
+                                                    
+                                                    // Send Subscribe Command with Config
+                                                    const sendSub = () => {
+                                                        window.vibeSocket.send('subscribe', {
+                                                            widgetId: props.widgetId,
+                                                            moduleId: props.moduleId,
+                                                            config: props.config || {}
+                                                        });
+                                                    };
+                                                    
+                                                    sendSub();
+                                                    // Retry once after 2 seconds in case backend module wasn't ready
+                                                    setTimeout(sendSub, 2000);
+                                                }
+                                            };                    onMounted(() => {
                         subscribe();
                         // If socket reconnects, we might need to resubscribe. 
                         // Currently vibeSocket implementation in index.html doesn't auto-replay sends on reconnect.

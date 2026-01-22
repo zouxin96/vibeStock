@@ -5,33 +5,34 @@ import logging
 # Add project root to path
 sys.path.append(os.getcwd())
 
-from vibe_data.factory import DataFactory
+# Import the new module directly
+from modules.core.akshare_data import AkShareDataModule
+from vibe_core.context import Context
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("TestAKShare")
 
 def test_akshare():
-    print("Testing AKShare Adapter...")
+    print("Testing AKShare Data Module...")
     
-    # Mock config
-    config = {
-        "data": {
-            "provider": "akshare"
-        }
-    }
+    # Mock Context
+    context = Context()
     
     try:
-        adapter = DataFactory.create_provider(config)
-        print("Adapter created successfully.")
+        # Instantiate Module
+        module = AkShareDataModule(context)
+        # We don't need full initialize() which registers to context.data (unless we test that)
+        # But AkShareDataModule inherits AKShareAdapter, so we can call methods directly.
+        print("Module created successfully.")
     except Exception as e:
-        print(f"Failed to create adapter: {e}")
+        print(f"Failed to create module: {e}")
         return
 
     # 1. Test Snapshot
     code = "600519.SH" # Moutai
     print(f"Fetching snapshot for {code}...")
     try:
-        data = adapter.get_snapshot([code])
+        data = module.get_snapshot([code])
         if data:
             print(f"Snapshot received: {data[0]}")
         else:
@@ -42,7 +43,7 @@ def test_akshare():
     # 2. Test History
     print(f"Fetching history for {code} (2023-01-01 to 2023-01-10)...")
     try:
-        df = adapter.get_history(code, "2023-01-01", "2023-01-10")
+        df = module.get_history(code, "2023-01-01", "2023-01-10")
         if not df.empty:
             print(f"History received:\n{df.head()}")
         else:

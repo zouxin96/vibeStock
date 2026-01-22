@@ -69,7 +69,7 @@
             onMounted(() => {
                 console.log(`[Heatmap] Widget mounted: ${props.widgetId}`);
                 if (window.vibeSocket) {
-                    window.vibeSocket.subscribe("widget_market_heatmap", (data) => {
+                    window.vibeSocket.subscribe(props.moduleId, (data) => {
                         heatmapData.value = data;
                     });
                 }
@@ -77,7 +77,7 @@
 
             onUnmounted(() => {
                 if (window.vibeSocket) {
-                    window.vibeSocket.unsubscribe("widget_market_heatmap");
+                    window.vibeSocket.unsubscribe(props.moduleId);
                 }
             });
 

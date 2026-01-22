@@ -26,7 +26,8 @@
 
             onMounted(() => {
                 if (window.vibeSocket) {
-                    window.vibeSocket.subscribe("widget_region_pie", (data) => {
+                    // Subscribe to the Module ID channel
+                    window.vibeSocket.subscribe(props.moduleId, (data) => {
                         // console.log("Region Pie Data:", data);
                         pieData.value = data;
                     });
@@ -35,7 +36,7 @@
 
             onUnmounted(() => {
                 if (window.vibeSocket) {
-                    window.vibeSocket.unsubscribe("widget_region_pie");
+                    window.vibeSocket.unsubscribe(props.moduleId);
                 }
             });
 

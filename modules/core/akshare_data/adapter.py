@@ -1,8 +1,8 @@
 import pandas as pd
 import logging
-from .realtime.market import AKShareMarket
-from .realtime.limit import AKShareLimitBoard
-from .dictionary.meta import AKShareMeta
+from realtime.market import AKShareMarket
+from realtime.limit import AKShareLimitBoard
+from dictionary.meta import AKShareMeta
 
 try:
     import akshare as ak
@@ -46,7 +46,7 @@ class AKShareAdapter(AKShareMarket, AKShareMeta, AKShareLimitBoard):
         """
         import datetime
         import os
-        from vibe_data.provider import DataCategory
+        from vibe_core.data.provider import DataCategory
         
         today = datetime.datetime.now().strftime("%Y%m%d")
         fname = self.get_archive_filename(date=today)

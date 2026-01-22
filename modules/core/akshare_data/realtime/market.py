@@ -1,7 +1,7 @@
 import pandas as pd
 import logging
 from typing import Optional, List
-from ..base import AKShareBase
+from base import AKShareBase
 
 try:
     import akshare as ak

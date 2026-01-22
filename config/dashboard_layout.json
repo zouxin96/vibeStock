@@ -56,5 +56,62 @@
     "script_path": "/modules/beta/market_heatmap/modules/beta/market_heatmap/widget.js",
     "instanceId": "market_heatmap_mib9gbmyh",
     "instanceConfig": {}
+  },
+  {
+    "id": "watchlist",
+    "component": "watchlist-widget",
+    "title": "Market Watchlist",
+    "default_col_span": "col-span-1 md:col-span-2 lg:col-span-1",
+    "script_path": "/modules/core/watchlist/widget.js",
+    "config_default": {
+      "codes": [
+        "600519.SH"
+      ]
+    },
+    "config_description": "List of stock codes to monitor.",
+    "instanceId": "watchlist_p08125a09",
+    "instanceConfig": {
+      "codes": [
+        "600519.SH"
+      ]
+    }
+  },
+  {
+    "id": "watchlist",
+    "component": "watchlist-widget",
+    "title": "Market Watchlist",
+    "default_col_span": "col-span-1 md:col-span-2 lg:col-span-1",
+    "script_path": "/modules/core/watchlist/widget.js",
+    "config_default": {
+      "codes": [
+        "600519.SH"
+      ]
+    },
+    "config_description": "List of stock codes to monitor.",
+    "instanceId": "watchlist_6h2r79mjr",
+    "instanceConfig": {
+      "codes": [
+        "600519.SH"
+      ]
+    }
+  },
+  {
+    "id": "watchlist",
+    "component": "watchlist-widget",
+    "title": "Market Watchlist",
+    "default_col_span": "col-span-1 md:col-span-2 lg:col-span-1",
+    "script_path": "/modules/core/watchlist/widget.js",
+    "config_default": {
+      "codes": [
+        "600519.SH"
+      ]
+    },
+    "config_description": "List of stock codes to monitor.",
+    "instanceId": "watchlist_g9zsjm7k4",
+    "instanceConfig": {
+      "codes": [
+        "600519.SH"
+      ]
+    }
   }
 ]

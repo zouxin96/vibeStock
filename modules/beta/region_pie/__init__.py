@@ -10,6 +10,8 @@ class RegionPieModule(VibeModule):
     地区/省份涨停分布饼图 (基于系统 StockInfoAdapter + SQLite)
     Limit-Up Stock Distribution by Province
     """
+    # Ensure data providers are ready before starting
+    dependencies = ['StockInfoModule', 'AkShareDataModule']
     
     def __init__(self, context=None):
         super().__init__()
@@ -104,8 +106,8 @@ class RegionPieModule(VibeModule):
             sorted_regions = sorted(region_counts.items(), key=lambda x: x[1], reverse=True)
             payload = [{"name": name, "value": count} for name, count in sorted_regions]
                 
-            # Broadcast
-            self.context.broadcast_ui("widget_region_pie", payload)
+            # Broadcast to the module ID (standard pattern)
+            self.context.broadcast_ui("region_pie", payload)
             
             # Log
             now = time.time()

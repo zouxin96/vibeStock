@@ -56,9 +56,10 @@ except Exception as e:
     # (our updated limit_up_monitor does handle ak=None)
 
 from vibe_core.context import Context
-from vibe_data.factory import DataFactory
-from vibe_driver.scheduler import SimpleScheduler
+from vibe_core.data.factory import DataFactory
+from vibe_core.driver.scheduler import SimpleScheduler
 from modules.prod.limit_up_monitor import LimitUpMonitor
+from modules.core.akshare_data import AkShareDataModule
 
 # Setup logging
 LOG_DIR = os.path.join(ROOT_DIR, "logs")
@@ -97,6 +98,14 @@ class MonitorService:
             self.scheduler = SimpleScheduler()
             self.context._scheduler = self.scheduler
             
+            # Init Dependencies
+            try:
+                self.ak_module = AkShareDataModule()
+                self.ak_module.initialize(self.context)
+                logger.info("AkShareDataModule initialized")
+            except Exception as e:
+                logger.error(f"Failed to init AkShareDataModule: {e}")
+
             # Init Monitor
             self.monitor = LimitUpMonitor()
             self.monitor.initialize(self.context)

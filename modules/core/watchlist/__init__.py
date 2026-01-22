@@ -1,20 +1,26 @@
 from vibe_core.module import VibeModule
 from vibe_core.event import Event
-from vibe_data.factory import DataFactory
+from vibe_core.data.factory import DataFactory
 import time
 import threading
 
 class WatchlistModule(VibeModule):
     """
     Monitors a list of stocks using Sina Data Source (Realtime).
-    Supports multiple independent instances via dynamic subscriptions.
+    Standard Multi-Instance capable module.
+    # Trigger reload
     """
+    dependencies = ['SinaDataModule']
     
     def configure(self):
         self.running = True
-        # Store subscriptions: { instance_id: { "codes": [...] } }
-        self.subscriptions = {}
-        self.subscriptions_lock = threading.Lock()
+        # Read codes from config (default provided if missing)
+        self.codes = self.config.get("codes", ["600519.SH", "000001.SZ", "600036.SH"])
+        if isinstance(self.codes, str):
+            self.codes = [c.strip() for c in self.codes.split(',')]
+            
+        # Normalize immediately
+        self.codes = [self._normalize_code(c) for c in self.codes if c]
         
         try:
             self.adapter = DataFactory.create_provider({"data": {"provider": "sina"}})
@@ -26,131 +32,90 @@ class WatchlistModule(VibeModule):
         self.thread.start()
 
     def get_ui_config(self):
+        # We return a generic ID. The ModuleLoader will append instance ID if needed.
+        # But wait, ModuleLoader logic: if instance.name != class_name, it appends.
+        # Let's use a base ID "watchlist".
         return {
-            "id": "watchlist_main",
+            "id": "watchlist", 
             "component": "watchlist-widget",
-            "title": "Market Watchlist (Sina)",
+            "title": "Market Watchlist",
             "default_col_span": "col-span-1 md:col-span-2 lg:col-span-1",
             "script_path": "widget.js",
             "config_default": {
-                "codes": ["600519.SH", "000001.SZ", "600036.SH"]
+                "codes": ["600519.SH"]
             },
-            "config_description": "Specify a list of stock codes to monitor. \nFormat: { \"codes\": [\"600519.SH\", \"000001.SZ\"] }"
+            "config_description": "List of stock codes to monitor."
         }
 
     def on_event(self, event: Event):
         pass
         
     def _normalize_code(self, code: str) -> str:
-        """
-        自动为股票代码添加 .SH, .SZ 或 .BJ 后缀（如果缺失）。
-        - 6, 900, 688, 689 开头 -> .SH (沪市)
-        - 0, 2, 3 开头 -> .SZ (深市)
-        - 4, 8, 920 开头 -> .BJ (北交所)
-        """
         code = code.strip().upper()
-        if '.' in code:
-            return code
+        if '.' in code: return code
         
-        if code.startswith(('6', '900', '688', '689')):
-            return f"{code}.SH"
-        if code.startswith(('0', '2', '3')):
-            return f"{code}.SZ"
-        if code.startswith(('4', '8', '920')):
-            return f"{code}.BJ"
-
-        # 尝试作为指数处理，上证指数 000001.SH 特殊处理
-        if code == '000001':
-            return '000001.SH'
-            
-        return code # 无法判断则返回原样
+        if code.startswith(('6', '900', '688', '689')): return f"{code}.SH"
+        if code.startswith(('0', '2', '3')): return f"{code}.SZ"
+        if code.startswith(('4', '8', '920')): return f"{code}.BJ"
+        if code == '000001': return '000001.SH'
+        return code 
 
     def on_client_message(self, message: dict):
         """
-        Handle messages from the frontend widget.
-        Msg format: { "type": "subscribe", "widgetId": "...", "config": {...} }
+        Handle runtime config updates from UI.
         """
         msg_type = message.get("type")
-        widget_id = message.get("widgetId")
         
-        if msg_type == "subscribe" and widget_id:
+        if msg_type == "update_config":
             config = message.get("config", {})
-            codes = config.get("codes", [])
-            
-            # Default if empty
-            if not codes:
-                codes = ["600519.SH", "000001.SZ", "600036.SH"]
-            elif isinstance(codes, str):
-                codes = [c.strip() for c in codes.split(',')]
-            
-            # 自动修正代码
-            normalized_codes = [self._normalize_code(c) for c in codes if c]
+            new_codes = config.get("codes")
+            if new_codes:
+                if isinstance(new_codes, str):
+                    new_codes = [c.strip() for c in new_codes.split(',')]
                 
-            with self.subscriptions_lock:
-                self.subscriptions[widget_id] = {"codes": normalized_codes}
-                print(f"[Watchlist] Subscribed instance {widget_id} with {len(normalized_codes)} stocks: {normalized_codes}")
+                self.codes = [self._normalize_code(c) for c in new_codes if c]
+                self.context.logger.info(f"[{self.name}] Updated codes: {self.codes}")
+                # Trigger immediate update?
+                pass
 
     def _update_loop(self):
         while self.running:
-            if self.adapter:
-                with self.subscriptions_lock:
-                    # Snapshot of current subscriptions
-                    subs = dict(self.subscriptions)
-                
-                if not subs:
-                    time.sleep(1)
-                    continue
-
-                all_codes = set()
-                for sub in subs.values():
-                    all_codes.update(sub["codes"])
-                
-                if all_codes:
-                    try:
-                        # Fetch all data once
-                        data_list = self.adapter.get_snapshot(list(all_codes))
+            if self.adapter and self.codes:
+                try:
+                    data_list = self.adapter.get_snapshot(self.codes)
+                    
+                    # Map back to display preference if needed, but here we just push what we got
+                    # The widget ID to broadcast to is THIS instance's registered ID.
+                    # Which ModuleLoader registers as self.get_ui_config()['id'] (potentially patched)
+                    
+                    # Issue: How do we know the 'patched' widget ID assigned by ModuleLoader?
+                    # ModuleLoader registered context.register_module_instance(widget_id, self).
+                    # But it didn't tell US what that ID is.
+                    # We should probably iterate or broadcast to a topic?
+                    # Or ModuleLoader should have set 'self.widget_id' on us?
+                    
+                    # Simplification: Broadcast to 'watchlist' topic suffix?
+                    # Or just rely on the fact that if instance name is 'watchlist_tech',
+                    # ModuleLoader likely registered 'watchlist_watchlist_tech'.
+                    
+                    # BETTER: Use self.name as the channel ID?
+                    # The frontend widget will subscribe to 'moduleId'.
+                    # If we follow the convention that `get_ui_config()['id']` IS the channel...
+                    
+                    # Let's assume ModuleLoader patch logic:
+                    # if instance.name != class_name: cfg['id'] = f"{cfg['id']}_{instance.name}"
+                    
+                    target_id = "watchlist"
+                    if self.name != "WatchlistModule":
+                        # If name is customized, ID is patched
+                        target_id = f"watchlist_{self.name}"
                         
-                        # Data Mapping: Sina adapter returns codes in lowercase/different format sometimes
-                        # We need to map back to the requested codes.
-                        # Strategy: Create a map of normalized_code -> data_row
-                        # And a map of requested_code -> normalized_code
-                        
-                        # 1. Normalize data keys
-                        # Sina adapter output 'code' is usually 'sh600519'
-                        data_map = { row['code']: row for row in data_list }
-                        
-                        # 2. Distribute to instances
-                        for widget_id, sub in subs.items():
-                            instance_data = []
-                            for req_code in sub["codes"]:
-                                # Convert requested '600519.SH' to 'sh600519' using adapter's helper if available
-                                # Or manually matching logic. 
-                                # adapter._convert_code is what we want.
-                                if hasattr(self.adapter, '_convert_code'):
-                                    norm_code = self.adapter._convert_code(req_code)
-                                else:
-                                    # Fallback simple converter
-                                    if '.' in req_code:
-                                        num, suffix = req_code.split('.')
-                                        norm_code = f"{suffix.lower()}{num}"
-                                    else:
-                                        norm_code = req_code.lower()
-                                
-                                if norm_code in data_map:
-                                    # Inject the original requested code for display consistency if needed
-                                    # But widget expects 'code', 'name', 'price', etc.
-                                    # Let's keep the row as is, or override 'code' to match display preference?
-                                    # The widget displays row.code. Sina returns 'sh600519'. User might prefer '600519.SH'.
-                                    # Let's override it back for display.
-                                    row = data_map[norm_code].copy()
-                                    row['code'] = req_code
-                                    instance_data.append(row)
-                            
-                            if instance_data:
-                                if hasattr(self.context, 'broadcast_ui'):
-                                    self.context.broadcast_ui(widget_id, instance_data)
+                    # NOTE: This coupling with ModuleLoader's patching logic is fragile.
+                    # Ideally, ModuleLoader sets `self.ui_id` on the instance.
+                    
+                    self.context.broadcast_ui(target_id, data_list)
                                     
-                    except Exception as e:
-                         print(f"[Watchlist] Update error: {e}")
+                except Exception as e:
+                     print(f"[{self.name}] Update error: {e}")
             
             time.sleep(3)

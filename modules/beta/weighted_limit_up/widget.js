@@ -111,7 +111,7 @@
                 onMounted(() => {
                     console.log(`[WeightedLimitUp] Component mounted. ID: ${props.widgetId}`);
                     if (window.vibeSocket) {
-                        window.vibeSocket.subscribe("widget_weighted_limit_up", (data) => {
+                        window.vibeSocket.subscribe(props.moduleId, (data) => {
                             tableData.value = data;
                             if (currentPage.value > Math.ceil(data.length / pageSize)) {
                                 currentPage.value = 1;
@@ -122,7 +122,7 @@
 
                 onUnmounted(() => {
                     if (window.vibeSocket) {
-                        window.vibeSocket.unsubscribe("widget_weighted_limit_up");
+                        window.vibeSocket.unsubscribe(props.moduleId);
                     }
                 });
 

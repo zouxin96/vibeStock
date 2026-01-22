@@ -1,6 +1,6 @@
 from vibe_core.module import VibeModule
 from vibe_core.event import Event
-from vibe_data.factory import DataFactory
+from vibe_core.data.factory import DataFactory
 import datetime
 import os
 
@@ -69,7 +69,7 @@ class InfoSyncModule(VibeModule):
                 # Let's use the adapter's method directly if possible or the helper
                 
                 # Using helper correctly:
-                from vibe_data.provider import DataCategory
+                from vibe_core.data.provider import DataCategory
                 path = self.adapter.get_save_path(DataCategory.INFO, f"industry_sw2021_{datetime.date.today()}.csv")
                 
                 df.to_csv(path, index=False)

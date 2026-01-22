@@ -9,6 +9,7 @@ class WeightedLimitUpModule(VibeModule):
     加权连板排序模块
     定期获取涨停股池，并按 加权连板数 (连板数 * 涨跌幅) 降序排列。
     """
+    dependencies = ['AkShareDataModule']
     
     def __init__(self, context=None):
         super().__init__()
@@ -93,7 +94,7 @@ class WeightedLimitUpModule(VibeModule):
 
             # 推送
             payload = result_df.to_dict(orient='records')
-            self.context.broadcast_ui("widget_weighted_limit_up", payload)
+            self.context.broadcast_ui("weighted_limit_up", payload)
             
         except Exception as e:
             self.context.logger.error(f"处理加权连板排序时出错: {e}")

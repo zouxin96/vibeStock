@@ -112,9 +112,9 @@
                 };
 
                 onMounted(() => {
-                    console.log(`[LimitRank] Component mounted. ID: ${props.widgetId}`);
+                    console.log(`[LimitRank] Component mounted. ID: ${props.widgetId}, Module: ${props.moduleId}`);
                     if (window.vibeSocket) {
-                        window.vibeSocket.subscribe("widget_limit_rank", (data) => {
+                        window.vibeSocket.subscribe(props.moduleId, (data) => {
                             tableData.value = data;
                             // Reset to page 1 if data refreshes? Maybe keep current page if possible.
                             // But if total pages shrink, adjust.
@@ -127,7 +127,7 @@
 
                 onUnmounted(() => {
                     if (window.vibeSocket) {
-                        window.vibeSocket.unsubscribe("widget_limit_rank");
+                        window.vibeSocket.unsubscribe(props.moduleId);
                     }
                 });
 

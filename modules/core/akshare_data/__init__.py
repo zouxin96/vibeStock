@@ -1,23 +1,32 @@
 from vibe_core.module import VibeModule, ModuleCategory
-from .adapter import AKShareAdapter
+import sys
+import os
+# Fix for dynamic loading relative imports
+sys.path.append(os.path.dirname(__file__))
+from adapter import AKShareAdapter
+from base import AKShareBase 
 import datetime
 
-class AkShareDataModule(VibeModule):
-    def __init__(self):
-        super().__init__()
+class AkShareDataModule(VibeModule, AKShareAdapter):
+    # Trigger reload 3
+    def __init__(self, context=None):
+        VibeModule.__init__(self)
+        AKShareBase.__init__(self) # Initialize the Data Provider base
+        
+        if context:
+            self.context = context
+            
         self.category = ModuleCategory.DATA
         self.name = "akshare_data"
         self.description = "Core Data Module for AKShare Adapter"
-        self.adapter = None
         self.error_count = 0
 
     def initialize(self, context):
         self.context = context
-        self.adapter = AKShareAdapter()
         
-        # Dynamically register to HybridDataProvider
+        # Dynamically register SELF as provider
         if self.context.data and hasattr(self.context.data, 'register_provider'):
-             self.context.data.register_provider("akshare", self.adapter)
+             self.context.data.register_provider("akshare", self)
         
         # Periodic status update (every 5 seconds)
         self.trigger_on_cron("interval:5")

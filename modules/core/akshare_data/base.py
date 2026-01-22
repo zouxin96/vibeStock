@@ -1,7 +1,7 @@
 import logging
 import pandas as pd
 from typing import Optional, List
-from vibe_data.provider import BaseFetcher, FetcherType, DataDimension
+from vibe_core.data.provider import BaseFetcher, FetcherType, DataDimension
 
 try:
     import akshare as ak

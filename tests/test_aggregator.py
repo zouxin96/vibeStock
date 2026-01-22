@@ -3,8 +3,8 @@ import threading
 import time
 import pandas as pd
 from typing import List, Optional
-from vibe_data.provider import IDataProvider, DataDimension, SyncPolicy
-from vibe_data.aggregator import DataAggregator
+from vibe_core.data.provider import IDataProvider, DataDimension, SyncPolicy
+from vibe_core.data.aggregator import DataAggregator
 
 class MockProvider(IDataProvider):
     def __init__(self):

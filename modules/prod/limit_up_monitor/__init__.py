@@ -15,14 +15,21 @@ class LimitUpMonitor(VibeModule):
     涨停数据监控服务模块
     功能：每天 09:20 - 15:30 每分钟抓取一次涨停数据并存档
     """
+    dependencies = ["AkShareDataModule"]
+
+    def __init__(self, context=None):
+        super().__init__()
+        if context:
+            self.context = context
+
     def configure(self):
         self.name = "涨停监控服务"
         self.category = "Service"
         self._trade_dates_cache = None
         self._last_cache_date = None
         
-        # 注册每 60 秒运行一次的心跳
-        self.context.register_cron(self, "interval:60")
+        # 注册每 10 秒运行一次 (UI更新更及时，底层已有缓存和IO限流)
+        self.context.register_cron(self, "interval:10")
         self.context.logger.info(f"[{self.name}] 已启动: 计划每日 09:20-15:30 运行")
 
     def on_event(self, event: Event):
@@ -79,17 +86,33 @@ class LimitUpMonitor(VibeModule):
 
     def _run_task(self, now):
         try:
-            self.context.logger.info(f"[{self.name}] Fetching limit up data...")
+            # self.context.logger.info(f"[{self.name}] Fetching limit up data...")
             if not hasattr(self.context.data, 'get_limit_up_pool'):
                 return
             df = self.context.data.get_limit_up_pool()
             if df is not None and not df.empty:
                 count = len(df)
-                self.context.logger.info(f"[{self.name}] Success: {count} records")
+                
+                # Sort for top stocks
+                top_stocks = []
+                if '连板数' in df.columns:
+                     df['连板数'] = pd.to_numeric(df['连板数'], errors='coerce').fillna(0)
+                     sorted_df = df.sort_values(by='连板数', ascending=False)
+                     top_5 = sorted_df.head(5)
+                     # Select only necessary fields
+                     cols = ['名称', '连板数', '代码']
+                     cols = [c for c in cols if c in top_5.columns]
+                     top_stocks = top_5[cols].to_dict(orient='records')
+
+                # Only log every minute or so to avoid spamming since we run every 10s now
+                # Or just log debug.
+                # self.context.logger.info(f"[{self.name}] Success: {count} records")
+                
                 monitor_data = {
                     "last_run": now.strftime("%H:%M:%S"),
                     "count": count,
-                    "status": "Running"
+                    "status": "Running",
+                    "top_stocks": top_stocks
                 }
                 self.context.broadcast_ui("limit_up_monitor", monitor_data)
         except Exception as e:

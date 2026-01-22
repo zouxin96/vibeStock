@@ -10,17 +10,17 @@ sys.path.append(os.getcwd())
 from vibe_core.context import Context
 from vibe_core.event import Event
 from vibe_core.module import VibeModule
-from vibe_backtest.engine import BacktestEngine
 from vibe_core.service import ServiceManager
-from vibe_services.scheduler_service import SchedulerService
-from vibe_services.web_service import WebServerService
-from vibe_services.module_loader import ModuleLoaderService
-from vibe_data.factory import DataFactory
+from vibe_core.backtest.engine import BacktestEngine
+from vibe_core.services.scheduler_service import SchedulerService
+from vibe_core.services.web_service import WebServerService
+from vibe_core.services.module_loader import ModuleLoaderService
+from vibe_core.data.hybrid import HybridDataProvider
 import time
 import threading
 import uvicorn
 import yaml
-from vibe_server.server import app
+from vibe_core.server.server import app
 
 def cmd_new(args):
     """Create a new module"""
@@ -162,6 +162,11 @@ def load_config(path="config/config.yaml"):
 
 def cmd_run(args):
     """Start the VibeStock system in live mode"""
+    # Fix for Windows asyncio ProactorEventLoop bug on shutdown
+    if sys.platform == 'win32':
+        import asyncio
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+
     print("Starting VibeStock System (Hot-Reload Enabled)...")
     
     # 0. Load Config
@@ -174,33 +179,10 @@ def cmd_run(args):
     ctx = Context()
     ctx.config = config # Inject config into context
 
-    # 1.1 Initialize Data Provider
-    try:
-        ctx.data = DataFactory.create_provider(config)
-        print(f"Data Provider initialized: {type(ctx.data).__name__}")
-    except Exception as e:
-        print(f"CRITICAL ERROR: Failed to initialize data provider: {e}")
-        import traceback
-        traceback.print_exc()
-        # Fallback to a dummy provider to prevent NoneType crashes
-        class NullDataProvider:
-            def __getattr__(self, name):
-                def safe_return(*args, **kwargs):
-                    try:
-                        import pandas as pd
-                        return pd.DataFrame()
-                    except ImportError:
-                        return None
-                return safe_return
-            @property
-            def data_dimension(self): return None
-            @property
-            def sync_policy(self): return None
-        ctx.data = NullDataProvider()
-
-        print("WARNING: Using NullDataProvider. System functionality will be severely limited.")
-
-
+    # 1.1 Initialize Data Provider (Registry)
+    # Modules will register themselves into this provider.
+    ctx.data = HybridDataProvider()
+    print("Data Provider Registry initialized.")
     
     # 2. Create Services
     sched_service = SchedulerService()
@@ -216,7 +198,7 @@ def cmd_run(args):
     ServiceManager.register(loader_service)
     
     # Wire up WebSocket handler to Context routing
-    from vibe_server.websocket_manager import manager
+    from vibe_core.server.websocket_manager import manager
     manager.set_handler(ctx.handle_client_message)
 
     # 5. Start All Services

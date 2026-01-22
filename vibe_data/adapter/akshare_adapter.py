@@ -1,1 +1,0 @@
-from modules.core.akshare_data.adapter import AKShareAdapter
