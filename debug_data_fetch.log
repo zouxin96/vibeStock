@@ -55281,3 +55281,167 @@
 [2026-01-22 15:08:00] get_limit_up_pool called. Date=None, AK_Loaded=True
 [2026-01-22 15:08:00] get_limit_up_pool called. Date=None, AK_Loaded=True
 [2026-01-22 15:08:00] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:44:33] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:44:34] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:44:34] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:44:34] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:44:34] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:44:34] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:44:34] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:44:44] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:44:44] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:44:44] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:44:44] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:44:54] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:44:54] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:44:54] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:44:54] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:44:54] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:45:04] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:45:04] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:45:04] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:45:04] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:45:04] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:45:14] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:45:14] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:45:14] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:45:14] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:45:15] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:45:24] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:45:24] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:45:25] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:45:25] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:45:25] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:45:35] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:45:35] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:45:35] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:45:35] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:45:35] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:45:45] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:45:45] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:45:45] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:45:45] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:45:45] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:45:55] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:45:55] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:45:55] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:45:55] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:45:55] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:45:56] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:46:05] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:46:06] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:46:06] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:46:06] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:46:06] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:46:16] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:46:16] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:46:16] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:46:16] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:46:16] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:46:16] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:46:26] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:46:26] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:46:26] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:46:26] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:46:26] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:46:36] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:46:36] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:46:36] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:46:36] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:46:37] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:46:46] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:46:47] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:46:47] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:46:47] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:46:47] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:46:57] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:46:57] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:46:57] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:46:57] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:46:57] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:46:57] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:47:07] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:47:07] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:47:07] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:47:07] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:47:07] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:47:17] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:47:17] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:47:17] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:47:17] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:47:18] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:47:27] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:47:28] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:47:28] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:47:28] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:47:28] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:47:38] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:47:38] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:47:38] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:47:38] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:47:38] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:47:48] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:47:48] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:47:48] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:47:48] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:47:48] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:47:58] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:47:58] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:47:58] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:47:58] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:47:59] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:48:08] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:48:09] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:48:09] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:48:09] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:48:09] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:48:19] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:48:19] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:48:19] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:48:19] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:48:19] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:48:29] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:48:29] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:48:29] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:48:29] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:48:35] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:48:35] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:48:39] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:48:39] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:48:49] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:48:49] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:48:49] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:48:49] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:48:50] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:48:59] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:48:59] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:49:00] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:49:00] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:49:06] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:49:06] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:49:10] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:49:10] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:49:20] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:49:20] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:49:20] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:49:22] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:49:30] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:49:30] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:49:30] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:49:39] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:49:39] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:49:40] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:49:40] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:49:50] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:49:50] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:49:51] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:49:51] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:49:54] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:50:01] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:50:01] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:50:01] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:50:01] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:50:11] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:50:11] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 17:50:11] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 17:50:11] get_limit_up_pool called. Date=None, AK_Loaded=True
