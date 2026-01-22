@@ -27,7 +27,7 @@ vibeStock 是一个基于 Python 的模块化量化交易与行情监控系统�
 ### 1. 安装依赖
 确保已安装 Python 3.9+，并安装必要库：
 ```bash
-pip install fastapi uvicorn requests pyyaml pandas
+pip install -r requirements.txt
 ```
 
 ### 2. 启动系统
@@ -35,14 +35,19 @@ pip install fastapi uvicorn requests pyyaml pandas
 ```bash
 start_vibeStock.bat 
 ``` 
-//请修改python的位置 我这里使用了veighna_studio
+## 2.1. 托盘监控
+直接运行根目录下的批处理文件：
+```bash
+启动托盘监控.bat
+```  
+
 ### 3. 配置说明
 - **端口修改**: 在 `config/config.yaml` 中修改 `server.port`。
-- **数据源**: 在 `config/config.yaml` 中切换 `data.provider` (sina/tushare/local)。
-
+ 
 ## 🛠️ 开发者工具 (CLI)
 
 - **启动系统**: `python vibe.py run`
+//以下待完善
 - **新建模块**: `python vibe.py new <module_name> -d "描述"`
 - **调试模块**: `python vibe.py debug modules/beta/your_module.py`
 - **回测模块**: `python vibe.py backtest modules/prod/strategy.py --start 2025-01-01 --end 2025-01-31`

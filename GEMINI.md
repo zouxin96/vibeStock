@@ -2,9 +2,7 @@
 
 本文档定义了 VibeStock 项目的核心上下文、开发规范及架构概览。AI 助手在开始任务前应优先读取此文件。
 
-## 1. 环境与基础配置 (Environment)
-
-*   **Python Interpreter**: `C:\veighna_studio\python.exe`
+## 1. 环境与基础配置 (Environment) 
 *   **Operating System**: Windows (win32)
 *   **Project Root**: `D:\vibeStock\vibeStock\vibeStock`
 *   **UI Framework**: Vue3 + ECharts + SortableJS (Single File: `ui/index.html`)
@@ -20,8 +18,9 @@
     *   遵循 PEP8 规范。
     *   类型提示 (Type Hinting) 是必须的。
     *   **架构职责 (Architecture Responsibility)**:
-    *   **Data Module (数据模块)**: 位于 `modules/core/`，封装外部数据源 (如 AKShare)。提供标准化的数据服务和状态监控。
-    *   **Strategy Module (策略模块)**: 位于 `modules/prod/` 或 `modules/beta/`，负责业务逻辑。**严禁**直接调用外部 API，必须通过 `self.context.data` 或订阅数据模块。
+     *  Module(模块) ，位于 `modules/core/`，`modules/prod/` 或 `modules/beta/`
+    *   **Data Module (数据模块)**: 封装外部数据源 (如 AKShare)。提供标准化的数据服务和状态监控。
+    *   **Strategy Module (策略模块)**: 负责业务逻辑。**严禁**直接调用外部 API，必须通过 `self.context.data` 或订阅数据模块。
 *   **错误处理**:
     *   所有外部 API 调用必须包含 `try-except` 块并记录日志。
 
@@ -40,7 +39,7 @@ python -m pytest tests/
 ```
 
 ### 模块开发
-*   **指南**: 详见 `modules/GEMINI.md` (必读：创建新策略/监控模块的标准流程)。
+*   **指南**: 详见 `modules/GEMINI.md` (必读：创建新UI/策略/数据模块的标准流程)。
 *   **目录规范**:
     *   `modules/core/`: 系统级模块 (数据源、底层服务)，随系统启动，不可热卸载。
     *   `modules/prod/`: 经过验证的稳定策略/功能。
@@ -48,37 +47,42 @@ python -m pytest tests/
 
 ## 4. 系统架构 (Architecture)
 
-系统采用 **微内核 + 插件式** 架构：
+系统采用 **微内核 + 插件式** 架构，核心功能已整合至 `vibe_core` 包内：
 
-*   **核心层 (`vibe_core/`)**: 定义了 `Context`, `Event`, `VibeModule` (增强版基类)。这是系统的“宪法”。
-*   **数据层 (`vibe_data/`)**: 负责数据路由与聚合。
-    *   `hybrid.py`: 统一数据入口，动态管理注册的数据模块。
-    *   *(Legacy)* `adapter/`: 旧版适配器存根 (Stubs)，指向 `modules/core/` 中的实现。
-*   **服务层 (`vibe_services/`)**: 包装具体业务逻辑（如 `web_service` 负责 API，`module_loader` 负责热重载）。
-*   **驱动层 (`vibe_driver/`)**: 底层基础设施（如 Scheduler）。
+*   **核心层 (`vibe_core/`)**: 
+    *   `context.py`, `module.py`: 定义了核心基类与上下文环境。
+    *   `data/`: 数据层 (Hybrid Facade)，负责数据路由与聚合。
+    *   `server/`: 服务层，包含 FastAPI 与 WebSocket 接口。
+    *   `services/`: 业务服务，负责模块加载 (`loader`) 与调度 (`scheduler`)。
+    *   `driver/`: 驱动层，处理底层触发机制。
+*   **模块层 (`modules/`)**: 动态加载的业务逻辑，分为系统核心 (`core`)、稳定版 (`prod`) 和实验版 (`beta`)。
 
 ## 5. 目录结构索引 (File Structure)
 
 ```text
 vibeStock/
 ├── vibe.py                 # [Entry] 系统入口 (CLI)
+├── tray_monitor.py         # [Monitor] 托盘监控程序
+├── run_monitor_service.py  # [Service] 监控服务运行脚本
 ├── config/                 # [Config] 配置文件
 │   ├── config.yaml         # 主配置 (端口, Key)
+│   ├── instances.yaml      # 实例管理配置
+│   ├── dashboard_layout.json # UI 布局持久化
 │   └── modules/            # 模块独立配置
-├── modules/                # [Plugins] 全面模块化
+├── modules/                # [Plugins] 业务模块化目录
 │   ├── core/               # -> 系统核心模块 (Data Providers)
-│   ├── prod/               # -> 生产级策略
-│   ├── beta/               # -> 实验性策略
+│   ├── prod/               # -> 生产级模块
+│   ├── beta/               # -> 实验性模块
 │   └── GEMINI.md           # -> 模块开发指南
 ├── vibe_core/              # [Kernel] 框架核心
-├── vibe_data/              # [Data] 数据层 (Hybrid Facade)
-├── vibe_server/            # [Web] FastAPI & WebSocket Server
-├── vibe_services/          # [Service] 业务服务 (Loader, SchedulerService)
-├── vibe_crawler/           # [Crawler] 爬虫子系统
-├── vibe_backtest/          # [Backtest] 回测引擎
-├── ui/                     # [Frontend] 前端资源
-│   ├── index.html          # SPA 入口
-│   └── widgets.js          # 组件库
+│   ├── data/               # -> 数据路由与聚合层
+│   ├── server/             # -> Web 服务 (FastAPI/WS)
+│   ├── services/           # -> 核心服务 (Loader/Scheduler)
+│   ├── crawler/            # -> 爬虫子系统
+│   └── backtest/           # -> 回测引擎
+├── ui/                     # [Frontend] 前端资源 (Vue3 + ECharts)
 ├── data/                   # [Storage] 本地数据 (CSV/JSON/DB)
+├── logs/                   # [Logs] 系统与监控日志
+├── module_templates/       # [Templates] 模块开发模板
 └── tests/                  # [Tests] 测试用例
 ```

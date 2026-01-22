@@ -24157,3 +24157,73 @@
 2026-01-21 16:59:29,033 - vibe - INFO - Fetched info for 1 new stocks via Adapter.
 2026-01-21 16:59:35,682 - vibe.data.aksharedatamodule - WARNING - AKShare get_em_sectors (EM) failed: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response')). Trying Fallback (THS)...
 2026-01-21 16:59:39,053 - vibe - INFO - Fetched info for 1 new stocks via Adapter.
+2026-01-22 15:08:00,207 - vibe.loader - INFO - Starting module watcher on: ['modules\\core', 'modules\\prod', 'modules\\beta']
+2026-01-22 15:08:00,208 - vibe.loader - INFO - Loading definition from: modules\core\akshare_data\__init__.py
+2026-01-22 15:08:00,209 - vibe.loader - INFO - Loading definition from: modules\core\local_data\__init__.py
+2026-01-22 15:08:00,209 - vibe.loader - INFO - Loading definition from: modules\core\sina_data\__init__.py
+2026-01-22 15:08:00,210 - vibe.loader - INFO - Loading definition from: modules\core\stock_info\__init__.py
+2026-01-22 15:08:00,210 - vibe.loader - INFO - Loading definition from: modules\core\tushare_data\__init__.py
+2026-01-22 15:08:00,211 - vibe.loader - INFO - Loading definition from: modules\core\watchlist\__init__.py
+2026-01-22 15:08:00,214 - vibe.loader - INFO - Loading definition from: modules\prod\info_sync.py
+2026-01-22 15:08:00,216 - vibe.loader - INFO - Loading definition from: modules\prod\limit_up_monitor\__init__.py
+2026-01-22 15:08:00,222 - vibe.loader - INFO - Loading definition from: modules\prod\market_recorder.py
+2026-01-22 15:08:00,226 - vibe.loader - INFO - Loading definition from: modules\prod\tushare_extra.py
+2026-01-22 15:08:00,227 - vibe.loader - INFO - Loading definition from: modules\prod\tushare_sync.py
+2026-01-22 15:08:00,230 - vibe.loader - INFO - Loading definition from: modules\beta\limit_rank\__init__.py
+2026-01-22 15:08:00,232 - vibe.loader - INFO - Loading definition from: modules\beta\market_charts\__init__.py
+2026-01-22 15:08:00,233 - vibe.loader - INFO - Loading definition from: modules\beta\market_heatmap\__init__.py
+2026-01-22 15:08:00,235 - vibe.loader - INFO - Loading definition from: modules\beta\region_pie\__init__.py
+2026-01-22 15:08:00,239 - vibe.loader - INFO - Loading definition from: modules\beta\weighted_limit_up\__init__.py
+2026-01-22 15:08:00,244 - vibe.loader - INFO - Starting instance: akshare_data (AkShareDataModule)
+2026-01-22 15:08:00,248 - vibe - INFO - Registered module route: akshare_status_akshare_data -> akshare_data
+2026-01-22 15:08:00,248 - vibe.data.hybrid - INFO - Registered data provider: akshare
+2026-01-22 15:08:00,248 - vibe.data.hybrid - INFO - Setting akshare as temporary default provider.
+2026-01-22 15:08:00,249 - vibe - INFO - Registered interval job 5s for akshare_data
+2026-01-22 15:08:00,249 - vibe.loader - INFO - Starting instance: sina_data (SinaDataModule)
+2026-01-22 15:08:00,250 - vibe - INFO - Registered module route: sina_status_sina_data -> sina_data
+2026-01-22 15:08:00,250 - vibe.data.hybrid - INFO - Registered data provider: sina
+2026-01-22 15:08:00,250 - vibe - INFO - sina_data initialized.
+2026-01-22 15:08:00,251 - vibe.loader - INFO - Starting instance: stock_info (StockInfoModule)
+2026-01-22 15:08:00,265 - vibe.data.hybrid - INFO - Registered data provider: stock_info
+2026-01-22 15:08:00,265 - vibe - INFO - stock_info initialized.
+2026-01-22 15:08:00,267 - vibe.loader - INFO - Starting instance: WatchlistModule (WatchlistModule)
+2026-01-22 15:08:00,269 - vibe - INFO - Registered module route: watchlist -> WatchlistModule
+2026-01-22 15:08:00,270 - vibe.data.aggregator - INFO - [SinaDataModule:get_snapshot] First Fetch: Key=snapshot:942678066958612218
+2026-01-22 15:08:00,270 - vibe.loader - INFO - Starting instance: main (WatchlistModule)
+2026-01-22 15:08:00,275 - vibe - INFO - Registered module route: watchlist_main -> main
+2026-01-22 15:08:00,275 - vibe.data.aggregator - INFO - [SinaDataModule:get_snapshot] First Fetch: Key=snapshot:8148523411567559289
+2026-01-22 15:08:00,276 - vibe.loader - INFO - Starting instance: LocalDataModule (LocalDataModule)
+2026-01-22 15:08:00,276 - vibe.loader - ERROR - Failed to start instance LocalDataModule: Can't instantiate abstract class LocalDataModule with abstract methods archive_filename_template, on_event
+2026-01-22 15:08:00,280 - vibe.loader - INFO - Starting instance: TushareDataModule (TushareDataModule)
+2026-01-22 15:08:00,280 - vibe.loader - ERROR - Failed to start instance TushareDataModule: Can't instantiate abstract class TushareDataModule with abstract method on_event
+2026-01-22 15:08:00,282 - vibe.loader - INFO - Starting instance: InfoSyncModule (InfoSyncModule)
+2026-01-22 15:08:00,282 - vibe - INFO - Registered interval job 3600s for InfoSyncModule
+2026-01-22 15:08:00,282 - vibe - ERROR - Failed to init Info Adapter: Can't instantiate abstract class TushareDataModule with abstract method on_event
+2026-01-22 15:08:00,286 - vibe.loader - INFO - Starting instance: LimitUpMonitor (LimitUpMonitor)
+2026-01-22 15:08:00,287 - vibe - INFO - Registered module route: limit_up_monitor -> LimitUpMonitor
+2026-01-22 15:08:00,287 - vibe - INFO - Registered interval job 10s for 涨停监控服务
+2026-01-22 15:08:00,288 - vibe - INFO - [涨停监控服务] Syncing trade calendar...
+2026-01-22 15:08:00,288 - vibe - INFO - [涨停监控服务] 已启动: 计划每日 09:20-15:30 运行
+2026-01-22 15:08:00,290 - vibe.loader - INFO - Starting instance: MarketDataRecorder (MarketDataRecorder)
+2026-01-22 15:08:00,291 - vibe - INFO - Registered interval job 60s for MarketDataRecorder
+2026-01-22 15:08:00,291 - vibe.loader - INFO - Starting instance: TushareExtraModule (TushareExtraModule)
+2026-01-22 15:08:00,292 - vibe - INFO - Subscribed TushareExtraModule to 'CMD_FETCH_EXTRA'
+2026-01-22 15:08:00,292 - vibe.loader - INFO - Starting instance: TushareSyncModule (TushareSyncModule)
+2026-01-22 15:08:00,293 - vibe - INFO - Registered interval job 60s for TushareSyncModule
+2026-01-22 15:08:00,293 - vibe.loader - INFO - Starting instance: LimitOrderRankModule (LimitOrderRankModule)
+2026-01-22 15:08:00,293 - vibe - INFO - Registered module route: limit_rank -> LimitOrderRankModule
+2026-01-22 15:08:00,293 - vibe - INFO - LimitOrderRankModule started. Refresh interval: 10s
+2026-01-22 15:08:00,555 - vibe - INFO - First run processed 50 limit rank stocks.
+2026-01-22 15:08:00,561 - vibe - INFO - Registered interval job 10s for LimitOrderRankModule
+2026-01-22 15:08:00,561 - vibe.loader - INFO - Starting instance: MarketChartsModule (MarketChartsModule)
+2026-01-22 15:08:00,564 - vibe - INFO - Registered module route: sector_pie -> MarketChartsModule
+2026-01-22 15:08:00,564 - vibe - INFO - Registered module route: index_line -> MarketChartsModule
+2026-01-22 15:08:00,566 - vibe - INFO - Registered module route: stock_kline -> MarketChartsModule
+2026-01-22 15:08:00,568 - vibe.loader - INFO - Starting instance: MarketHeatmapModule (MarketHeatmapModule)
+2026-01-22 15:08:00,568 - vibe - INFO - Registered module route: market_heatmap -> MarketHeatmapModule
+2026-01-22 15:08:00,569 - vibe - INFO - MarketHeatmapModule module loaded.
+2026-01-22 15:08:00,749 - vibe - INFO - [Heatmap] Broadcasted 30 sectors. Cost: 0.18s
+2026-01-22 15:08:00,750 - vibe - INFO - Registered interval job 10s for MarketHeatmapModule
+2026-01-22 15:08:00,750 - vibe.loader - INFO - Starting instance: RegionPieModule (RegionPieModule)
+2026-01-22 15:08:00,752 - vibe - INFO - Registered module route: region_pie -> RegionPieModule
+2026-01-22 15:08:00,752 - vibe - INFO - RegionPieModule started.

@@ -789,3 +789,4 @@
 2026-01-20 15:31:49,652 - INFO - Registered interval job 60s for 涨停监控服务
 2026-01-20 15:31:49,653 - INFO - [涨停监控服务] 已启动: 计划每日 09:20-15:30 运行
 2026-01-20 15:31:49,653 - INFO - Service stopped
+2026-01-22 15:00:16,829 - ERROR - Init failed: Can't instantiate abstract class TushareDataModule without an implementation for abstract method 'on_event'

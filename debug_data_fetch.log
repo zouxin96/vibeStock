@@ -55274,3 +55274,10 @@
 [2026-01-21 16:59:38] get_limit_up_pool called. Date=None, AK_Loaded=True
 [2026-01-21 16:59:38] get_limit_up_pool called. Date=None, AK_Loaded=True
 [2026-01-21 16:59:38] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 15:08:00] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 15:08:00] ak.stock_zt_pool_em returned DF with shape (73, 16)
+[2026-01-22 15:08:00] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 15:08:00] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 15:08:00] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 15:08:00] get_limit_up_pool called. Date=None, AK_Loaded=True
+[2026-01-22 15:08:00] get_limit_up_pool called. Date=None, AK_Loaded=True
